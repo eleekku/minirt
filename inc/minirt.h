@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 14:40:31 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/07/16 16:37:09 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/07/16 17:56:44 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define MINIRT_H
 
 # include <math.h>
+# include <stdio.h>
+# include "MLX42/MLX42.h"
 
 # define EPS 0.00001
 
