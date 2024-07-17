@@ -16,7 +16,9 @@ SRCDIR  := ./src
 HEADERS	:= -I ./inc -I $(LIBMLX)/include
 LIBS	:= $(LIBMLX)/build/libmlx42.a -Iinclude -ldl -lglfw -pthread -lm
 			
-SRCS	:= $(SRCDIR)/main.c $(SRCDIR)/utils.c
+SRCS	:= $(SRCDIR)/main.c $(SRCDIR)/definitions.c \
+			$(SRCDIR)/tuple_operations_one.c \
+			$(SRCDIR)/tuple_operations_two.c
 OBJS	:= ${SRCS:.c=.o}
 
 #all: libmlx $(LIBFT) $(NAME)

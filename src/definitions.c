@@ -1,20 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   definitions.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/16 14:46:25 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/07/16 16:36:05 by xriera-c         ###   ########.fr       */
+/*   Created: 2024/07/17 13:20:16 by xriera-c          #+#    #+#             */
+/*   Updated: 2024/07/17 13:29:57 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minirt.h"
 
-int equal_float(float a, float b)
+t_tuple	point(float a, float b, float c)
 {
-    if (fabs(a - b) < EPS)
-        return (1);
-    return (0);
+	t_tuple	p;
+
+	p.x = a;
+	p.y = b;
+	p.z = c;
+	p.w = 1;
+	return (p);
+}
+
+t_tuple	vector(float a, float b, float c)
+{
+	t_tuple	v;
+
+	v.x = a;
+	v.y = b;
+	v.z = c;
+	v.w = 0;
+	return (v);
 }

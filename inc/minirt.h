@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 14:40:31 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/07/16 17:56:44 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/07/17 13:19:44 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,20 @@ typedef struct s_tuple {
     float   w;
 }   t_tuple;
 
-/*** Basic operations ***/
+/*** Definitions ***/
+t_tuple point(float a, float b, float c);
+t_tuple vector(float a, float b, float c);
+
+/*** Operations ***/
 int equal_float(float a, float b);
+t_tuple tuple_add(t_tuple a, t_tuple b);
+t_tuple tuple_subs(t_tuple a, t_tuple b);
+t_tuple negate_vector(t_tuple a);
+t_tuple scalar_multi_tuple(t_tuple a, float n);
+t_tuple scalar_div_tuple(t_tuple a, float n);
+float   magnitude(t_tuple a);
+t_tuple normalize(t_tuple a);
+float dot_product(t_tuple a, t_tuple b);
+t_tuple vector_cross_prod(t_tuple a, t_tuple b);
 
 #endif
