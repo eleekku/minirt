@@ -15,9 +15,15 @@
 
 # include <math.h>
 # include <stdio.h>
+# include <fcntl.h>
+# include "../lib/Libft/libft.h"
 # include "MLX42/MLX42.h"
 
 # define EPS 0.00001
+# define TRUE 1
+# define FALSE 0
+
+typedef int     t_bool;
 
 typedef struct s_tuple {
     float   x;
