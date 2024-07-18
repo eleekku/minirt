@@ -32,6 +32,42 @@ typedef struct s_tuple {
     float   w;
 }   t_tuple;
 
+typedef struct  s_sphere
+{
+    float   coord[3];
+    float   diameter;
+    int     color[3];
+}   t_sphere;
+
+typedef struct  s_plane
+{
+    float   coord[3];
+    float   normv[3];
+    int     color[3];
+}   t_plane;
+
+typedef struct  s_cylinder
+{
+    float   coord[3];
+    float   normv[3];
+    float   diameter;
+    float   height;
+    int     color[3];
+}   t_cylinder;
+
+typedef struct s_scene
+{
+    float       ambient[4];
+    int         camc[3];
+    int         normv[3];
+    int         fow;
+    float       light[3];
+    float       brightness;
+    t_sphere    *sp;
+    t_plane     *pl;
+    t_cylinder  *cy;
+}   t_scene;
+
 /*** Definitions ***/
 t_tuple point(float a, float b, float c);
 t_tuple vector(float a, float b, float c);
