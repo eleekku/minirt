@@ -67,6 +67,7 @@ typedef struct s_scene
     t_plane     *pl;
     t_cylinder  *cy;
 }   t_scene;
+
 typedef struct s_color
 {
 	int	r;
