@@ -32,24 +32,24 @@ typedef struct s_tuple {
     float   w;
 }   t_tuple;
 
-typedef struct  s_sphere
+/* typedef struct  s_sphere
 {
     float   coord[3];
     float   diameter;
     int     color[3];
-}   t_sphere;
+}   t_sphere;*/
 
 typedef struct  s_plane
 {
-    float   coord[3];
-    float   normv[3];
+    t_tuple   coord[3];
+    t_tuple   normv;
     int     color[3];
 }   t_plane;
 
 typedef struct  s_cylinder
 {
-    float   coord[3];
-    float   normv[3];
+    t_tuple   coord[3];
+    t_tuple   normv[3];
     float   diameter;
     float   height;
     int     color[3];

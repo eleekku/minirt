@@ -1,13 +1,23 @@
 #include "../inc/minirt.h"
 
-t_bool  validate_line(char *arg)
+void    validate_ambient(char **args, t_scene *scene)
 {
-    if (ft_strncmp(arg, "A", 1) == 0 ||
-    ft_strncmp(arg, "C", 1) == 0 ||
-    ft_strncmp(arg, "L", 1) == 0 ||
-    ft_strncmp(arg, "sp", 2) == 0 ||
-    ft_strncmp(arg, "pl", 2) == 0 ||
-    ft_strncmp(arg, "cy", 2) == 0)
+        if (ft_strncmp(args[0], "A", ft_strlen(args[0]) != 0))
+            exit; 
+}
+t_bool  validate_line(char *arg, char **args, t_scene *scene)
+{
+    if (ft_strncmp(arg, "A", 1) == 0)
+        validate_ambient(args, scene);    
+    if else (ft_strncmp(arg, "C", 1) == 0)
+
+    if else ft_strncmp(arg, "L", 1) == 0)
+
+    if else (ft_strncmp(arg, "sp", 2) == 0)
+
+    if else (ft_strncmp(arg, "pl", 2) == 0)
+    
+    if else (ft_strncmp(arg, "cy", 2) == 0)
     return (TRUE);
     else
     return (FALSE);
