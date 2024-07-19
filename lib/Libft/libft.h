@@ -91,4 +91,5 @@ int		putuints(unsigned int n, int *p, int fd);
 void	ft_put_ptr(uintptr_t num, int *p, int fd);
 int		ft_ptr_len(uintptr_t num);
 int		ft_print_void(unsigned long long ptr, int *p, int fd);
+float	ft_atof(const char *str);
 #endif

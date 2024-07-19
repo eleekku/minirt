@@ -57,7 +57,8 @@ typedef struct  s_cylinder
 
 typedef struct s_scene
 {
-    float       ambient[4];
+    float       alightr;
+    int         amcolor[3];
     int         camc[3];
     int         normv[3];
     int         fow;

@@ -2,8 +2,30 @@
 
 void    validate_ambient(char **args, t_scene *scene)
 {
+        float   lightratio;
+        int     rgb;
+        int     i;
+
+        i = 2;
         if (ft_strncmp(args[0], "A", ft_strlen(args[0]) != 0))
-            exit; 
+            exit;
+        if (!ft_isdigit(args[1][0]))
+            exit;
+        lightratio = ft_atof(args[1]);
+        if (lightratio < 0.0 || lightratio > 1.0)
+            ft_printf(2, "invalid ambient light ratio\n");
+        scene->alightr = ft_atof(args[1]);
+        while (i < 5)
+        {
+            if (!ft_isdigit(args[i][0]))
+                ft_printf(2, "invalid ambient rgb value");
+            
+            rgb = ft_atoi(args[i])
+            if (rgb == 0 && args[i][0] != )
+        }
+
+        
+        
 }
 t_bool  validate_line(char *arg, char **args, t_scene *scene)
 {

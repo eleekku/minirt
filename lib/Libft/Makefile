@@ -58,6 +58,7 @@ FILES = ft_memset \
 		ft_print_void \
 		ft_printf_hex \
 		ft_printf_utils \
+		ft_atof
 
 FILES_B =   ft_lstnew_bonus \
 	  		ft_lstadd_front_bonus \
