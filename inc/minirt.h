@@ -17,7 +17,7 @@
 # include <stdio.h>
 # include <fcntl.h>
 # include "../lib/Libft/libft.h"
-# include "MLX42/MLX42.h"
+//# include "MLX42/MLX42.h"
 
 # define EPS 0.00001
 # define TRUE 1
@@ -31,6 +31,13 @@ typedef struct s_tuple {
     float   z;
     float   w;
 }   t_tuple;
+
+typedef struct s_color
+{
+	int	r;
+	int	g;
+	int	b;
+}	t_color;
 
 /* typedef struct  s_sphere
 {
@@ -55,6 +62,14 @@ typedef struct  s_cylinder
     int     color[3];
 }   t_cylinder;
 
+typedef struct	s_sphere
+{
+    t_tuple	center;
+    float	diameter;
+	t_color	color;
+}	t_sphere;
+
+
 typedef struct s_scene
 {
     float       alightr;
@@ -69,19 +84,12 @@ typedef struct s_scene
     t_cylinder  *cy;
 }   t_scene;
 
-typedef struct s_color
-{
-	int	r;
-	int	g;
-	int	b;
-}	t_color;
-
-typedef struct	s_sphere
+/* typedef struct	s_sphere
 {
     t_tuple	center;
     float	diameter;
 	t_color	color;
-}	t_sphere;
+}	t_sphere;*/
 
 typedef struct s_intersections
 {
