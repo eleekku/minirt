@@ -6,61 +6,85 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 13:22:27 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/07/17 14:27:15 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/07/22 14:39:47 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minirt.h"
 
-t_tuple	tuple_add(t_tuple a, t_tuple b)
+float	*tuple_add(float *a, float *b)
 {
-	t_tuple	r;
+	float	*p;
+	int		i;
 
-	r.x = a.x + b.x;
-	r.y = a.y + b.y;
-	r.z = a.z + b.z;
-	r.w = a.w + b.w;
-	if (r.w == 2)
+	p = malloc(4 * sizeof(float));
+	if (!p)
+		return (NULL);
+	i = 0;
+	while (i < 4)
+	{
+		p[i] = a[i] + b[i];
+		i++;
+	}
+	if (p[3] == 2)
 		printf("Error: Adding two points. Unexpected result\n");
-	return (r);
+	return (p);
 }
 
-t_tuple	tuple_subs(t_tuple a, t_tuple b)
+float	*tuple_subs(float *a, float *b)
 {
-	t_tuple	r;
+	float	*p;
+	int		i;
 
-	r.x = a.x - b.x;
-	r.y = a.y - b.y;
-	r.z = a.z - b.z;
-	r.w = a.w - b.w;
-	if (r.w < 0)
+	p = malloc(4 * sizeof(float));
+	if (!p)
+		return (NULL);
+	i = 0;
+	while (i < 4)
+	{
+		p[i] = a[i] - b[i];
+		i++;
+	}
+	if (p[3] < 0)
 		printf("Error: Substracting wrong parameters. Unexpected result\n");
-	return (r);
+	return (p);
 }
 
-t_tuple	negate_vector(t_tuple a)
+float	*negate_vector(float *a)
 {
 	return (tuple_subs(vector(0, 0, 0), a));
 }
 
-t_tuple	scalar_multi_tuple(t_tuple a, float n)
+float	*scalar_multi_tuple(float *a, float n)
 {
-	t_tuple	r;
+	float	*p;
+	int		i;
 
-	r.x = a.x * n;
-	r.y = a.y * n;
-	r.z = a.z * n;
-	r.w = a.w * n;
-	return (r);
+	p = malloc(4 * sizeof(float));
+	if (!p)
+		return (NULL);
+	i = 0;
+	while (i < 4)
+	{
+		p[i] = a[i] * n;
+		i++;
+	}
+	return (p);
 }
 
-t_tuple	scalar_div_tuple(t_tuple a, float n)
+float	*scalar_div_tuple(float *a, float n)
 {
-	t_tuple	r;
+	float	*p;
+	int		i;
 
-	r.x = a.x / n;
-	r.y = a.y / n;
-	r.z = a.z / n;
-	r.w = a.w / n;
-	return (r);
+	p = malloc(4 * sizeof(float));
+	if (!p)
+		return (NULL);
+	i = 0;
+	while (i < 4)
+	{
+		p[i] = a[i] / n;
+		i++;
+	}
+	return (p);
 }

@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 14:40:31 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/07/18 15:21:00 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/07/22 15:43:15 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <math.h>
 # include <stdio.h>
+# include <stdlib.h>
 # include "MLX42/MLX42.h"
 
 # define EPS 0.00001
@@ -60,24 +61,25 @@ typedef struct s_intersection
 }	t_intersection;
 
 /*** Definitions ***/
-t_tuple point(float a, float b, float c);
-t_tuple vector(float a, float b, float c);
+float	*point(float a, float b, float c);
+float	*vector(float a, float b, float c);
 
 /*** Operations ***/
-int equal_float(float a, float b);
-t_tuple tuple_add(t_tuple a, t_tuple b);
-t_tuple tuple_subs(t_tuple a, t_tuple b);
-t_tuple negate_vector(t_tuple a);
-t_tuple scalar_multi_tuple(t_tuple a, float n);
-t_tuple scalar_div_tuple(t_tuple a, float n);
-float   magnitude(t_tuple a);
-t_tuple normalize(t_tuple a);
-float dot_product(t_tuple a, t_tuple b);
-t_tuple vector_cross_prod(t_tuple a, t_tuple b);
+int 	equal_float(float a, float b);
+float	*tuple_add(float *a, float *b);
+float	*tuple_subs(float *a, float *b);
+float	*negate_vector(float *a);
+float	*tuple_add(float *a, float *b);
+float	*scalar_multi_tuple(float *a, float n);
+float	*scalar_div_tuple(float *a, float n);
+float   magnitude(float *a);
+float	*normalize(float *a);
+float	dot_product(float *a, float *b);
+float	*vector_cross_prod(float *a, float *b);
 
 /*** Rays ***/
-t_ray	create_ray(t_tuple origin, t_tuple direction);
-t_tuple	ray_position(t_ray r, float t);
+float	**create_ray(float *origin, float *direction);
+float	*ray_position(float **r, float t);
 
 /*** Spheres  ***/
 t_intersections	sp_cross(t_sphere sp, t_ray	r);
@@ -85,5 +87,6 @@ t_intersections	sp_cross(t_sphere sp, t_ray	r);
 /*** Intersections ***/
 t_intersection	intersection(float t, char object);
 t_intersections	intersections(int n, t_intersection i, ...);
+t_intersection	hit(t_intersections xs);
 
 #endif

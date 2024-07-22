@@ -6,37 +6,46 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 15:46:54 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/07/18 15:15:47 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/07/22 15:36:12 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minirt.h"
 
-t_ray	create_ray(t_tuple origin, t_tuple direction)
+float	**create_ray(float *origin, float *direction)
 {
-	t_ray	r;
+	float	**p;
 
-	if (origin.w == 0)
+	p = malloc(2 * 4 * sizeof(float));
+	if (!p)
+		return (NULL);
+	if (origin[3] == 0)
 	{
 		printf("Error: Origin is a vector\n");
 		; //Need to change
 	}
-	if (direction.w == 1)
+	if (direction[3] == 1)
 	{
 		printf("Error: Direction is a point\n");
 		; //Need to change
 	}
-	r.origin = origin;
-	r.direction = direction;
-	return (r);
+	p[0] = origin;
+	p[1] = direction;
+	return (p);
 }
-
-t_tuple	ray_position(t_ray r, float t)
+float	*ray_position(float **r, float t)
 {
-	t_tuple	pos;
+	float	*p;
+	int		i;
 
-	pos.x = r.origin.x + r.direction.x * t;
-	pos.y = r.origin.y + r.direction.y * t;
-	pos.z = r.origin.z + r.direction.z * t;
-	return (pos);
+	p = malloc(4 * sizeof(float));
+	if (!p)
+		return (NULL);
+	i = 0;
+	while (i < 3)
+	{
+		p[i] = r[0][i] + r[1][i] * t;
+		i++;
+	}
+	return (p);
 }

@@ -1,39 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   definitions.c                                      :+:      :+:    :+:   */
+/*   matrix_operations.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/17 13:20:16 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/07/22 13:03:34 by xriera-c         ###   ########.fr       */
+/*   Created: 2024/07/22 11:14:29 by xriera-c          #+#    #+#             */
+/*   Updated: 2024/07/22 11:32:50 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minirt.h"
 
-float	*point(float a, float b, float c)
+float	**matrix_multiply(float **a, float **b)
 {
-	float	*p;
+	float	matrix[4][4];
+	int		i;
+	int		j;
 
-	p = malloc(4 * sizeof(float));
-	if (!p)
-		return (NULL);
-	p[0] = a;
-	p[1] = b;
-	p[2] = c;
-	p[3] = 1;
-	return (p);
-}
-
-float	*vector(float a, float b, float c)
-{
-	float	*p;
-
-	p = malloc(4 * sizeof(float));
-	p[0] = a;
-	p[1] = b;
-	p[2] = c;
-	p[3] = 0;
-	return (p);
+	i = 0;
+	while (i < 4)
+	{
+		j = 0;
+		while (j < 4)
+		{
+			matrix[i][j] = (a[i][0] * b[0][j]) + (a[i][1] * b[1][j]) +
+				(a[i][2] * b[2][j]) + (a[i][3] * b[3][j]);
+			j++;
+		}
+		i++;
+	}
+	return (matrix);
 }

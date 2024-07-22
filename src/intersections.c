@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 14:57:03 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/07/18 16:12:53 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/07/22 10:43:22 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,10 @@ t_intersections	intersections(int n, t_intersection i, ...)
 		if (k > 0)
 			tmp = va_arg(ap, t_intersection);
 		xs.object[k] = tmp.object;
-		printf("%c\n", xs.object[k]);
 		xs.t[k] = tmp.t;
-		printf("%f\n", xs.t[k]);
 		k++;
 	}
 	va_end(ap);
-	printf("%f %f %f %f %d\n", xs.t[0], xs.t[1], xs.t[2], xs.t[3], xs.count);
 	xs = sort_intersect(n, xs);
 	return (xs);
 }
@@ -81,7 +78,19 @@ t_intersections	intersections(int n, t_intersection i, ...)
 t_intersection	hit(t_intersections xs)
 {
 	t_intersection	i;
+	int				k;
 
-	
+	k = 0;
+	while (k < xs.count)
+	{
+		if (xs.t[k] >= 0)
+		{
+			i.t = xs.t[k];
+			i.object = xs.object[k];
+			return (i);
+		}
+		k++;
+	}
+	i.t = -1;
 	return (i);
 }
