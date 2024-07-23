@@ -33,6 +33,28 @@ void    validate_ambient(char **args, t_scene *scene)
             i++;
         }       
 }
+
+void    validate_camera(char **args, t_scene *scene)
+{
+        int     i;
+        int     coordinate;
+
+        i = 1;
+        if (ft_strncmp(args[0], "C", ft_strlen(args[0]) != 0))
+            exit_error("invalid format");
+        if (!ft_isdigit(args[1][0]))
+            exit_error("invalid format");
+        coordinate = ft_atof(args[1]);
+        while(++i < 4)
+        { 
+            coordinate = ft_atoi(args[i]);
+            if (coordinate == 0 && args[i][0] != '0')
+                exit_error("invalid camera coordinates");               
+            scene->camc[i - 1] = coordinate;
+        }
+            
+}
+
 t_bool  validate_line(char *arg, char **args, t_scene *scene)
 {
     if (ft_strncmp(arg, "A", 1) == 0)

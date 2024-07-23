@@ -25,13 +25,6 @@
 
 typedef int     t_bool;
 
-typedef struct s_tuple {
-    float   x;
-    float   y;
-    float   z;
-    float   w;
-}   t_tuple;
-
 typedef struct s_color
 {
 	int	r;
@@ -48,15 +41,15 @@ typedef struct s_color
 
 typedef struct  s_plane
 {
-    t_tuple   coord[3];
-    t_tuple   normv;
-    int     color[3];
+    float       coord[3];
+    float       normv[3];
+    int         color[3];
 }   t_plane;
 
 typedef struct  s_cylinder
 {
-    t_tuple   coord[3];
-    t_tuple   normv[3];
+    float   coord[3];
+    float   normv[3];
     float   diameter;
     float   height;
     int     color[3];
@@ -64,9 +57,9 @@ typedef struct  s_cylinder
 
 typedef struct	s_sphere
 {
-    t_tuple	center;
+    float	center[3];
     float	diameter;
-	t_color	color;
+	int 	color;
 }	t_sphere;
 
 
