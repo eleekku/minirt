@@ -39,8 +39,7 @@ t_bool  validate_line(char *arg, char **args, t_scene *scene)
     {
         validate_ambient(args, scene);
         return(TRUE);
-
-  //  if else (ft_strncmp(arg, "C", 1) == 0)
+    if else (ft_strncmp(arg, "C", 1) == 0)
 
 //    if else ft_strncmp(arg, "L", 1) == 0)
 
