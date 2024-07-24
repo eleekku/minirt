@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 13:22:27 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/07/22 14:39:47 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/07/24 10:35:10 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ float	*tuple_subs(float *a, float *b)
 
 float	*negate_vector(float *a)
 {
-	return (tuple_subs(vector(0, 0, 0), a));
+	return (tuple_subs(tuple(0, 0, 0, 0), a));
 }
 
 float	*scalar_multi_tuple(float *a, float n)
