@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 14:40:31 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/07/22 15:43:15 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/07/24 10:26:29 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,6 @@
 
 # define EPS 0.00001
 
-typedef struct s_tuple {
-    float   x;
-    float   y;
-    float   z;
-    float   w;
-}   t_tuple;
-
 typedef struct s_color
 {
 	int	r;
@@ -36,7 +29,7 @@ typedef struct s_color
 
 typedef struct	s_sphere
 {
-    t_tuple	center;
+//    t_tuple	center;
     float	diameter;
 	t_color	color;
 }	t_sphere;
@@ -50,8 +43,8 @@ typedef struct s_intersections
 
 typedef struct s_ray
 {
-    t_tuple origin;
-    t_tuple direction;
+//    t_tuple origin;
+//    t_tuple direction;
 }   t_ray;
 
 typedef struct s_intersection
@@ -61,10 +54,10 @@ typedef struct s_intersection
 }	t_intersection;
 
 /*** Definitions ***/
-float	*point(float a, float b, float c);
-float	*vector(float a, float b, float c);
+float	*tuple(float a, float b, float c, float w);
+float	**matrix(float *a, float *b, float *c, float *d);
 
-/*** Operations ***/
+/*** Tuple Operations ***/
 int 	equal_float(float a, float b);
 float	*tuple_add(float *a, float *b);
 float	*tuple_subs(float *a, float *b);
@@ -76,6 +69,10 @@ float   magnitude(float *a);
 float	*normalize(float *a);
 float	dot_product(float *a, float *b);
 float	*vector_cross_prod(float *a, float *b);
+
+/*** Matrix operations ***/
+int		matrix_are_equal(float **a, float **b);
+float	**matrix_multiply(float **a, float **b);
 
 /*** Rays ***/
 float	**create_ray(float *origin, float *direction);
