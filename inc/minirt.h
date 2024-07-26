@@ -67,8 +67,8 @@ typedef struct s_scene
 {
     float       alightr;
     int         amcolor[3];
-    int         camc[3];
-    int         normv[3];
+    float         camc[3];
+    float         normv[3];
     int         fow;
     float       light[3];
     float       brightness;
@@ -91,11 +91,11 @@ typedef struct s_intersections
 	float	t[100];
 }	t_intersections;
 
-typedef struct s_ray
-{
-    t_tuple origin;
-    t_tuple direction;
-}   t_ray;
+//typedef struct s_ray
+//{
+  //  t_tuple origin;
+    //t_tuple direction;
+//}   t_ray;
 
 typedef struct s_intersection
 {
@@ -103,11 +103,10 @@ typedef struct s_intersection
 	char	object;
 }	t_intersection;
 
-/*** Definitions ***/
+/*
 t_tuple point(float a, float b, float c);
 t_tuple vector(float a, float b, float c);
 
-/*** Operations ***/
 int equal_float(float a, float b);
 t_tuple tuple_add(t_tuple a, t_tuple b);
 t_tuple tuple_subs(t_tuple a, t_tuple b);
@@ -119,15 +118,12 @@ t_tuple normalize(t_tuple a);
 float dot_product(t_tuple a, t_tuple b);
 t_tuple vector_cross_prod(t_tuple a, t_tuple b);
 
-/*** Rays ***/
 t_ray	create_ray(t_tuple origin, t_tuple direction);
 t_tuple	ray_position(t_ray r, float t);
 
-/*** Spheres  ***/
 t_intersections	sp_cross(t_sphere sp, t_ray	r);
 
-/*** Intersections ***/
 t_intersection	intersection(float t, char object);
 t_intersections	intersections(int n, t_intersection i, ...);
-
+*/
 #endif

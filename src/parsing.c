@@ -31,8 +31,9 @@ t_bool    validate_values(char *arg)
                 coma++;
                 i++; 
             }
-        if ((arg[i] != '.' && arg[i] != '-') && (arg[i] < '0' || arg[i] > '9'))
-            exit_error("Invalid value format\n");
+        if (arg[i] && ((arg[i] != '.' && arg[i] != '-') && (arg[i] < '0' || arg[i] > '9')) &&
+        arg[i] != '\n')
+            exit_error("Invalid value format");
         i++;
     }
     if (coma > 2)
@@ -40,7 +41,7 @@ t_bool    validate_values(char *arg)
     return (TRUE);
 }
 
-char    **safe_split(char string, char separator)
+char    **safe_split(char *string, char separator)
 {
     char **arr;
 
@@ -49,6 +50,7 @@ char    **safe_split(char string, char separator)
     {
         exit(1);
     }
+    return (arr);
 }
 
 void    validate_ambient(char **args, t_scene *scene)
@@ -65,9 +67,9 @@ void    validate_ambient(char **args, t_scene *scene)
         if (lightratio < 0.0 || lightratio > 1.0)
             exit_error("invalid ambient light ratio");
         scene->alightr = lightratio;
-        validate_values(args[1]);
-        rgb = safe_split(args[1], ",");
-        while (++i < 2)
+        validate_values(args[2]);
+        rgb = safe_split(args[2], ',');
+        while (++i <= 2)
         {
             value = ft_atoi(rgb[i]);
             if (!(value >= 0 && value <= 255))
@@ -79,26 +81,42 @@ void    validate_ambient(char **args, t_scene *scene)
         free_array(rgb);      
 }
 
+float    fill_value(char *arg)
+{
+    float   value;
+
+    if (ft_strchr(arg, '.'))
+        value = ft_atof(arg);
+    else
+        value = ft_atoi(arg);
+    return (value);
+}
+
 void    validate_camera(char **args, t_scene *scene)
 {
         int     i;
         char    **coordinates;
         float   value;
+        int     fow;
 
         i = -1;
         validate_values(args[1]);
         coordinates = safe_split(args[1], ',');
         while (++i < 2)
-        {
-            if (ft_strchr(args[i], '.'))
-                value = ft_atof(args[i]);
-            else
-                value = ft_atoi(args[i]);
-            scene->camc[i] = value;
-        }
-        if (args[i])
-            exit_error("too  many values in camera coordinates");
-        free_array(coordinates);    
+            scene->camc[i] = fill_value(coordinates[i]);
+        i = -1;
+        free_array(coordinates);
+        validate_values(args[2]);
+        coordinates = safe_split(args[2], ',');
+        while (++i < 2)
+            scene->normv[i] = fill_value(coordinates[i]);
+        free_array(coordinates); 
+        fow = ft_atoi(args[3]);
+        if (!ft_isdigit(args[3][0]) && args[3][0] != '0')
+            exit_error("invalid fow format");
+        if (fow < 0 || fow > 180)
+            exit_error("invalid fow format");
+        scene->fow = fow;
 }
 
 t_bool  validate_line(char *arg, char **args, t_scene *scene)
@@ -116,30 +134,24 @@ t_bool  validate_line(char *arg, char **args, t_scene *scene)
     
   //  if else (ft_strncmp(arg, "cy", 2) == 0)
   //  return (TRUE);
-    }
-    else
-    return (FALSE);
+//    }
+    return (TRUE);
 }
 
 void    read_file(int fd, t_scene *scene)
 {
     char    *line;
     char    **args;
+    int     i;
 
     line = get_next_line(fd);
     args = ft_split(line, ' ');
     free(line);
-    int i;
-    i = 0;
-    while (args[i])
-    {
-        printf("arg is %s\n", args[i]);
-        i++;
-    }
-    if (validate_line(args[0], args, scene) != TRUE)
-        printf("not validated\n");
-
-
+    i = -1;
+    while (args[++i])
+        if (validate_line(args[i], args, scene) != TRUE)
+            printf("not validated\n");
+    printf("%f", scene->camc[0]);
 }
 
 void  check_file(char *file, t_scene *scene)
