@@ -70,7 +70,7 @@ typedef struct s_scene
     float         camc[3];
     float         normv[3];
     int         fow;
-    float       light[3];
+    float       lightc[3];
     float       brightness;
     t_sphere    *sp;
     t_plane     *pl;
@@ -102,6 +102,13 @@ typedef struct s_intersection
 	float	t;
 	char	object;
 }	t_intersection;
+
+void        free_array(char **args);
+void        exit_error(char *msg);
+t_bool      validate_values(char *arg);
+char        **safe_split(char *string, char separator);
+float       fill_value(char *arg);
+
 
 /*
 t_tuple point(float a, float b, float c);

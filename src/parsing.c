@@ -1,57 +1,25 @@
 #include "../inc/minirt.h"
 
-void    free_array(char **args)
+void    validate_light(char **args, t_scene *scene)
 {
-    int i;
+    char    **coordinates;
+    int     i;
+    float   brightness;
 
     i = -1;
-    while(args[++i])
-        free(args[i]);
-    free(args);
-}
-
-void    exit_error(char *msg)
-{
-    ft_printf(2, "Error\n%s\n", msg);
-    exit(1);
-}
-
-t_bool    validate_values(char *arg)
-{
-    char    **rgb;
-    int     i;
-    int     coma;
-
-    i = 0;
-    coma = 0;
-    while (arg[i])
-    {
-        if (arg[i] == ',')
-            {
-                coma++;
-                i++; 
-            }
-        if (arg[i] && ((arg[i] != '.' && arg[i] != '-') && (arg[i] < '0' || arg[i] > '9')) &&
-        arg[i] != '\n')
-            exit_error("Invalid value format");
-        i++;
-    }
-    if (coma > 2)
-        exit_error("Invalid egb format");
-    return (TRUE);
-}
-
-char    **safe_split(char *string, char separator)
-{
-    char **arr;
-
-    arr = ft_split(string,  separator);
-    if (!arr)
-    {
-        exit(1);
-    }
-    return (arr);
-}
+    coordinates = safe_split(args[1], ',');
+    while (++i < 2)
+        scene->lightc[i] = fill_value(coordinates[i]);
+    free_array(coordinates);
+    if (!ft_isdigit(args[2][0]))
+        exit_error("invalid light brightness format");
+    brightness = fill_value(args[2]);
+    if (!(brightness >= 0.0 && brightness <= 1.0))
+        exit_error("Invalid light brightness value");
+    if (args[3])
+        exit_error("too many values in light");
+    
+};
 
 void    validate_ambient(char **args, t_scene *scene)
 {
@@ -79,17 +47,6 @@ void    validate_ambient(char **args, t_scene *scene)
         if (args[i])
             exit_error("too many values in ambien rgb");
         free_array(rgb);      
-}
-
-float    fill_value(char *arg)
-{
-    float   value;
-
-    if (ft_strchr(arg, '.'))
-        value = ft_atof(arg);
-    else
-        value = ft_atoi(arg);
-    return (value);
 }
 
 void    validate_camera(char **args, t_scene *scene)
@@ -121,21 +78,23 @@ void    validate_camera(char **args, t_scene *scene)
 
 t_bool  validate_line(char *arg, char **args, t_scene *scene)
 {
-    if (ft_strncmp(arg, "A", ft_strlen(arg)) == 0)
+    if (!ft_strncmp(arg, "A", ft_strlen(arg)))
         validate_ambient(args, scene);
-    else if (ft_strncmp(arg, "C", ft_strlen(arg)) == 0)
+    else if (!ft_strncmp(arg, "C", ft_strlen(arg)))
         validate_camera(args, scene);
-
-//    if else ft_strncmp(arg, "L", 1) == 0)
-
-//    if else (ft_strncmp(arg, "sp", 2) == 0)
-
-//    if else (ft_strncmp(arg, "pl", 2) == 0)
-    
-  //  if else (ft_strncmp(arg, "cy", 2) == 0)
-  //  return (TRUE);
-//    }
-    return (TRUE);
+    else if (!ft_strncmp(arg, "L", ft_strlen(arg)))
+        validate_light(args, scene);
+    else if (!ft_strncmp(arg, "sp", ft_strlen(arg)))
+        return (TRUE);
+    else if (!ft_strncmp(arg, "pl", ft_strlen(arg)))
+        return (TRUE);
+    else if (!ft_strncmp(arg, "cy", ft_strlen(arg)))
+        return (TRUE);
+    else if (!ft_strncmp(arg, "\n", (ft_strlen(arg))))
+        return (TRUE);
+    else
+        return (FALSE);
+    return (TRUE); 
 }
 
 void    read_file(int fd, t_scene *scene)
@@ -145,12 +104,16 @@ void    read_file(int fd, t_scene *scene)
     int     i;
 
     line = get_next_line(fd);
+    while (line)
+    {
     args = ft_split(line, ' ');
     free(line);
     i = -1;
     while (args[++i])
         if (validate_line(args[i], args, scene) != TRUE)
-            printf("not validated\n");
+            exit_error("Invalid file format");
+    line = get_next_line(fd);
+    }
     printf("%f", scene->camc[0]);
 }
 
