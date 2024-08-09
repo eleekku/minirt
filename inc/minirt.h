@@ -104,10 +104,10 @@ typedef struct s_intersection
 }	t_intersection;
 
 void        free_array(char **args);
-void        exit_error(char *msg);
-t_bool      validate_values(char *arg);
+void        exit_error(char *msg, char **args);
+t_bool      validate_values(char *arg, char **args);
 char        **safe_split(char *string, char separator);
-float       fill_value(char *arg);
+float       fill_value(char *arg, char **args, char **coordinates);
 
 
 /*
@@ -133,4 +133,5 @@ t_intersections	sp_cross(t_sphere sp, t_ray	r);
 t_intersection	intersection(float t, char object);
 t_intersections	intersections(int n, t_intersection i, ...);
 */
+
 #endif
