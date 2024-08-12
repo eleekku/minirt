@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 14:40:31 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/07/18 15:21:00 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/08/12 15:30:41 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include <math.h>
 # include <stdio.h>
+# include <stdlib.h>
+# include <stdarg.h>
 # include <fcntl.h>
 # include "../lib/Libft/libft.h"
 # include "MLX42/MLX42.h"
@@ -25,12 +27,10 @@
 
 typedef int     t_bool;
 
-typedef struct s_tuple {
-    float   x;
-    float   y;
-    float   z;
-    float   w;
-}   t_tuple;
+# define PNT 1.0
+# define VTR 0.0
+# define ORIGIN 0
+# define DIRECTION 1
 
 typedef struct  s_sphere
 {
@@ -68,19 +68,19 @@ typedef struct s_scene
     t_cylinder  *cy;
 }   t_scene;
 
-typedef struct s_color
+//typedef struct s_color
+typedef struct s_matrix
 {
-	int	r;
-	int	g;
-	int	b;
-}	t_color;
+	int		size;
+	float	**m;
+}	t_matrix;
 
-typedef struct	s_sphere
-{
-    t_tuple	center;
-    float	diameter;
-	t_color	color;
-}	t_sphere;
+//typedef struct s_sphere
+//{
+//	float	*center;
+//	float	diameter;
+//	int		*color;
+//}	t_sphere;
 
 typedef struct s_intersections
 {
@@ -89,12 +89,6 @@ typedef struct s_intersections
 	float	t[100];
 }	t_intersections;
 
-typedef struct s_ray
-{
-    t_tuple origin;
-    t_tuple direction;
-}   t_ray;
-
 typedef struct s_intersection
 {
 	float	t;
@@ -102,30 +96,45 @@ typedef struct s_intersection
 }	t_intersection;
 
 /*** Definitions ***/
-t_tuple point(float a, float b, float c);
-t_tuple vector(float a, float b, float c);
+float			*tuple(float a, float b, float c, float w);
+t_matrix		matrix(int size, float *a, ...);
+t_matrix		initialize_matrix(t_matrix matrix);
+//float	**matrix(float *a, float *b, float *c, float *d);
 
-/*** Operations ***/
-int equal_float(float a, float b);
-t_tuple tuple_add(t_tuple a, t_tuple b);
-t_tuple tuple_subs(t_tuple a, t_tuple b);
-t_tuple negate_vector(t_tuple a);
-t_tuple scalar_multi_tuple(t_tuple a, float n);
-t_tuple scalar_div_tuple(t_tuple a, float n);
-float   magnitude(t_tuple a);
-t_tuple normalize(t_tuple a);
-float dot_product(t_tuple a, t_tuple b);
-t_tuple vector_cross_prod(t_tuple a, t_tuple b);
+/*** Tuple Operations ***/
+int				equal_float(float a, float b);
+float			*tuple_add(float *a, float *b);
+float			*tuple_subs(float *a, float *b);
+float			*negate_vector(float *a);
+float			*tuple_add(float *a, float *b);
+float			*scalar_multi_tuple(float *a, float n);
+float			*scalar_div_tuple(float *a, float n);
+float			magnitude(float *a);
+float			*normalize(float *a);
+float			dot_product(float *a, float *b);
+float			*vector_cross_prod(float *a, float *b);
+
+/*** Matrix operations ***/
+int				matrix_are_equal(t_matrix a, t_matrix b);
+float			**matrix_multiply(float **a, float **b);
+float			**matrix_transpose(float **a);
+t_matrix		submatrix(t_matrix a, int i, int j);
+float			minor(t_matrix a, int i, int j);
+float			cofactor(t_matrix a, int i, int j);
+float			determinant(t_matrix a);
+t_matrix		inverse_matrix(t_matrix a);
 
 /*** Rays ***/
-t_ray	create_ray(t_tuple origin, t_tuple direction);
-t_tuple	ray_position(t_ray r, float t);
+float			**create_ray(float *origin, float *direction);
+float			*ray_position(float **r, float t);
 
 /*** Spheres  ***/
-t_intersections	sp_cross(t_sphere sp, t_ray	r);
+//t_intersections	sp_cross(t_sphere sp, float **r);
+t_intersections	intersects(t_sphere sp, float **r);
 
 /*** Intersections ***/
 t_intersection	intersection(float t, char object);
 t_intersections	intersections(int n, t_intersection i, ...);
+t_intersection	hit(t_intersections xs);
 
 #endif

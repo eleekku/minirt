@@ -6,12 +6,12 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 10:50:17 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/07/18 15:22:18 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/07/22 15:29:30 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minirt.h"
-
+/*
 t_intersections	sp_cross(t_sphere sp, t_ray	r)
 {
 	t_intersections	cross;
@@ -34,4 +34,4 @@ t_intersections	sp_cross(t_sphere sp, t_ray	r)
 		cross.count = cross.count + 2;
 	}
 	return (cross);
-}
+}*/

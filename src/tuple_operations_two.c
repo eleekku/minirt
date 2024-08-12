@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 14:46:25 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/07/17 14:06:09 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/07/22 15:34:25 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,46 +19,64 @@ int	equal_float(float a, float b)
 	return (0);
 }
 
-float	magnitude(t_tuple a)
+float	magnitude(float *a)
 {
 	float	n;
 
-    if (a.w == 1)
+    if (a[3] == 1)
         printf("Error: Magnitude failed. Value provided is not a vector\n.");
-    n = sqrt(a.x * a.x + a.y * a.y + a.z * a.z);
+    n = sqrt(a[0] * a[0] + a[1] * a[1] + a[2] * a[2]);
     return (n);
 }
 
-t_tuple	normalize(t_tuple a)
+float   *normalize(float *a)
 {
-    t_tuple	r;
-    float	mag;
+    float	*p;
+    float   mag;
+	int		i;
 
+	p = malloc(4 * sizeof(float));
+	if (!p)
+		return (NULL);
+	i = 0;
     mag = magnitude(a);
-    r.x = a.x / mag;
-    r.y = a.y / mag;
-    r.z = a.z / mag;
-    r.w = a.w / mag;
-    return (r);
+	while (i < 4)
+	{
+		p[i] = a[i] / mag;
+		i++;
+	}
+    return (p);
 }
 
-float	dot_product(t_tuple a, t_tuple b)
+float   dot_product(float *a, float *b)
 {
-    float	r;
-    
-    r = a.x * b.x + a.y * b.y + a.z * b.z + a.w * b.w;
-    return (r);
+    float	p;
+	int		i;
+
+    p = 0;
+	i = 0;
+	while (i < 4)
+	{
+		p = p + (a[i] * b[i]);
+		i++;
+	}
+    return (p);
 }
 
-t_tuple	vector_cross_prod(t_tuple a, t_tuple b)
+float	*vector_cross_prod(float *a, float *b)
 {
-    t_tuple	r;
-
-    if (a.w == 1 || b.w == 1)
+	float	*p;
+	
+    if (a[3] == 1 || b[3] == 1)
+	{
         printf("Error: Cross product failed. Use vectors\n");
-    r.x = a.y * b.z - a.z * b.y;
-    r.y = a.z * b.x - a.x * b.z;
-    r.z = a.x * b.y - a.y * b.x;
-    r.w = 0;
-    return (r);
+	}
+	p = malloc(4 * sizeof(float));
+	if (!p)
+		return (NULL);
+	p[0] = (a[1] * b[2]) - (a[2] * b[1]);
+    p[1] = (a[2] * b[0]) - (a[0] * b[2]);
+    p[2] = (a[0] * b[1]) - (a[1] * b[0]);
+    p[3] = 0; 
+	return (p);
 }
