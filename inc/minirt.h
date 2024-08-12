@@ -17,27 +17,70 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <stdarg.h>
+# include <fcntl.h>
+# include "../lib/Libft/libft.h"
 # include "MLX42/MLX42.h"
 
 # define EPS 0.00001
+# define TRUE 1
+# define FALSE 0
+
+typedef int     t_bool;
 
 # define PNT 1.0
 # define VTR 0.0
 # define ORIGIN 0
 # define DIRECTION 1
 
+typedef struct  s_sphere
+{
+    float   coord[3];
+    float   diameter;
+    int     color[3];
+}   t_sphere;
+
+typedef struct  s_plane
+{
+    float   coord[3];
+    float   normv[3];
+    int     color[3];
+}   t_plane;
+
+typedef struct  s_cylinder
+{
+    float   coord[3];
+    float   normv[3];
+    float   diameter;
+    float   height;
+    int     color[3];
+}   t_cylinder;
+
+typedef struct s_scene
+{
+    float       ambient[4];
+    int         camc[3];
+    int         normv[3];
+    int         fow;
+    float       light[3];
+    float       brightness;
+    t_sphere    *sp;
+    t_plane     *pl;
+    t_cylinder  *cy;
+}   t_scene;
+
+//typedef struct s_color
 typedef struct s_matrix
 {
 	int		size;
 	float	**m;
 }	t_matrix;
 
-typedef struct s_sphere
-{
-	float	*center;
-	float	diameter;
-	int		*color;
-}	t_sphere;
+//typedef struct s_sphere
+//{
+//	float	*center;
+//	float	diameter;
+//	int		*color;
+//}	t_sphere;
 
 typedef struct s_intersections
 {
