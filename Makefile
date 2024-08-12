@@ -22,7 +22,7 @@ SRCS	:= $(SRCDIR)/main.c $(SRCDIR)/definitions.c \
 			$(SRCDIR)/rays.c $(SRCDIR)/sphere.c \
 			$(SRCDIR)/intersections.c \
 			$(SRCDIR)/matrix_operations.c \
-			$(SRCDIR)/matrix_inverse.c
+			$(SRCDIR)/matrix_inverse.c \
 OBJS	:= ${SRCS:.c=.o}
 
 #all: libmlx $(LIBFT) $(NAME)

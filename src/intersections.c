@@ -6,12 +6,11 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 14:57:03 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/07/22 10:43:22 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/07/26 12:41:18 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minirt.h"
-#include <stdarg.h>
 
 static t_intersections	sort_intersect(int n, t_intersections xs)
 {

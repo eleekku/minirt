@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 14:40:31 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/08/12 15:30:41 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/08/12 16:29:15 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,8 +117,8 @@ float			*vector_cross_prod(float *a, float *b);
 /*** Matrix operations ***/
 int				matrix_are_equal(t_matrix a, t_matrix b);
 float			**matrix_multiply(float **a, float **b);
-float			**matrix_transpose(float **a);
 t_matrix		submatrix(t_matrix a, int i, int j);
+t_matrix		transpose(t_matrix a);
 float			minor(t_matrix a, int i, int j);
 float			cofactor(t_matrix a, int i, int j);
 float			determinant(t_matrix a);
