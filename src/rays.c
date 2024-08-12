@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 15:46:54 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/07/22 15:36:12 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/07/24 11:38:16 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 float	**create_ray(float *origin, float *direction)
 {
-	float	**p;
+	float	**r;
 
-	p = malloc(2 * 4 * sizeof(float));
-	if (!p)
+	r = malloc(2 * sizeof(float *));
+	if (!r)
 		return (NULL);
 	if (origin[3] == 0)
 	{
@@ -29,9 +29,9 @@ float	**create_ray(float *origin, float *direction)
 		printf("Error: Direction is a point\n");
 		; //Need to change
 	}
-	p[0] = origin;
-	p[1] = direction;
-	return (p);
+	r[0] = origin;
+	r[1] = direction;
+	return (r);
 }
 float	*ray_position(float **r, float t)
 {
