@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 14:40:31 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/08/12 16:29:15 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/08/13 13:21:16 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,11 @@ float			minor(t_matrix a, int i, int j);
 float			cofactor(t_matrix a, int i, int j);
 float			determinant(t_matrix a);
 t_matrix		inverse_matrix(t_matrix a);
+t_matrix	    translation(float a, float b, float c);
+t_matrix	    scaling(float a, float b, float c);
+t_matrix	    x_rotation(float a);
+t_matrix	    y_rotation(float a);
+t_matrix        z_rotation(float a);
 
 /*** Rays ***/
 float			**create_ray(float *origin, float *direction);
