@@ -75,44 +75,108 @@ void    validate_camera(char **args, t_scene *scene)
         scene->fow = fow;
 }
 
-t_bool  validate_line(char *arg, char **args, t_scene *scene)
+t_bool  validate_line(char **args, t_scene *scene)
 {
-    if (!ft_strncmp(arg, "A", ft_strlen(arg)))
+    if (!ft_strncmp(args[0], "A", ft_strlen(args[0])))
         validate_ambient(args, scene);
-    else if (!ft_strncmp(arg, "C", ft_strlen(arg)))
+    else if (!ft_strncmp(args[0], "C", ft_strlen(args[0])))
         validate_camera(args, scene);
-    else if (!ft_strncmp(arg, "L", ft_strlen(arg)))
+    else if (!ft_strncmp(args[0], "L", ft_strlen(args[0])))
         validate_light(args, scene);
-    else if (!ft_strncmp(arg, "sp", ft_strlen(arg)))
+    else if (!ft_strncmp(args[0], "sp", ft_strlen(args[0])))
         return (TRUE);
-    else if (!ft_strncmp(arg, "pl", ft_strlen(arg)))
+    else if (!ft_strncmp(args[0], "pl", ft_strlen(args[0])))
         return (TRUE);
-    else if (!ft_strncmp(arg, "cy", ft_strlen(arg)))
+    else if (!ft_strncmp(args[0], "cy", ft_strlen(args[0])))
         return (TRUE);
-    else if (!ft_strncmp(arg, "\n", (ft_strlen(arg))))
+    else if (!ft_strncmp(args[9], "\n", (ft_strlen(args[0]))))
         return (TRUE);
     else
         return (FALSE);
     return (TRUE); 
 }
 
-void    read_file(int fd, t_scene *scene)
+void  malloc_objects(t_scene *scene)
+{
+    if (scene->spheres > 0)
+    {
+    scene->sp = malloc(sizeof(t_sphere) * scene->spheres);
+        if (!scene->sp)
+            exit;
+    }
+    if (scene->planes > 0)
+    {
+    scene->sp = malloc(sizeof(t_plane) * scene->planes);
+        if (!scene->pl)
+        {
+            free(scene->sp);
+            exit_error("malloc error", NULL);
+        }
+    }
+    if (scene->spheres > 0)
+    {
+    scene->sp = malloc(sizeof(t_cylinder) * scene->planes);
+        if (!scene->cy)
+        {
+            free(scene->sp);
+            free(scene->pl);
+            exit_error("malloc error", NULL);
+        }
+    }
+}
+
+void    read_objects(int fd, t_scene *scene)
 {
     char    *line;
     char    **args;
-    int     i;
 
     line = get_next_line(fd);
+    malloc_objects(scene);
     while (line)
     {
-    args = ft_split(line, ' ');
-    free(line);
-    i = -1;
-    while (args[++i])
-        if (validate_line(args[i], args, scene) != TRUE)
-            exit_error("Invalid file format", args);
-    free_array(args);
+        args = safe_split(line, ' ');
+        free (line);
+        if (!ft_strncmp(args[0], "sp", ft_strlen(args[0])))
+            scene->spheres++;
+        if (!ft_strncmp(args[0], "pl", ft_strlen(args[0])))
+            scene->planes++;
+        if (!ft_strncmp(args[0], "sp", ft_strlen(args[0])))
+            scene->cylinders++;
+    }
+}
+
+void    count_objects(char **args, t_scene *scene)
+{
+    if (!ft_strncmp(args[0], "sp", ft_strlen(args[0])))
+        scene->spheres++;
+    if (!ft_strncmp(args[0], "pl", ft_strlen(args[0])))
+        scene->planes++;
+    if (!ft_strncmp(args[0], "sp", ft_strlen(args[0])))
+        scene->cylinders++; 
+}
+
+void    read_file(int fd, t_scene *scene, t_bool flag)
+{
+    char    *line;
+    char    **args;
+
     line = get_next_line(fd);
+    while (flag == FALSE && line)
+    {
+        args = ft_split(line, ' ');
+        free(line);
+            if (validate_line(args, scene) != TRUE)
+                exit_error("Invalid file format", args);
+        free_array(args);
+        line = get_next_line(fd);
+    }
+    while (flag == TRUE && line)
+    {
+        args = ft_split(line, ' ');
+        free(line);
+        count_objects(args, scene);
+        free_array(args);
+        line = get_next_line(fd);
     }
     close (fd);
 }
@@ -130,14 +194,26 @@ void  check_file(char *file, t_scene *scene, t_bool flag)
         exit_error("Failed to open the file please check name, path and permissions", NULL);
     if (flag == FALSE)
     {
-        read_file(fd, scene);
+        read_file(fd, scene, FALSE);
         check_file(file, scene, TRUE);
     }
+    else if (flag == FALSE)
+    {
+        read_file(fd, scene, TRUE);
+        check_file(file, scene, 2);
+    }
+    else
+        read_objects(fd, scene);
+
 
 }
 int main(int argc, char **argv)
 {
     t_scene scene;
+
+    scene.spheres = 0;
+    scene.planes = 0;
+    scene.planes = 0;
 
     if (argc != 2)
     {

@@ -72,6 +72,9 @@ typedef struct s_scene
     int         fow;
     float       lightc[3];
     float       brightness;
+    int         spheres;
+    int         planes;
+    int         cylinders;
     t_sphere    *sp;
     t_plane     *pl;
     t_cylinder  *cy;
