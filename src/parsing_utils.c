@@ -12,15 +12,27 @@ void    free_array(char **args)
     free(args);
 }
 
-void    exit_error(char *msg, char **args)
+void    free_objects(t_scene *scene)
+{
+    if (scene->sp)
+        free(scene->sp);
+    if (scene->pl)
+        free(scene->pl);
+    if (scene->cy)
+        free(scene->cy);
+}
+
+void    exit_error(char *msg, char **args, t_scene *scene)
 {
     if (args)
         free_array(args);
+    if (scene)
+        free_objects(scene);
     ft_printf(2, "Error\n%s\n", msg);
     exit(1);
 }
 
-t_bool    validate_values(char *arg, char **args)
+t_bool    validate_values(char *arg, char **args, t_scene *scene)
 {
     int     i;
     int     coma;
@@ -36,11 +48,11 @@ t_bool    validate_values(char *arg, char **args)
             }
         if (arg[i] && ((arg[i] != '.' && arg[i] != '-') && (arg[i] < '0' || arg[i] > '9')) &&
         arg[i] != '\n')
-            exit_error("Invalid value format", args);
+            exit_error("Invalid value format", args, scene);
         i++;
     }
     if (coma > 2)
-        exit_error("Invalid egb format", args);
+        exit_error("Invalid value format", args, scene);
     return (TRUE);
 }
 
@@ -56,7 +68,7 @@ char    **safe_split(char *string, char separator)
     return (arr);
 }
 
-float    fill_value(char *arg, char **args, char **coordinates)
+float    fill_value(char *arg, char **args, char **coordinates, t_scene *scene)
 {
     float   value;
     int     i;
@@ -68,7 +80,9 @@ float    fill_value(char *arg, char **args, char **coordinates)
         {   
             if (coordinates)
                 free_array(coordinates);
-            exit_error("Invalid value format", args);
+            if (scene)
+                free_objects(scene); 
+            exit_error("Invalid value format", args, NULL);
         } 
     if (ft_strchr(arg, '.'))
         value = ft_atof(arg);

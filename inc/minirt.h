@@ -59,7 +59,7 @@ typedef struct	s_sphere
 {
     float	center[3];
     float	diameter;
-	int 	color;
+	int 	color[3];
 }	t_sphere;
 
 
@@ -107,10 +107,10 @@ typedef struct s_intersection
 }	t_intersection;
 
 void        free_array(char **args);
-void        exit_error(char *msg, char **args);
-t_bool      validate_values(char *arg, char **args);
+void        exit_error(char *msg, char **args, t_scene *scene);
+t_bool      validate_values(char *arg, char **args, t_scene *scene);
 char        **safe_split(char *string, char separator);
-float       fill_value(char *arg, char **args, char **coordinates);
+float       fill_value(char *arg, char **args, char **coordinates, t_scene *scene);
 
 
 /*
