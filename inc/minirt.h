@@ -27,19 +27,16 @@
 
 typedef int     t_bool;
 
-<<<<<<< HEAD
 typedef struct s_color
 {
 	int	r;
 	int	g;
 	int	b;
 }	t_color;
-=======
 # define PNT 1.0
 # define VTR 0.0
 # define ORIGIN 0
 # define DIRECTION 1
->>>>>>> master
 
 /* typedef struct  s_sphere
 {
@@ -89,14 +86,6 @@ typedef struct s_scene
     t_cylinder  *cy;
 }   t_scene;
 
-<<<<<<< HEAD
-/* typedef struct	s_sphere
-{
-    t_tuple	center;
-    float	diameter;
-	t_color	color;
-}	t_sphere;*/
-=======
 //typedef struct s_color
 typedef struct s_matrix
 {
@@ -110,7 +99,6 @@ typedef struct s_matrix
 //	float	diameter;
 //	int		*color;
 //}	t_sphere;
->>>>>>> master
 
 typedef struct s_intersections
 {
@@ -119,27 +107,26 @@ typedef struct s_intersections
 	float	t[100];
 }	t_intersections;
 
-<<<<<<< HEAD
-//typedef struct s_ray
-//{
-  //  t_tuple origin;
-    //t_tuple direction;
-//}   t_ray;
-
-=======
->>>>>>> master
 typedef struct s_intersection
 {
 	float	t;
 	char	object;
 }	t_intersection;
 
-<<<<<<< HEAD
+//parser
+
+void        read_file(int fd, t_scene *scene, t_bool flag);
+t_bool      validate_line(char **args, t_scene *scene);
 void        free_array(char **args);
 void        exit_error(char *msg, char **args, t_scene *scene);
 t_bool      validate_values(char *arg, char **args, t_scene *scene);
+void        free_objects(t_scene *scene);
+void        free_objects_exit(t_scene *scene, char *message, char **array, char **args);
 char        **safe_split(char *string, char separator);
 float       fill_value(char *arg, char **args, char **coordinates, t_scene *scene);
+void        parse_sphere(char **args, t_scene *scene, int index);
+void        parse_plane(char **args, t_scene *scene, int index);
+void        parse_cylinder(char **args, t_scene *scene, int index);
 
 
 /*
@@ -161,7 +148,6 @@ t_ray	create_ray(t_tuple origin, t_tuple direction);
 t_tuple	ray_position(t_ray r, float t);
 
 t_intersections	sp_cross(t_sphere sp, t_ray	r);
-=======
 /*** Definitions ***/
 float			*tuple(float a, float b, float c, float w);
 t_matrix		matrix(int size, float *a, ...);
@@ -203,14 +189,10 @@ float			*ray_position(float **r, float t);
 /*** Spheres  ***/
 //t_intersections	sp_cross(t_sphere sp, float **r);
 t_intersections	intersects(t_sphere sp, float **r);
->>>>>>> master
 
 t_intersection	intersection(float t, char object);
 t_intersections	intersections(int n, t_intersection i, ...);
-<<<<<<< HEAD
 */
-=======
 t_intersection	hit(t_intersections xs);
->>>>>>> master
 
 #endif
