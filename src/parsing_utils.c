@@ -74,16 +74,17 @@ float    fill_value(char *arg, char **args, char **coordinates, t_scene *scene)
     int     i;
 
     i = -1;
-
-    while(arg[++i])
-        if (arg[i] != '.' || (arg[i] != '-' && !(arg[i] >= '1' && arg[i] <= '9')))
-        {   
+    while(arg[++i] && arg[i] != '\n')
+    {
+        if (arg[i] && arg[i] != '.' && arg[i] != '-' && !(arg[i] >= '0' && arg[i] <= '9'))
+        {  
             if (coordinates)
                 free_array(coordinates);
             if (scene)
                 free_objects(scene); 
             exit_error("Invalid value format", args, NULL);
-        } 
+        }
+    }
     if (ft_strchr(arg, '.'))
         value = ft_atof(arg);
     else

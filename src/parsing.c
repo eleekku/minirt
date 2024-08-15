@@ -8,7 +8,7 @@ void    validate_light(char **args, t_scene *scene)
 
     i = -1;
     coordinates = safe_split(args[1], ',');
-    while (++i < 2)
+    while (++i <= 2)
         scene->lightc[i] = fill_value(coordinates[i], args, coordinates, NULL);
     free_array(coordinates);
     if (!ft_isdigit(args[2][0]))
@@ -18,7 +18,6 @@ void    validate_light(char **args, t_scene *scene)
         exit_error("Invalid light brightness value", args, NULL);
     if (args[3])
         exit_error("too many values in light", args, NULL);
-    
 };
 
 void    validate_ambient(char **args, t_scene *scene)
@@ -59,7 +58,7 @@ void    validate_camera(char **args, t_scene *scene)
         validate_values(args[1], args, NULL);
         coordinates = safe_split(args[1], ',');
         while (++i < 2)
-            scene->camc[i] = fill_value(coordinates[i], args, coordinates, scene);
+            scene->camc[i] = fill_value(coordinates[i], args, coordinates, NULL);
         i = -1;
         free_array(coordinates);
         validate_values(args[2], args, NULL);
@@ -89,7 +88,7 @@ t_bool  validate_line(char **args, t_scene *scene)
         return (TRUE);
     else if (!ft_strncmp(args[0], "cy", ft_strlen(args[0])))
         return (TRUE);
-    else if (!ft_strncmp(args[9], "\n", (ft_strlen(args[0]))))
+    else if (!ft_strncmp(args[0], "\n", (ft_strlen(args[0]))))
         return (TRUE);
     else
         return (FALSE);
@@ -114,11 +113,11 @@ void    malloc_objects(t_scene *scene)
     {
     scene->sp = malloc(sizeof(t_sphere) * scene->spheres);
         if (!scene->sp)
-            exit;
+            exit_error("malloc error", NULL, NULL);        
     }
     if (scene->planes > 0)
     {
-    scene->sp = malloc(sizeof(t_plane) * scene->planes);
+    scene->pl = malloc(sizeof(t_plane) * scene->planes);
         if (!scene->pl)
         {
             free(scene->sp);
@@ -127,7 +126,7 @@ void    malloc_objects(t_scene *scene)
     }
     if (scene->spheres > 0)
     {
-    scene->sp = malloc(sizeof(t_cylinder) * scene->planes);
+    scene->cy = malloc(sizeof(t_cylinder) * scene->cylinders);
         if (!scene->cy)
         {
             free(scene->sp);
@@ -135,6 +134,81 @@ void    malloc_objects(t_scene *scene)
             exit_error("malloc error", NULL, NULL);
         }
     }
+}
+
+void    parse_cylinder2(char **args, t_scene *scene, int index)
+{
+        float   value;
+        char    **rgb;
+        int     i;
+        int     temp;
+
+        value = fill_value(args[3], args, NULL, scene);
+        if (value <= 0.0)
+            free_objects_exit(scene, "Invalid cylinder diameter value", args, NULL);
+        scene->cy[index].diameter = value;
+        value = fill_value(args[4], args, NULL, scene);
+        if (value <= 0.0)
+            free_objects_exit(scene, "Invalid cylinder height value", args, NULL);
+        scene->cy[index].height = value;
+        i = -1;
+        validate_values(args[5], args, scene);
+        rgb = safe_split(args[5], ',');
+        while (++i < 2)
+        {
+            temp = ft_atoi(rgb[i]);
+            if (!(temp >= 0 && temp <= 255))
+                exit_error("invalid plane rgb value", args, scene);
+            scene->cy[index].color[i] = temp;
+        }
+        free_array(rgb);
+}
+
+void    parse_cylinder(char **args, t_scene *scene, int index)
+{
+        char    **values;
+        int     i;
+        float   temp;
+ 
+        validate_values(args[1], args, scene);
+        i = -1;
+        values = safe_split(args[1], ',');
+        while (++i <= 2)
+            scene->cy[index].coord[i] = fill_value(values[i], args, values, scene);
+        if (values[i])
+            free_objects_exit(scene, "Invalid cylinder format", values, args);
+        i = -1;
+        free_array(values);
+        validate_values(args[2], args, scene);
+        values = safe_split(args[2], ',');
+        while (++i <= 2)
+        {
+            temp = fill_value(values[i], values, args, scene);
+            if (!(temp >= -1.0 && temp <= 1.0))
+                free_objects_exit(scene, "Invalid cylinder normal vector value", args, values);
+            scene->pl[index].normv[i] = temp;
+        }
+        parse_cylinder2(args, scene, index);
+
+}
+
+void    parse_planergb(char **args, t_scene *scene, int index)
+{
+        char    **rgb;
+        int     i;
+        int     temp;
+
+        i = -1;
+        validate_values(args[3], args, scene);
+        rgb = safe_split(args[3], ',');
+        while (++i < 2)
+        {
+            temp = ft_atoi(rgb[i]);
+            if (!(temp >= 0 && temp <= 255))
+                exit_error("invalid plane rgb value", args, scene);
+            scene->pl[index].color[i] = temp;
+        }
+        free_array(rgb);
 }
 
 void    parse_plane(char **args, t_scene *scene, int index)
@@ -146,7 +220,7 @@ void    parse_plane(char **args, t_scene *scene, int index)
         validate_values(args[1], args, scene);
         i = -1;
         values = safe_split(args[1], ',');
-        while (++i < 2)
+        while (++i <= 2)
         scene->pl[index].coord[i] = fill_value(values[i], args, values, scene);
         if (values[i])
             free_objects_exit(scene, "Invalid plane format", values, args);
@@ -161,8 +235,7 @@ void    parse_plane(char **args, t_scene *scene, int index)
                 free_objects_exit(scene, "Invalid plane normal vector value", args, values);
             scene->pl[index].normv[i] = temp;
         }
-        
-
+       parse_planergb(args, scene, index); 
 }
 
 void    parse_sphere(char **args, t_scene *scene, int index)
@@ -174,7 +247,7 @@ void    parse_sphere(char **args, t_scene *scene, int index)
         validate_values(args[1], args, scene);
         i = -1;
         values = safe_split(args[1], ',');
-        while (++i < 2)
+        while (++i <= 2)
         scene->sp[index].center[i] = fill_value(values[i], args, values, scene);
         if (values[i])
             free_objects_exit(scene, "Invalid sphere format", values, args);
@@ -201,18 +274,19 @@ void    recon_object(char **args, t_scene *scene)
     
     if (!ft_strncmp(args[0], "sp", ft_strlen(args[0])))
     {
-        sph++;
         parse_sphere(args, scene, sph);
+        sph++;
     }
-    if (!ft_strncmp(args[0], "pl", ft_strlen(args[0])))
+    else if (!ft_strncmp(args[0], "pl", ft_strlen(args[0])))
     {
+        parse_plane(args, scene, pla);
         pla++;
-        //
     }
-    if (!ft_strncmp(args[0], "sp", ft_strlen(args[0])))
+    else if (!ft_strncmp(args[0], "cy", ft_strlen(args[0])))
     {
+
+        parse_cylinder(args, scene, cyl);
         cyl++;
-        scene->cylinders++;
     }
 }
 
@@ -285,16 +359,15 @@ void  check_file(char *file, t_scene *scene, t_bool flag)
         read_file(fd, scene, FALSE);
         check_file(file, scene, TRUE);
     }
-    else if (flag == FALSE)
+    else if (flag == TRUE)
     {
         read_file(fd, scene, TRUE);
         check_file(file, scene, 2);
     }
     else
         read_objects(fd, scene);
-
-
 }
+
 int main(int argc, char **argv)
 {
     t_scene scene;
