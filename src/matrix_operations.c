@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 11:14:29 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/08/12 16:37:01 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/08/15 16:50:24 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,22 @@ int	matrix_are_equal(t_matrix a, t_matrix b)
 		i++;
 	}
 	return (1);
+}
+float	*four_one_multiply(float **a, float *b)
+{
+	float	*result;
+	int		i;
+
+	i = 0;
+	result = tuple(0, 0, 0, 0);
+	if (!result)
+		return (NULL);
+	while (i < 4)
+	{
+		result[i] = dot_product(a[i], b);
+		i++;
+	}
+	return (result);
 }
 
 float	**matrix_multiply(float **a, float **b)
