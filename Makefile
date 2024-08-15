@@ -23,6 +23,8 @@ SRCS	:= $(SRCDIR)/main.c $(SRCDIR)/definitions.c \
 			$(SRCDIR)/intersections.c \
 			$(SRCDIR)/matrix_operations.c \
 			$(SRCDIR)/matrix_inverse.c \
+			$(SRCDIR)/matrix_transformations.c \
+			$(SRCDIR)/paint_sphere_shadow.c
 OBJS	:= ${SRCS:.c=.o}
 
 #all: libmlx $(LIBFT) $(NAME)
