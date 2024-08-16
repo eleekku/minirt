@@ -17,6 +17,11 @@ HEADERS	:= -I ./inc -I $(LIBMLX)/include
 LIBS	:= $(LIBMLX)/build/libmlx42.a -Iinclude -ldl -lglfw -pthread -lm
 			
 SRCS	:= $(SRCDIR)/main.c $(SRCDIR)/definitions.c \
+			$(SRCDIR)/parsing.c \
+			$(SRCDIR)/file_handler.c \
+			$(SRCDIR)/parsing_utils.c \
+			$(SRCDIR)/error_functions.c \
+			$(SRCDIR)/objects_parser.c \ 
 			$(SRCDIR)/tuple_operations_one.c \
 			$(SRCDIR)/tuple_operations_two.c \
 			$(SRCDIR)/rays.c $(SRCDIR)/sphere.c \

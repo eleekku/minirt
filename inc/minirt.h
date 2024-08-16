@@ -115,11 +115,12 @@ typedef struct s_intersection
 
 //parser
 
-void        read_file(int fd, t_scene *scene, t_bool flag);
+void        check_file(char *file, t_scene *scene, t_bool flag);
 t_bool      validate_line(char **args, t_scene *scene);
 void        free_array(char **args);
 void        exit_error(char *msg, char **args, t_scene *scene);
 t_bool      validate_values(char *arg, char **args, t_scene *scene);
+void        malloc_objects(t_scene *scene);
 void        free_objects(t_scene *scene);
 void        free_objects_exit(t_scene *scene, char *message, char **array, char **args);
 char        **safe_split(char *string, char separator);
@@ -129,25 +130,6 @@ void        parse_plane(char **args, t_scene *scene, int index);
 void        parse_cylinder(char **args, t_scene *scene, int index);
 
 
-/*
-t_tuple point(float a, float b, float c);
-t_tuple vector(float a, float b, float c);
-
-int equal_float(float a, float b);
-t_tuple tuple_add(t_tuple a, t_tuple b);
-t_tuple tuple_subs(t_tuple a, t_tuple b);
-t_tuple negate_vector(t_tuple a);
-t_tuple scalar_multi_tuple(t_tuple a, float n);
-t_tuple scalar_div_tuple(t_tuple a, float n);
-float   magnitude(t_tuple a);
-t_tuple normalize(t_tuple a);
-float dot_product(t_tuple a, t_tuple b);
-t_tuple vector_cross_prod(t_tuple a, t_tuple b);
-
-t_ray	create_ray(t_tuple origin, t_tuple direction);
-t_tuple	ray_position(t_ray r, float t);
-
-t_intersections	sp_cross(t_sphere sp, t_ray	r);
 /*** Definitions ***/
 float			*tuple(float a, float b, float c, float w);
 t_matrix		matrix(int size, float *a, ...);
@@ -167,7 +149,7 @@ float			*normalize(float *a);
 float			dot_product(float *a, float *b);
 float			*vector_cross_prod(float *a, float *b);
 
-/*** Matrix operations ***/
+/* Matrix operations */
 int				matrix_are_equal(t_matrix a, t_matrix b);
 float			**matrix_multiply(float **a, float **b);
 t_matrix		submatrix(t_matrix a, int i, int j);
@@ -192,7 +174,7 @@ t_intersections	intersects(t_sphere sp, float **r);
 
 t_intersection	intersection(float t, char object);
 t_intersections	intersections(int n, t_intersection i, ...);
-*/
+
 t_intersection	hit(t_intersections xs);
 
 #endif
