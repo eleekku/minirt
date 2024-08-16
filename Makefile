@@ -1,59 +1,67 @@
-NAME	:= minirt
+#---------------------------------Archive-------------------------------------#
+NAME = fdf
+LIBFTNAME = libft.a
 
-#Compiler options#
+#---------------------------------Flags---------------------------------------#
+CC = cc
+CFLAGS = -Wall -Wextra -Werror -Iinclude -ldl -lglfw -pthread -lm
+RM = rm -rf
 
-CC		:= cc
-CFLAGS	:= -Wextra -Wall -Werror -Wunreachable-code -Ofast
+#---------------------------------Directories---------------------------------#
+SRC_DIR 	= .
+LIBFT_DIR 	= ./lib/libft
+OBJ_DIR		= objects
+MLX_DIR		= ./lib/MLX42
 
-LIBMLX	:= ./lib/MLX42
-SRCDIR  := ./src
+#---------------------------------MLX-----------------------------------------#
+MLX_HEAD	= $(MLX_DIR)/include/MLX42/MLX42.h
+MLX_A		= $(MLX_DIR)/build/libmlx42.a #-ldl -pthread -lm 
+#MLX_LIBS	= $(MLX_DIR)/build #-lmlx42  #"/Users/$(USER)/.brew/opt/glfw/lib" -lglfw -framework Cocoa -framework OpenGL -framework IOKit
 
-#Libft#
+#---------------------------------Source Files--------------------------------#
+SRC_FLS = 	fdf.c draw.c colors.c fdf_utils.c keys.c
 
-#LIBFT_DIR	:= ./lib/libft/
-#LIBFT		:= $(LIBFT_DIR)/libft.a
+OBJS 	= $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC_FLS))
 
-HEADERS	:= -I ./inc -I $(LIBMLX)/include
-LIBS	:= $(LIBMLX)/build/libmlx42.a -Iinclude -ldl -lglfw -pthread -lm
-			
-SRCS	:= $(SRCDIR)/main.c $(SRCDIR)/definitions.c \
-			$(SRCDIR)/parsing.c \
-			$(SRCDIR)/file_handler.c \
-			$(SRCDIR)/parsing_utils.c \
-			$(SRCDIR)/error_functions.c \
-			$(SRCDIR)/objects_parser.c \ 
-			$(SRCDIR)/tuple_operations_one.c \
-			$(SRCDIR)/tuple_operations_two.c \
-			$(SRCDIR)/rays.c $(SRCDIR)/sphere.c \
-			$(SRCDIR)/intersections.c \
-			$(SRCDIR)/matrix_operations.c \
-			$(SRCDIR)/matrix_inverse.c \
-OBJS	:= ${SRCS:.c=.o}
+#---------------------------------Colours-------------------------------------#
+RED		= \033[1;91m
+YELLOW		= \033[1;33m
+GREEN		= \033[1;32m
+CYAN		= \033[1;36m
+PURPLE		= \033[1;35m
+END		= \033[0m
 
-#all: libmlx $(LIBFT) $(NAME)
-all: libmlx $(NAME)
+#---------------------------------Rules---------------------------------------#
+all: libmlx $(LIBFTNAME) $(NAME)
 
 libmlx:
-	@cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j4
+	@if [ ! -d $(MLX_DIR)/build ]; then\
+		cmake $(MLX_DIR) -B $(MLX_DIR)/build && make -C $(MLX_DIR)/build -j4;\
+	fi
 
-%.o: %.c
-	@$(CC) $(CFLAGS) -o $@ -c $< $(HEADERS) && printf "Compiling: $(notdir $<)\n"
+$(OBJ_DIR):
+	@mkdir -p $(OBJ_DIR)
+
+$(OBJ_DIR)/%.o:  $(SRC_DIR)/%.c | $(OBJ_DIR)
+	$(CC) $(CFLAGS) $(MLX_HEAD) -c $< -o
+
+$(LIBFTNAME):
+	@make -C $(LIBFT_DIR)
+	@make bonus -C ./lib/libft
 
 $(NAME): $(OBJS)
-	@$(CC) $(CFLAGS) $(OBJS) $(LIBS) $(HEADERS) -o $(NAME)
-
-#$(LIBFT) :
-#	@make -C $(LIBFT_DIR)
+	@echo "${YELLOW}|------------------------>${PURPLE}Compiling fil de fer (fdf)${YELLOW}<--------------------|${END}"
+	$(CC) $(CFLAGS) $(MLX_HEAD) $(OBJS) $(MLX_A) $(MLX_LIBS) $(LIBFT_DIR)/$(LIBFTNAME) $(LIBFT_DIR)/ft_printf/libftprintf.a
+	@echo "${YELLOW}|---------------->${GREEN}Congrats Fil De Fer (fdf) Compiled Successfully${YELLOW}<----------------|${END}"
 
 clean:
-#	make -C $(LIBFT_DIR) clean
-	@rm -rf $(OBJS)
-	@rm -rf $(LIBMLX)/build
+	$(RM) $(OBJ_DIR) $(MLX_DIR)/build
+	@make clean -C lib/libft/
+	@echo "${YELLOW}|------------------------>${RED}Fil de Fer (fdf) Cleaned${YELLOW}<----------------------|${END}"
 
 fclean: clean
-#	rm -rf $(LIBFT)
-	@rm -rf $(NAME)
+	$(RM) $(NAME)
+	@make fclean -C lib/libft/
+	@rm -f libft/$(LIBFTNAME)
 
-re: clean all
-
-.PHONY: all, clean, fclean, re, libmlx
+re: fclean all
