@@ -1,23 +1,9 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/16 17:47:42 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/08/12 16:35:33 by xriera-c         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../inc/minirt.h"
 #include <string.h>
 
-#include "../inc/minirt.h"
-
-int	paint_sphere_shadow(mlx_image_t *img)
+int	paint_sphere_shadow(mlx_image_t *img, t_sphere *sphere)
 {
-	t_sphere sphere;
+//	t_sphere sphere;
 	t_intersections	xs;
 	float *position, *ray_origin;
 	float	y, x, wall_z;
@@ -30,14 +16,15 @@ int	paint_sphere_shadow(mlx_image_t *img)
 	wall_size = 7;
 	half = wall_size / 2;
 	pixel_size = wall_size / canvas_pixels;
-	ray_origin = tuple(0,0,1, 1);
-	sphere.color[0] = 0;
-	sphere.color[1] = 0;
-	sphere.color[2] = 0;
-	sphere.center[0] = 0;
-	sphere.center[1] = 0;
-	sphere.center[2] = 0;
-	sphere.diameter = 1;
+	ray_origin = tuple(0,0,0, 1);
+    printf("sphere: %f %f %f\n%f\n%d %d %d\n", sphere->center[0], sphere->center[1], sphere->center[2], sphere->diameter, sphere->color[0], sphere->color[1], sphere->color[2]);
+//	sphere->color[0] = 0;
+//	sphere.color[1] = 0;
+//	sphere.color[2] = 0;
+//	sphere.center[0] = 0;
+//	sphere.center[1] = 0;
+//	sphere.center[2] = 0;
+//	sphere.diameter = 1;
 	
 	for (y = 0; y < canvas_pixels - 1; y++)
 	{
@@ -93,8 +80,9 @@ int print_float_array(float *a)
     return (0);
 }
 
-int	main(void)
+int	main(int argc, char **argv)
 {
+    t_scene scene;
     //float   **r;
     //t_intersections xs;
     //t_intersection  i1;
@@ -117,6 +105,16 @@ int	main(void)
     //printf("Ray-Sphere intersection\nNumber of intersections: %d\nIntersection distance: [%f] [%f]\n", xs.count, xs.t[0], xs.t[1]);
     //i1 = hit(xs);
     //printf("%f\n", i1.t);
+    scene.spheres = 0;
+    scene.planes = 0;
+    scene.planes = 0;
+
+    if (argc != 2)
+    {
+        ft_printf(2, "Error\nPlease input one and only one file\n");
+        exit (1);
+    }
+    check_file(argv[1], &scene, FALSE); 
     float a[] = {8,-5,9,2};
     float b[] = {7,5,6,1};
     float c[] = {-6,0,9,6};
@@ -155,14 +153,14 @@ int	main(void)
     if (!mlx) exit(1);
 
     // Create a 250x250 image.
-    mlx_image_t* img = mlx_new_image(mlx, 250, 250);
+    mlx_image_t* img = mlx_new_image(mlx, 2000, 2000);
 
     // Set the channels of each pixel in our image to the maximum byte value of 255. 
     memset(img->pixels, 180, img->width * img->height * sizeof(int));
 
     // Draw the image at coordinate (0, 0).
     mlx_image_to_window(mlx, img, 0, 0);
-    paint_sphere_shadow(img);
+    paint_sphere_shadow(img, &scene.sp[0]);
 
     // Run the main loop and terminate on quit.  
     mlx_loop(mlx);

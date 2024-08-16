@@ -19,7 +19,7 @@
 # include <stdarg.h>
 # include <fcntl.h>
 # include "../lib/Libft/libft.h"
-//# include "MLX42/MLX42.h"
+# include "../lib/MLX42/include/MLX42/MLX42.h"
 
 # define EPS 0.00001
 # define TRUE 1
@@ -170,7 +170,7 @@ float			*ray_position(float **r, float t);
 
 /*** Spheres  ***/
 //t_intersections	sp_cross(t_sphere sp, float **r);
-t_intersections	intersects(t_sphere sp, float **r);
+t_intersections	intersects(t_sphere *sp, float **r);
 
 t_intersection	intersection(float t, char object);
 t_intersections	intersections(int n, t_intersection i, ...);

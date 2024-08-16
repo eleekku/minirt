@@ -1,5 +1,5 @@
 #---------------------------------Archive-------------------------------------#
-NAME = fdf
+NAME = minirt
 LIBFTNAME = libft.a
 
 #---------------------------------Flags---------------------------------------#
@@ -9,7 +9,7 @@ RM = rm -rf
 
 #---------------------------------Directories---------------------------------#
 SRC_DIR 	= .
-LIBFT_DIR 	= ./lib/libft
+LIBFT_DIR 	= ./lib/Libft
 OBJ_DIR		= objects
 MLX_DIR		= ./lib/MLX42
 
@@ -19,7 +19,19 @@ MLX_A		= $(MLX_DIR)/build/libmlx42.a #-ldl -pthread -lm
 #MLX_LIBS	= $(MLX_DIR)/build #-lmlx42  #"/Users/$(USER)/.brew/opt/glfw/lib" -lglfw -framework Cocoa -framework OpenGL -framework IOKit
 
 #---------------------------------Source Files--------------------------------#
-SRC_FLS = 	fdf.c draw.c colors.c fdf_utils.c keys.c
+SRC_FLS = 	src/minirt.c \
+			src/definitions.c \
+			src/parsing.c \
+			src/filehandler.c \
+			src/parsing_utils.c \
+			src/error_functions.c \
+			src/objects_parser.c \
+			src/tuple_operations_one.c \
+			src/tuple_operations_two.c \
+			src/rays.c src/sphere.c \
+			src/intersections.c \
+			src/matrix_operations.c \
+			src/matrix_inverse.c \
 
 OBJS 	= $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC_FLS))
 
@@ -47,21 +59,21 @@ $(OBJ_DIR)/%.o:  $(SRC_DIR)/%.c | $(OBJ_DIR)
 
 $(LIBFTNAME):
 	@make -C $(LIBFT_DIR)
-	@make bonus -C ./lib/libft
+	@make bonus -C ./lib/Libft
 
 $(NAME): $(OBJS)
-	@echo "${YELLOW}|------------------------>${PURPLE}Compiling fil de fer (fdf)${YELLOW}<--------------------|${END}"
-	$(CC) $(CFLAGS) $(MLX_HEAD) $(OBJS) $(MLX_A) $(MLX_LIBS) $(LIBFT_DIR)/$(LIBFTNAME) $(LIBFT_DIR)/ft_printf/libftprintf.a
-	@echo "${YELLOW}|---------------->${GREEN}Congrats Fil De Fer (fdf) Compiled Successfully${YELLOW}<----------------|${END}"
+	@echo "${YELLOW}|------------------------>${PURPLE}Compiling miniRT${YELLOW}<--------------------|${END}"
+	$(CC) $(CFLAGS) $(MLX_HEAD) $(OBJS) $(MLX_A) $(MLX_LIBS) $(LIBFT_DIR)/$(LIBFTNAME)
+	@echo "${YELLOW}|---------------->${GREEN}Congrats miniRT Compiled Successfully${YELLOW}<----------------|${END}"
 
 clean:
 	$(RM) $(OBJ_DIR) $(MLX_DIR)/build
-	@make clean -C lib/libft/
-	@echo "${YELLOW}|------------------------>${RED}Fil de Fer (fdf) Cleaned${YELLOW}<----------------------|${END}"
+	@make clean -C lib/Libft/
+	@echo "${YELLOW}|------------------------>${RED}miniRT Cleaned${YELLOW}<----------------------|${END}"
 
 fclean: clean
 	$(RM) $(NAME)
-	@make fclean -C lib/libft/
+	@make fclean -C lib/Libft/
 	@rm -f libft/$(LIBFTNAME)
 
 re: fclean all

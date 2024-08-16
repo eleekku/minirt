@@ -95,6 +95,7 @@ t_bool  validate_line(char **args, t_scene *scene)
     return (TRUE); 
 }
 
+/*
 int main(int argc, char **argv)
 {
     t_scene scene;
@@ -109,4 +110,4 @@ int main(int argc, char **argv)
         exit (1);
     }
     check_file(argv[1], &scene, FALSE);
-}
+}*/
