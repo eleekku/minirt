@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 14:40:31 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/08/15 15:35:08 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/08/19 16:10:40 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,8 @@ typedef struct s_intersection
 }	t_intersection;
 
 /*** Definitions ***/
-float			*tuple(float a, float b, float c, float w);
+float           *create_point(float a, float b, float c);
+float           *create_vector(float a, float b, float c);
 t_matrix		matrix(int size, float *a, ...);
 t_matrix		initialize_matrix(t_matrix matrix);
 //float	**matrix(float *a, float *b, float *c, float *d);
@@ -135,7 +136,7 @@ float			*ray_position(float **r, float t);
 
 /*** Spheres  ***/
 //t_intersections	sp_cross(t_sphere sp, float **r);
-t_intersections	intersects(t_sphere sp, float **r);
+t_intersections	intersects(t_sphere *sp, float **r);
 
 /*** Intersections ***/
 t_intersection	intersection(float t, char object);
