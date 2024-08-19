@@ -1,79 +1,61 @@
-#---------------------------------Archive-------------------------------------#
-NAME = minirt
-LIBFTNAME = libft.a
+NAME	:= minirt
 
-#---------------------------------Flags---------------------------------------#
-CC = cc
-CFLAGS = -Wall -Wextra -Werror -Iinclude -ldl -lglfw -pthread -lm
-RM = rm -rf
+#Compiler options#
 
-#---------------------------------Directories---------------------------------#
-SRC_DIR 	= .
-LIBFT_DIR 	= ./lib/Libft
-OBJ_DIR		= objects
-MLX_DIR		= ./lib/MLX42
+CC		:= cc
+CFLAGS	:= -Wextra -Wall -Werror -Wunreachable-code -Ofast
 
-#---------------------------------MLX-----------------------------------------#
-MLX_HEAD	= $(MLX_DIR)/include/MLX42/MLX42.h
-MLX_A		= $(MLX_DIR)/build/libmlx42.a #-ldl -pthread -lm 
-#MLX_LIBS	= $(MLX_DIR)/build #-lmlx42  #"/Users/$(USER)/.brew/opt/glfw/lib" -lglfw -framework Cocoa -framework OpenGL -framework IOKit
+LIBMLX	:= ./lib/MLX42
+SRCDIR  := ./src
 
-#---------------------------------Source Files--------------------------------#
-SRC_FLS = 	src/minirt.c \
-			src/definitions.c \
-			src/parsing.c \
-			src/filehandler.c \
-			src/parsing_utils.c \
-			src/error_functions.c \
-			src/objects_parser.c \
-			src/tuple_operations_one.c \
-			src/tuple_operations_two.c \
-			src/rays.c src/sphere.c \
-			src/intersections.c \
-			src/matrix_operations.c \
-			src/matrix_inverse.c \
+#Libft#
 
-OBJS 	= $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC_FLS))
+#LIBFT_DIR	:= ./lib/libft/
+#LIBFT		:= $(LIBFT_DIR)/libft.a
 
-#---------------------------------Colours-------------------------------------#
-RED		= \033[1;91m
-YELLOW		= \033[1;33m
-GREEN		= \033[1;32m
-CYAN		= \033[1;36m
-PURPLE		= \033[1;35m
-END		= \033[0m
+HEADERS	:= -I ./inc -I $(LIBMLX)/include
+LIBS	:= $(LIBMLX)/build/libmlx42.a -Iinclude -ldl -lglfw -pthread -lm
+			
+SRCS	:= $(SRCDIR)/minirt.c $(SRCDIR)/definitions.c \
+			$(SRCDIR)/parsing.c \
+			$(SRCDIR)/parsing_utils.c \
+			$(SRCDIR)/filehandler.c \
+			$(SRCDIR)/error_functions.c \
+			$(SRCDIR)/objects_parser.c \
+			$(SRCDIR)/tuple_operations_one.c \
+			$(SRCDIR)/tuple_operations_two.c \
+			$(SRCDIR)/rays.c $(SRCDIR)/sphere.c \
+			$(SRCDIR)/intersections.c \
+			$(SRCDIR)/matrix_operations.c \
+			$(SRCDIR)/matrix_inverse.c \
+			$(SRCDIR)/matrix_transformations.c \
+			$(SRCDIR)/paint_sphere_shadow.c
+OBJS	:= ${SRCS:.c=.o}
 
-#---------------------------------Rules---------------------------------------#
-all: libmlx $(LIBFTNAME) $(NAME)
+#all: libmlx $(LIBFT) $(NAME)
+all: libmlx $(NAME)
 
 libmlx:
-	@if [ ! -d $(MLX_DIR)/build ]; then\
-		cmake $(MLX_DIR) -B $(MLX_DIR)/build && make -C $(MLX_DIR)/build -j4;\
-	fi
+	@cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j4
 
-$(OBJ_DIR):
-	@mkdir -p $(OBJ_DIR)
-
-$(OBJ_DIR)/%.o:  $(SRC_DIR)/%.c | $(OBJ_DIR)
-	$(CC) $(CFLAGS) $(MLX_HEAD) -c $< -o
-
-$(LIBFTNAME):
-	@make -C $(LIBFT_DIR)
-	@make bonus -C ./lib/Libft
+%.o: %.c
+	@$(CC) $(CFLAGS) -o $@ -c $< $(HEADERS) && printf "Compiling: $(notdir $<)\n"
 
 $(NAME): $(OBJS)
-	@echo "${YELLOW}|------------------------>${PURPLE}Compiling miniRT${YELLOW}<--------------------|${END}"
-	$(CC) $(CFLAGS) $(MLX_HEAD) $(OBJS) $(MLX_A) $(MLX_LIBS) $(LIBFT_DIR)/$(LIBFTNAME)
-	@echo "${YELLOW}|---------------->${GREEN}Congrats miniRT Compiled Successfully${YELLOW}<----------------|${END}"
+	@$(CC) $(CFLAGS) $(OBJS) $(LIBS) $(HEADERS) -o $(NAME)
+
+#$(LIBFT) :
+#	@make -C $(LIBFT_DIR)
 
 clean:
-	$(RM) $(OBJ_DIR) $(MLX_DIR)/build
-	@make clean -C lib/Libft/
-	@echo "${YELLOW}|------------------------>${RED}miniRT Cleaned${YELLOW}<----------------------|${END}"
+#	make -C $(LIBFT_DIR) clean
+	@rm -rf $(OBJS)
+	@rm -rf $(LIBMLX)/build
 
 fclean: clean
-	$(RM) $(NAME)
-	@make fclean -C lib/Libft/
-	@rm -f libft/$(LIBFTNAME)
+#	rm -rf $(LIBFT)
+	@rm -rf $(NAME)
 
-re: fclean all
+re: clean all
+
+.PHONY: all, clean, fclean, re, libmlx

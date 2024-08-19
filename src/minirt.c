@@ -16,7 +16,7 @@ int	paint_sphere_shadow(mlx_image_t *img, t_sphere *sphere)
 	wall_size = 7;
 	half = wall_size / 2;
 	pixel_size = wall_size / canvas_pixels;
-	ray_origin = tuple(0,0,0, 1);
+	ray_origin = tuple(-5,0,1, 1);
     printf("sphere: %f %f %f\n%f\n%d %d %d\n", sphere->center[0], sphere->center[1], sphere->center[2], sphere->diameter, sphere->color[0], sphere->color[1], sphere->color[2]);
 //	sphere->color[0] = 0;
 //	sphere.color[1] = 0;
