@@ -47,7 +47,7 @@ int	paint_sphere_shadow(mlx_image_t *img, t_sphere *sphere)
 			xs = intersects(sphere, ray);
 			if (hit(xs).t != -1)
 			{
-				mlx_put_pixel(img, x, y, 0xFF0000FF);
+				mlx_put_pixel(img, x, y, colors_to_int(sphere->color));
 			}
 		}
 	}

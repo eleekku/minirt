@@ -47,15 +47,15 @@ typedef struct s_color
 
 typedef struct  s_plane
 {
-    float       coord[3];
-    float       normv[3];
+    float       coord[4];
+    float       normv[4];
     int         color[3];
 }   t_plane;
 
 typedef struct  s_cylinder
 {
-    float   coord[3];
-    float   normv[3];
+    float   coord[4];
+    float   normv[4];
     float   diameter;
     float   height;
     int     color[3];
@@ -63,7 +63,7 @@ typedef struct  s_cylinder
 
 typedef struct	s_sphere
 {
-    float	center[3];
+    float	center[4];
     float	diameter;
 	int 	color[3];
 }	t_sphere;
@@ -127,6 +127,9 @@ void    parse_plane(char **args, t_scene *scene, int index);
 void    parse_cylinder(char **args, t_scene *scene, int index);
 t_bool  validate_line(char **args, t_scene *scene);
 void    free_objects_exit(t_scene *scene, char *message, char **array, char **args);
+
+
+int	colors_to_int(int *colors);
 
 
 

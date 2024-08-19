@@ -39,6 +39,7 @@ void    parse_cylinder(char **args, t_scene *scene, int index)
         values = safe_split(args[1], ',');
         while (++i <= 2)
             scene->cy[index].coord[i] = fill_value(values[i], args, values, scene);
+        scene->cy[index].coord[i] = 1;
         if (values[i])
             free_objects_exit(scene, "Invalid cylinder format", values, args);
         i = -1;
@@ -52,6 +53,7 @@ void    parse_cylinder(char **args, t_scene *scene, int index)
                 free_objects_exit(scene, "Invalid cylinder normal vector value", args, values);
             scene->pl[index].normv[i] = temp;
         }
+        scene->pl[index].normv[i] = 0;
         parse_cylinder2(args, scene, index);
 }
 
@@ -84,7 +86,8 @@ void    parse_plane(char **args, t_scene *scene, int index)
         i = -1;
         values = safe_split(args[1], ',');
         while (++i <= 2)
-        scene->pl[index].coord[i] = fill_value(values[i], args, values, scene);
+            scene->pl[index].coord[i] = fill_value(values[i], args, values, scene);
+        scene->pl[index].coord[i] = 1;
         if (values[i])
             free_objects_exit(scene, "Invalid plane format", values, args);
         free_array(values);
@@ -98,7 +101,8 @@ void    parse_plane(char **args, t_scene *scene, int index)
                 free_objects_exit(scene, "Invalid plane normal vector value", args, values);
             scene->pl[index].normv[i] = temp;
         }
-       parse_planergb(args, scene, index); 
+        scene->pl[index].normv[i] = 0;
+        parse_planergb(args, scene, index); 
 }
 
 void    parse_sphere(char **args, t_scene *scene, int index)
@@ -111,7 +115,8 @@ void    parse_sphere(char **args, t_scene *scene, int index)
         i = -1;
         values = safe_split(args[1], ',');
         while (++i <= 2)
-        scene->sp[index].center[i] = fill_value(values[i], args, values, scene);
+            scene->sp[index].center[i] = fill_value(values[i], args, values, scene);
+        scene->sp[index].center[i] = 1;
         if (values[i])
             free_objects_exit(scene, "Invalid sphere format", values, args);
         free_array(values);

@@ -10,6 +10,7 @@ void    validate_light(char **args, t_scene *scene)
     coordinates = safe_split(args[1], ',');
     while (++i <= 2)
         scene->lightc[i] = fill_value(coordinates[i], args, coordinates, NULL);
+    scene->lightc[i] = 0;
     free_array(coordinates);
     if (!ft_isdigit(args[2][0]))
         exit_error("invalid light brightness format", args, NULL);
@@ -59,12 +60,14 @@ void    validate_camera(char **args, t_scene *scene)
         coordinates = safe_split(args[1], ',');
         while (++i < 2)
             scene->camc[i] = fill_value(coordinates[i], args, coordinates, NULL);
+        scene->camc[i] = 1;
         i = -1;
         free_array(coordinates);
         validate_values(args[2], args, NULL);
         coordinates = safe_split(args[2], ',');
         while (++i < 2)
             scene->normv[i] = fill_value(coordinates[i], args, coordinates, scene);
+        scene->normv[i] = 0;
         free_array(coordinates); 
         fow = ft_atoi(args[3]);
         if (!ft_isdigit(args[3][0]) && args[3][0] != '0')
