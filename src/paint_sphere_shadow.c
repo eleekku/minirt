@@ -12,9 +12,9 @@
 
 #include "../inc/minirt.h"
 
-int	paint_sphere_shadow(mlx_image_t *img)
+int	paint_sphere_shadow(mlx_image_t *img, t_sphere *sphere)
 {
-	t_sphere sphere;
+	//t_sphere sphere;
 	t_intersections	xs;
 	float *position, *ray_origin;
 	float	y, x, wall_z;
@@ -28,13 +28,13 @@ int	paint_sphere_shadow(mlx_image_t *img)
 	half = wall_size / 2;
 	pixel_size = wall_size / canvas_pixels;
 	ray_origin = tuple(0,0,-5, 1);
-	sphere.color[0] = 0;
+	/*sphere.color[0] = 0;
 	sphere.color[1] = 0;
 	sphere.color[2] = 0;
 	sphere.coord[0] = 0;
 	sphere.coord[1] = 0;
 	sphere.coord[2] = 0;
-	sphere.diameter = 1;
+	sphere.diameter = 1;*/
 	
 	for (y = 0; y < canvas_pixels - 1; y++)
 	{

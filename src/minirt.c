@@ -1,7 +1,7 @@
 #include "../inc/minirt.h"
 #include <string.h>
 
-int	paint_sphere_shadow(mlx_image_t *img, t_sphere *sphere)
+/*int	paint_sphere_shadow(mlx_image_t *img, t_sphere *sphere)
 {
 //	t_sphere sphere;
 	t_intersections	xs;
@@ -42,7 +42,7 @@ int	paint_sphere_shadow(mlx_image_t *img, t_sphere *sphere)
 		}
 	}
 	return (1);
-}
+}*/
 
 int print_matrix(float **m, int size)
 {
@@ -160,7 +160,7 @@ int	main(int argc, char **argv)
 
     // Draw the image at coordinate (0, 0).
     mlx_image_to_window(mlx, img, 0, 0);
-   // paint_sphere_shadow(img, &scene.sp[0]);
+    paint_sphere_shadow(img, &scene.sp[0]);
 
     // Run the main loop and terminate on quit.  
     mlx_loop(mlx);

@@ -113,21 +113,21 @@ typedef struct s_intersection
 	char	object;
 }	t_intersection;
 
-//parser
+/*** Parsing ***/
+void  check_file(char *file, t_scene *scene, t_bool flag);
+char    **safe_split(char *string, char separator);
+void    free_array(char **args);
+void    exit_error(char *msg, char **args, t_scene *scene);
+t_bool    validate_values(char *arg, char **args, t_scene *scene);
+float    fill_value(char *arg, char **args, char **coordinates, t_scene *scene);
+void    free_objects(t_scene *scene);
+void    malloc_objects(t_scene *scene);
+void    parse_sphere(char **args, t_scene *scene, int index);
+void    parse_plane(char **args, t_scene *scene, int index);
+void    parse_cylinder(char **args, t_scene *scene, int index);
+t_bool  validate_line(char **args, t_scene *scene);
+void    free_objects_exit(t_scene *scene, char *message, char **array, char **args);
 
-void        check_file(char *file, t_scene *scene, t_bool flag);
-t_bool      validate_line(char **args, t_scene *scene);
-void        free_array(char **args);
-void        exit_error(char *msg, char **args, t_scene *scene);
-t_bool      validate_values(char *arg, char **args, t_scene *scene);
-void        malloc_objects(t_scene *scene);
-void        free_objects(t_scene *scene);
-void        free_objects_exit(t_scene *scene, char *message, char **array, char **args);
-char        **safe_split(char *string, char separator);
-float       fill_value(char *arg, char **args, char **coordinates, t_scene *scene);
-void        parse_sphere(char **args, t_scene *scene, int index);
-void        parse_plane(char **args, t_scene *scene, int index);
-void        parse_cylinder(char **args, t_scene *scene, int index);
 
 
 /*** Definitions ***/
@@ -149,7 +149,7 @@ float			*normalize(float *a);
 float			dot_product(float *a, float *b);
 float			*vector_cross_prod(float *a, float *b);
 
-/* Matrix operations */
+/*** Matrix operations ***/
 int				matrix_are_equal(t_matrix a, t_matrix b);
 float			**matrix_multiply(float **a, float **b);
 t_matrix		submatrix(t_matrix a, int i, int j);
@@ -174,11 +174,10 @@ t_intersections	intersects(t_sphere *sp, float **r);
 
 t_intersection	intersection(float t, char object);
 t_intersections	intersections(int n, t_intersection i, ...);
-
 t_intersection	hit(t_intersections xs);
 
 /*** Printing ***/
-int	paint_sphere_shadow(mlx_image_t *img);
+int paint_sphere_shadow(mlx_image_t *img, t_sphere *sphere);
 
 
 /*** Possible to remove maybe later who knows */
