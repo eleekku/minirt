@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 14:40:31 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/08/13 13:21:16 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/08/15 15:35:08 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,4 +177,10 @@ t_intersections	intersections(int n, t_intersection i, ...);
 
 t_intersection	hit(t_intersections xs);
 
+/*** Printing ***/
+int	paint_sphere_shadow(mlx_image_t *img);
+
+
+/*** Possible to remove maybe later who knows */
+float	*four_one_multiply(float **a, float *b);
 #endif
