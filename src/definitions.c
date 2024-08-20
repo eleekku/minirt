@@ -6,13 +6,13 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 13:20:16 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/08/19 16:08:26 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/08/20 16:02:48 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minirt.h"
 
-static float	*tuple(float a, float b, float c, float w)
+float	*tuple(float a, float b, float c, float w)
 {
 	float	*p;
 
@@ -37,28 +37,21 @@ float	*create_vector(float a, float b, float c)
 }
 
 //Could it be simplified to a 4x4 matrix?
-t_matrix	matrix(int size, float *a, ...)
+t_matrix	matrix(float *a, float *b, float *c, float *d)
 {
-	va_list		ap;
 	t_matrix	matrix;
-	float		**m;
-	int			j;
 
-	m = malloc(size * sizeof(float *));
-	if (!m)
+	matrix.m = malloc(4 * sizeof(float *));
+	if (!matrix.m)
 	{
 		matrix.size = 0;
 		return (matrix);
 	}
-	matrix.size = size;
-	va_start(ap,a);
-	j = -1;
-	while (++j < size)
-	{
-		m[j] = a;
-		a = va_arg(ap, float *);
-	}
-	matrix.m = m;
+	matrix.size = 4;
+	matrix.m[0] = a;
+	matrix.m[1] = b;
+	matrix.m[2] = c;
+	matrix.m[3] = d;
 	return (matrix);
 }
 
