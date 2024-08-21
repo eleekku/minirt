@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 14:21:11 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/08/20 14:51:14 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/08/21 11:59:45 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_matrix	create_shearing(float *p)
 
 void	set_transform(t_object	*object, t_matrix matrix)
 {
-	object->transform = matrix.m;
+	object->transform = matrix;
 	//if (matrix.type == TRANSLATION)
 	//if (matrix.type == ROTATE)
 	//if (matrix.type == SCALING)

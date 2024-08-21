@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 17:47:42 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/08/20 16:04:27 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/08/21 12:45:12 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,26 +51,31 @@ int print_float_array(float *a)
 
 int	main(void)
 {
-    t_matrix    inv;
+    //t_matrix    inv;
 	t_matrix 	m1;
-	float	*a, *b, *c, *d;
+    t_matrix    scale;
+    t_matrix    rotate;
+    //t_object    sphere;
+	//float	*a, *b, *c, *d;
 
-	a = tuple(-5, 2, 6, -8);
-	b = tuple(1, -5, 1, 8);
-	c = tuple(7, 7, -6, -7);
-	d = tuple(1, -3, 7, 4);
-	m1 = matrix(a, b, c, d);
-	inv = inverse_matrix(m1);
+	//a = tuple(1, 0, 0, 0);
+	//b = tuple(0, 1, 0, 0);
+	//c = tuple(0, 0, 1, 0);
+	//d = tuple(0, 0, 0, 1);
+	//m1 = matrix(a, b, c, d);
+	//inv = inverse_matrix(m1);
 
-	print_matrix(inv.m, 4);
-    /*t_object	sphere;
+	//print_matrix(inv.m, 4);
+    t_object	sphere;
 	float		*n;
 
+    scale = create_scaling(1, 0.5, 1);
+    rotate = create_z_rotation(PI/5);
 	sphere.coord = create_point(0, 0, 0);
 	sphere.diameter = 1;
-	n = normal_at(&sphere, create_point(0, 1, 0));
-    */
-	//print_float_array(n);
+    sphere.transform = matrix_multiply(scale.m, rotate.m);
+	n = normal_at(&sphere, create_point(0, sqrt(PI/2), -sqrt(PI/2)));
+	print_float_array(n);
 	//mlx_t* mlx = mlx_init(1080, 1080, "MLX42", true);
     
   //  if (!mlx) exit(1);

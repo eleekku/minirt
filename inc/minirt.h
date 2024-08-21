@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 14:40:31 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/08/20 16:03:38 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/08/21 12:40:41 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ float			*vector_cross_prod(float *a, float *b);
 
 /*** Matrix operations ***/
 int				matrix_are_equal(t_matrix a, t_matrix b);
-float			**matrix_multiply(float **a, float **b);
+t_matrix		matrix_multiply(float **a, float **b);
 t_matrix		submatrix(t_matrix a, int i, int j);
 t_matrix		transpose(t_matrix a);
 float			minor(t_matrix a, int i, int j);
@@ -164,7 +164,11 @@ float	        *normal_at(t_object *object, float *world_p);
 
 /*** Printing ***/
 int	paint_sphere_shadow(mlx_image_t *img);
+int print_matrix(float **m, int size);
 
+/*** Matrix utils ***/
+t_matrix    create_identity(void);
+void        clear_matrix(t_matrix *matrix, int i);
 
 /*** Possible to remove maybe later who knows */
 float	*four_one_multiply(float **a, float *b);
