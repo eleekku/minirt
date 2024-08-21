@@ -58,7 +58,7 @@ void    validate_camera(char **args, t_scene *scene)
         i = -1;
         validate_values(args[1], args, NULL);
         coordinates = safe_split(args[1], ',');
-        while (++i < 2)
+        while (++i <= 2)
             scene->camc[i] = fill_value(coordinates[i], args, coordinates, NULL);
         scene->camc[i] = 1;
         i = -1;

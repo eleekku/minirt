@@ -73,10 +73,10 @@ typedef struct s_scene
 {
     float       alightr;
     int         amcolor[3];
-    float         camc[3];
-    float         normv[3];
+    float         camc[4];
+    float         normv[4];
     int         fow;
-    float       lightc[3];
+    float       lightc[4];
     float       brightness;
     int         spheres;
     int         planes;
@@ -180,7 +180,7 @@ t_intersections	intersections(int n, t_intersection i, ...);
 t_intersection	hit(t_intersections xs);
 
 /*** Printing ***/
-int paint_sphere_shadow(mlx_image_t *img, t_sphere *sphere);
+int paint_sphere_shadow(mlx_image_t *img, t_sphere *sphere, t_scene *scene);
 
 
 /*** Possible to remove maybe later who knows */

@@ -100,7 +100,7 @@ int	colors_to_int(int *colors)
 	result = ft_atoi_base(string, 16);
 	return (result);
 }
-/*
+
 static float	clamp_color(float n)
 {
 	if (n > 255)
@@ -108,24 +108,16 @@ static float	clamp_color(float n)
 	return (n);
 }
 
-t_tuple	conv_color_for(t_tuple a)
+void	conv_color_for(int *color)
 {
-	t_tuple	r;
-
-	r.x = a.x / 256;
-	r.y = a.y / 256;
-	r.z = a.z / 256;
-	r.w = 0;
-	return (r);
+	color[0] = color[0] / 256;
+	color[1] = color[1] / 256;
+	color[2] = color[2] / 256;
 }
 
-t_tuple	conv_color_back(t_tuple a)
+void	conv_color_back(int *color)
 {
-	t_tuple	r;
-
-	r.x = clamp_color(a.x * 256);
-	r.y = clamp_color(a.y * 256);
-	r.z = clamp_color(a.z * 256);
-	r.w = 0;
-	return (r);
-}*/
+	color[0] = clamp_color(color[0] * 256);
+	color[1] = clamp_color(color[1] * 256);
+	color[2] = clamp_color(color[2] * 256);
+}

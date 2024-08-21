@@ -160,7 +160,7 @@ int	main(int argc, char **argv)
 
     // Draw the image at coordinate (0, 0).
     mlx_image_to_window(mlx, img, 0, 0);
-    paint_sphere_shadow(img, &scene.sp[0]);
+    paint_sphere_shadow(img, &scene.sp[0], &scene);
 
     // Run the main loop and terminate on quit.  
     mlx_loop(mlx);
