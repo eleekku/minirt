@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 14:40:31 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/08/15 15:35:08 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/08/21 16:20:10 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,34 +16,62 @@
 # include <math.h>
 # include <stdio.h>
 # include <stdlib.h>
-# include <stdarg.h>
 # include <fcntl.h>
 # include "../lib/Libft/libft.h"
-# include "../lib/MLX42/include/MLX42/MLX42.h"
+# include "MLX42/MLX42.h"
+# include "light.h"
 
+# define PI 3.14159265358979323846
 # define EPS 0.00001
 # define TRUE 1
 # define FALSE 0
 
 typedef int     t_bool;
 
-typedef struct s_color
-{
-	int	r;
-	int	g;
-	int	b;
-}	t_color;
-# define PNT 1.0
-# define VTR 0.0
 # define ORIGIN 0
 # define DIRECTION 1
 
-/* typedef struct  s_sphere
+typedef enum    e_shape
+{
+    SPHERE,
+    PLANE,
+    CYLINDER
+}   t_shape;
+
+typedef enum    e_transformation
+{
+    TRANSLATION,
+    SCALING,
+    ROTATE,
+	SHEARING
+}   t_transformation;
+
+typedef struct s_matrix
+{
+	int		            size;
+	float	            **m;
+    t_transformation    type;
+}	t_matrix;
+
+typedef struct s_object
+{
+    t_shape s;
+    float   *coord;
+    float   diameter;
+    int     color[3];
+    t_matrix	transform;
+    float   normv[3];
+    float   height;
+    t_material  material;
+}   t_object;
+
+typedef struct  s_sphere
 {
     float   coord[3];
     float   diameter;
     int     color[3];
-}   t_sphere;*/
+    float   **transform;
+}   t_sphere;
 
 typedef struct  s_plane
 {
@@ -61,6 +89,7 @@ typedef struct  s_cylinder
     int     color[3];
 }   t_cylinder;
 
+<<<<<<< HEAD
 typedef struct	s_sphere
 {
     float	center[4];
@@ -69,6 +98,8 @@ typedef struct	s_sphere
 }	t_sphere;
 
 
+=======
+>>>>>>> master
 typedef struct s_scene
 {
     float       alightr;
@@ -78,6 +109,7 @@ typedef struct s_scene
     int         fow;
     float       lightc[4];
     float       brightness;
+    t_object    *objects;
     int         spheres;
     int         planes;
     int         cylinders;
@@ -85,20 +117,6 @@ typedef struct s_scene
     t_plane     *pl;
     t_cylinder  *cy;
 }   t_scene;
-
-//typedef struct s_color
-typedef struct s_matrix
-{
-	int		size;
-	float	**m;
-}	t_matrix;
-
-//typedef struct s_sphere
-//{
-//	float	*center;
-//	float	diameter;
-//	int		*color;
-//}	t_sphere;
 
 typedef struct s_intersections
 {
@@ -113,6 +131,7 @@ typedef struct s_intersection
 	char	object;
 }	t_intersection;
 
+<<<<<<< HEAD
 /*** Parsing ***/
 void  check_file(char *file, t_scene *scene, t_bool flag);
 char    **safe_split(char *string, char separator);
@@ -133,12 +152,20 @@ int	colors_to_int(int *colors, int intensity);
 int	*combine_colors(int *a, int *b);
 
 
+=======
+void        free_array(char **args);
+void        exit_error(char *msg, char **args, t_scene *scene);
+t_bool      validate_values(char *arg, char **args, t_scene *scene);
+char        **safe_split(char *string, char separator);
+float       fill_value(char *arg, char **args, char **coordinates, t_scene *scene);
+>>>>>>> master
 
 /*** Definitions ***/
-float			*tuple(float a, float b, float c, float w);
-t_matrix		matrix(int size, float *a, ...);
+float	        *tuple(float a, float b, float c, float w);
+float           *create_point(float a, float b, float c);
+float           *create_vector(float a, float b, float c);
+t_matrix	    matrix(float *a, float *b, float *c, float *d);
 t_matrix		initialize_matrix(t_matrix matrix);
-//float	**matrix(float *a, float *b, float *c, float *d);
 
 /*** Tuple Operations ***/
 int				equal_float(float a, float b);
@@ -155,34 +182,47 @@ float			*vector_cross_prod(float *a, float *b);
 
 /*** Matrix operations ***/
 int				matrix_are_equal(t_matrix a, t_matrix b);
-float			**matrix_multiply(float **a, float **b);
+t_matrix		matrix_multiply(float **a, float **b);
 t_matrix		submatrix(t_matrix a, int i, int j);
 t_matrix		transpose(t_matrix a);
 float			minor(t_matrix a, int i, int j);
 float			cofactor(t_matrix a, int i, int j);
 float			determinant(t_matrix a);
 t_matrix		inverse_matrix(t_matrix a);
-t_matrix	    translation(float a, float b, float c);
-t_matrix	    scaling(float a, float b, float c);
-t_matrix	    x_rotation(float a);
-t_matrix	    y_rotation(float a);
-t_matrix        z_rotation(float a);
+
+/*** Matrix transformations ***/
+t_matrix	    create_translate(float a, float b, float c);
+t_matrix	    create_scaling(float a, float b, float c);
+t_matrix		create_x_rotation(float a);
+t_matrix		create_y_rotation(float a);
+t_matrix		create_z_rotation(float a);
+t_matrix		create_shearing(float *p);
 
 /*** Rays ***/
 float			**create_ray(float *origin, float *direction);
 float			*ray_position(float **r, float t);
 
 /*** Spheres  ***/
-//t_intersections	sp_cross(t_sphere sp, float **r);
-t_intersections	intersects(t_sphere *sp, float **r);
-
+t_intersections	intersects(t_object *sp, float **r);
 t_intersection	intersection(float t, char object);
 t_intersections	intersections(int n, t_intersection i, ...);
 t_intersection	hit(t_intersections xs);
 
+<<<<<<< HEAD
 /*** Printing ***/
 int paint_sphere_shadow(mlx_image_t *img, t_sphere *sphere, t_scene *scene);
+=======
+float	        *normal_at(t_object *object, float *world_p);
+float	*reflect(float *vector, float *normal);
+>>>>>>> master
 
+/*** Printing ***/
+int	paint_sphere_shadow(mlx_image_t *img);
+int print_matrix(float **m, int size);
+
+/*** Matrix utils ***/
+t_matrix    create_identity(void);
+void        clear_matrix(t_matrix *matrix, int i);
 
 /*** Possible to remove maybe later who knows */
 float	*four_one_multiply(float **a, float *b);

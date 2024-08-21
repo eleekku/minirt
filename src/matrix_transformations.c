@@ -6,13 +6,13 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 11:18:13 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/08/13 14:20:53 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/08/20 14:24:59 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minirt.h"
 
-t_matrix	translation(float a, float b, float c)
+t_matrix	create_translate(float a, float b, float c)
 {
 	t_matrix matrix;
 
@@ -27,7 +27,7 @@ t_matrix	translation(float a, float b, float c)
 	return (matrix);
 }
 
-t_matrix	scaling(float a, float b, float c)
+t_matrix	create_scaling(float a, float b, float c)
 {
 	t_matrix matrix;
 
@@ -43,7 +43,7 @@ t_matrix	scaling(float a, float b, float c)
 
 }
 
-t_matrix	x_rotation(float a)
+t_matrix	create_x_rotation(float a)
 {
 	t_matrix	matrix;
 	matrix.size = 4;
@@ -58,7 +58,7 @@ t_matrix	x_rotation(float a)
 
 }
 
-t_matrix	y_rotation(float a)
+t_matrix	create_y_rotation(float a)
 {
 	t_matrix	matrix;
 	matrix.size = 4;
@@ -72,7 +72,7 @@ t_matrix	y_rotation(float a)
 	return (matrix);
 
 }
-t_matrix	z_rotation(float a)
+t_matrix	create_z_rotation(float a)
 {
 	t_matrix	matrix;
 	matrix.size = 4;

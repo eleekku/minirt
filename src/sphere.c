@@ -6,13 +6,17 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 10:50:17 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/08/15 11:52:44 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/08/20 13:53:15 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minirt.h"
 
+<<<<<<< HEAD
 t_intersections	intersects(t_sphere *sp, float **r)
+=======
+t_intersections	intersects(t_object *sp, float **r)
+>>>>>>> 4466b38041281945d6a14f2d6ad303fea6e08d7b
 {
 	t_intersections	cross;
 	float			*sp_to_ray;
@@ -20,7 +24,11 @@ t_intersections	intersects(t_sphere *sp, float **r)
 	float			discriminant;
 
 	cross.count = 0;
+<<<<<<< HEAD
 	sp_to_ray = tuple_subs(r[ORIGIN], sp->center);
+=======
+	sp_to_ray = tuple_subs(r[ORIGIN], sp->coord);
+>>>>>>> 4466b38041281945d6a14f2d6ad303fea6e08d7b
 	values = tuple(1,1,1,1);
 	if (!values)
 		return (cross);
