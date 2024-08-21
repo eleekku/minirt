@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 14:40:31 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/08/21 12:40:41 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/08/21 16:20:10 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <fcntl.h>
 # include "../lib/Libft/libft.h"
 # include "MLX42/MLX42.h"
+# include "light.h"
 
 # define PI 3.14159265358979323846
 # define EPS 0.00001
@@ -61,6 +62,7 @@ typedef struct s_object
     t_matrix	transform;
     float   normv[3];
     float   height;
+    t_material  material;
 }   t_object;
 
 typedef struct  s_sphere
@@ -104,12 +106,6 @@ typedef struct s_scene
     t_plane     *pl;
     t_cylinder  *cy;
 }   t_scene;
-
-typedef struct s_matrix
-{
-	int		size;
-	float	**m;
-}	t_matrix;
 
 typedef struct s_intersections
 {
@@ -179,6 +175,7 @@ t_intersections	intersections(int n, t_intersection i, ...);
 t_intersection	hit(t_intersections xs);
 
 float	        *normal_at(t_object *object, float *world_p);
+float	*reflect(float *vector, float *normal);
 
 /*** Printing ***/
 int	paint_sphere_shadow(mlx_image_t *img);
