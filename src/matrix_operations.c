@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 11:14:29 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/08/15 16:50:24 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/08/21 12:15:45 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,28 +50,25 @@ float	*four_one_multiply(float **a, float *b)
 	return (result);
 }
 
-float	**matrix_multiply(float **a, float **b)
+t_matrix	matrix_multiply(float **a, float **b)
 {
-	float	**matrix;
-	int		i;
-	int		j;
-	int		k;
+	t_matrix	matrix;
+	int			i;
+	int			j;
 
-	k = 1;
-	if (sizeof(b) > sizeof(float) * 4)
-		k = 4;
-	matrix = malloc(4 * sizeof(float *));
-	if (!matrix)
-		return (NULL);
+	matrix.size = 4;
+	matrix.m = malloc(4 * sizeof(float *));
+	if (!matrix.m)
+		return (matrix);
 	i = -1;
 	while (++i < 4)
 	{
-		matrix[i] = tuple(0,0,0,0);
-		if (matrix[i] == NULL)
-			return (NULL);
+		matrix.m[i] = tuple(0,0,0,0);
+		if (matrix.m[i] == NULL)
+			return (matrix);
 		j = -1;
 		while (++j < 4)
-			matrix[i][j] = (a[i][0] * b[0][j]) + (a[i][1] * b[1][j]) 
+			matrix.m[i][j] = (a[i][0] * b[0][j]) + (a[i][1] * b[1][j]) 
 				+ (a[i][2] * b[2][j]) + (a[i][3] * b[3][j]);
 	}
 	return (matrix);

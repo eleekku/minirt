@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 14:46:25 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/07/22 15:34:25 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/08/20 16:50:32 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ float	magnitude(float *a)
 {
 	float	n;
 
-    if (a[3] == 1)
-        printf("Error: Magnitude failed. Value provided is not a vector\n.");
     n = sqrt(a[0] * a[0] + a[1] * a[1] + a[2] * a[2]);
     return (n);
 }

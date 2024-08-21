@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 13:20:16 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/08/12 15:14:41 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/08/20 16:02:48 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,29 +26,32 @@ float	*tuple(float a, float b, float c, float w)
 	return (p);
 }
 
-//Could it be simplified to a 4x4 matrix?
-t_matrix	matrix(int size, float *a, ...)
+float	*create_point(float a, float b, float c)
 {
-	va_list		ap;
-	t_matrix	matrix;
-	float		**m;
-	int			j;
+	return (tuple(a, b, c, 1));
+}
 
-	m = malloc(size * sizeof(float *));
-	if (!m)
+float	*create_vector(float a, float b, float c)
+{
+	return (tuple(a, b, c, 0));
+}
+
+//Could it be simplified to a 4x4 matrix?
+t_matrix	matrix(float *a, float *b, float *c, float *d)
+{
+	t_matrix	matrix;
+
+	matrix.m = malloc(4 * sizeof(float *));
+	if (!matrix.m)
 	{
 		matrix.size = 0;
 		return (matrix);
 	}
-	matrix.size = size;
-	va_start(ap,a);
-	j = -1;
-	while (++j < size)
-	{
-		m[j] = a;
-		a = va_arg(ap, float *);
-	}
-	matrix.m = m;
+	matrix.size = 4;
+	matrix.m[0] = a;
+	matrix.m[1] = b;
+	matrix.m[2] = c;
+	matrix.m[3] = d;
 	return (matrix);
 }
 
