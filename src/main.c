@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 17:47:42 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/08/15 13:58:23 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/08/21 12:45:12 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,77 +51,46 @@ int print_float_array(float *a)
 
 int	main(void)
 {
-    //float   **r;
-    //t_intersections xs;
-    //t_intersection  i1;
-    //t_intersection  i2, i3;
-    //t_sphere    sp;
-    //float   a[] = {0,0,5,PNT};
-    //float   b[] = {0,0,1,0};
-    //float   c[] = {0,0,0,1};
+    //t_matrix    inv;
+	t_matrix 	m1;
+    t_matrix    scale;
+    t_matrix    rotate;
+    //t_object    sphere;
+	//float	*a, *b, *c, *d;
 
-    //r = create_ray(a, b);
-    //sp.center = c;
-    //sp.diameter = 1;
+	//a = tuple(1, 0, 0, 0);
+	//b = tuple(0, 1, 0, 0);
+	//c = tuple(0, 0, 1, 0);
+	//d = tuple(0, 0, 0, 1);
+	//m1 = matrix(a, b, c, d);
+	//inv = inverse_matrix(m1);
 
-    //xs = intersects(sp, r);
-    //printf("Ray-Sphere intersection\nNumber of intersections: %d\nIntersection distance: [%f] [%f]\n", xs.count, xs.t[0], xs.t[1]);
-    //i1 = intersection(-1,'s');
-    //i2 = intersection(-3,'s');
-    //i3 = intersection(-2, 's');
-    //xs = intersections(3, i2, i1, i3);
-    //printf("Ray-Sphere intersection\nNumber of intersections: %d\nIntersection distance: [%f] [%f]\n", xs.count, xs.t[0], xs.t[1]);
-    //i1 = hit(xs);
-    //printf("%f\n", i1.t);
-    //float a[] = {8,-5,9,2};
-    //float b[] = {7,5,6,1};
-    //float c[] = {-6,0,9,6};
-    //float d[] = {-3,0,-9,-4};
-    //float ab[] = {-2,1,2,3};
-    //float bb[] = {3, 2, 1, -1};
-    //float cb[] = {4,3,6,5};
-    //float db[] = {1,2,7,8};
-    //float ac[] = {1,0,0,0};
-    //float bc[] = {0,1,0,0};
-    //float cc[] = {0,0,1,0};
-    //float dc[] = {0,0,0,1};
-    //t_matrix  m1;
-    //t_matrix    m2;
-    //t_matrix    m3;
-	//float	**m2;
-	//float	**m3;
-    //float   **m4;
-    //float   **m5;
+	//print_matrix(inv.m, 4);
+    t_object	sphere;
+	float		*n;
 
-//    m1 = matrix(4, a, b, c, d);
- //   print_matrix(m1.m, 4);
-  //  m2 = inverse_matrix(m1);
-	//print_matrix(m2.m, 4);
- //   print_matrix(transpose(m1).m, 4);
-    //print_float_array(tuple(1, 2, 3, 1));
-    //print_float_array(tuple(1, 2, 3, 0));
-    //print_float_array(tuple_add(tuple(1, 2, 3, 1), tuple(1, 1, 1, 0)));
-    //print_float_array(normalize(tuple(4,0,0,0)));
-    //printf("%f\n", dot_product(tuple(1,2,3,0), tuple(2,3,4,0)));
-    //print_float_array(vector_cross_prod(tuple(1,2,3,0), tuple(2,3,4,0)));
-    //print_matrix(matrix_multiply(matrix(a, b, c, d), matrix(ab,bb,cb,db)));
+    scale = create_scaling(1, 0.5, 1);
+    rotate = create_z_rotation(PI/5);
+	sphere.coord = create_point(0, 0, 0);
+	sphere.diameter = 1;
+    sphere.transform = matrix_multiply(scale.m, rotate.m);
+	n = normal_at(&sphere, create_point(0, sqrt(PI/2), -sqrt(PI/2)));
+	print_float_array(n);
+	//mlx_t* mlx = mlx_init(1080, 1080, "MLX42", true);
     
-	mlx_t* mlx = mlx_init(1080, 1080, "MLX42", true);
-    
-    if (!mlx) exit(1);
+  //  if (!mlx) exit(1);
 
     // Create a 100x100 image.
-    mlx_image_t* img = mlx_new_image(mlx, 1000, 1000);
+//    mlx_image_t* img = mlx_new_image(mlx, 1000, 1000);
 
     // Set the channels of each pixel in our image to the maximum byte value of 255. 
-    memset(img->pixels, 255, img->width * img->height * sizeof(int));
+//    memset(img->pixels, 255, img->width * img->height * sizeof(int));
 
     // Draw the image at coordinate (0, 0).
-    mlx_image_to_window(mlx, img, 0, 0);
-    paint_sphere_shadow(img);
-
+//    mlx_image_to_window(mlx, img, 0, 0);
+ //   paint_sphere_shadow(img);
     // Run the main loop and terminate on quit.  
-    mlx_loop(mlx);
-    mlx_terminate(mlx);
+    //mlx_loop(mlx);
+    //mlx_terminate(mlx);
     return (0);
 }
