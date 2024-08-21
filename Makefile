@@ -1,7 +1,6 @@
 NAME	:= minirt
 
 #Compiler options#
-
 CC		:= cc
 CFLAGS	:= -Wextra -Wall -Werror -Wunreachable-code -Ofast
 
@@ -13,8 +12,7 @@ LIBFT_DIR	:= ./lib/Libft/
 LIBFT		:= $(LIBFT_DIR)/libft.a
 
 HEADERS	:= -I ./inc -I $(LIBMLX)/include
-LIBS	:= $(LIBMLX)/build/libmlx42.a -Iinclude -ldl -lglfw -pthread -lm
-			
+LIBS	:= $(LIBMLX)/build/libmlx42.a -Iinclude -lglfw	
 SRCS	:= $(SRCDIR)/minirt.c $(SRCDIR)/definitions.c \
 			$(SRCDIR)/parsing.c \
 			$(SRCDIR)/parsing_utils.c \

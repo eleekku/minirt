@@ -55,11 +55,7 @@ float	**matrix_multiply(float **a, float **b)
 	float	**matrix;
 	int		i;
 	int		j;
-	int		k;
 
-	k = 1;
-	if (sizeof(b) > sizeof(float) * 4)
-		k = 4;
 	matrix = malloc(4 * sizeof(float *));
 	if (!matrix)
 		return (NULL);

@@ -41,7 +41,7 @@ int	paint_sphere_shadow(mlx_image_t *img, t_sphere *sphere, t_scene *scene)
 {
 	//t_sphere sphere;
 	t_intersections	xs;
-	float *position, *ray_origin;
+	float *position;
 	float	y, x, wall_z;
 	float wall_size, half, pixel_size, canvas_pixels;
 	float world_y, world_x;
@@ -52,7 +52,7 @@ int	paint_sphere_shadow(mlx_image_t *img, t_sphere *sphere, t_scene *scene)
 	wall_size = 7;
 	half = wall_size / 2;
 	pixel_size = wall_size / canvas_pixels;
-	ray_origin = tuple(0.5, 0.5, -50, 1);
+//	ray_origin = tuple(0.5, 0.5, -50, 1);
 	/*sphere.color[0] = 0;
 	sphere.color[1] = 0;
 	sphere.color[2] = 0;
