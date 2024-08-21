@@ -63,7 +63,7 @@ typedef struct s_object
     float   height;
 }   t_object;
 
-/*typedef struct  s_sphere
+typedef struct  s_sphere
 {
     float   coord[3];
     float   diameter;
@@ -73,9 +73,9 @@ typedef struct s_object
 
 typedef struct  s_plane
 {
-    float   coord[3];
-    float   normv[3];
-    int     color[3];
+    float       coord[3];
+    float       normv[3];
+    int         color[3];
 }   t_plane;
 
 typedef struct  s_cylinder
@@ -86,17 +86,30 @@ typedef struct  s_cylinder
     float   height;
     int     color[3];
 }   t_cylinder;
-*/
+
 typedef struct s_scene
 {
-    float       ambient[4];
-    int         camc[3];
-    int         normv[3];
+    float       alightr;
+    int         amcolor[3];
+    float         camc[3];
+    float         normv[3];
     int         fow;
-    float       light[3];
+    float       lightc[3];
     float       brightness;
     t_object    *objects;
+    int         spheres;
+    int         planes;
+    int         cylinders;
+    t_sphere    *sp;
+    t_plane     *pl;
+    t_cylinder  *cy;
 }   t_scene;
+
+typedef struct s_matrix
+{
+	int		size;
+	float	**m;
+}	t_matrix;
 
 typedef struct s_intersections
 {
@@ -110,6 +123,12 @@ typedef struct s_intersection
 	float	t;
 	char	object;
 }	t_intersection;
+
+void        free_array(char **args);
+void        exit_error(char *msg, char **args, t_scene *scene);
+t_bool      validate_values(char *arg, char **args, t_scene *scene);
+char        **safe_split(char *string, char separator);
+float       fill_value(char *arg, char **args, char **coordinates, t_scene *scene);
 
 /*** Definitions ***/
 float	        *tuple(float a, float b, float c, float w);
@@ -155,11 +174,10 @@ float			*ray_position(float **r, float t);
 
 /*** Spheres  ***/
 t_intersections	intersects(t_object *sp, float **r);
-
-/*** Intersections ***/
 t_intersection	intersection(float t, char object);
 t_intersections	intersections(int n, t_intersection i, ...);
 t_intersection	hit(t_intersections xs);
+
 float	        *normal_at(t_object *object, float *world_p);
 
 /*** Printing ***/
