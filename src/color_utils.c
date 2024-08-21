@@ -49,6 +49,23 @@ unsigned int	ft_atoi_base(const char *str, int str_base)
 		++str;
 		digit = get_digit(to_lower(*str), str_base);
 	}
+	return (result);
+}
+
+unsigned int	ft_atoi_baseintense(const char *str, int str_base)
+{
+	unsigned int	result;
+	int				digit;
+
+	result = 0;
+	digit = get_digit(to_lower(*str), str_base);
+	while (digit >= 0)
+	{
+		result = result * str_base;
+		result = result + digit;
+		++str;
+		digit = get_digit(to_lower(*str), str_base);
+	}
 	result = result * str_base;
 	result = result + 15;
 	result = result * str_base;
@@ -67,7 +84,10 @@ char *strjoin_colors(char *s1, char *s2, char *s3)
 	result = ft_strjoin(temp, s3);
 	if (!result)
 		exit(1);
-	free (temp);
+	free(temp);
+	free(s1);
+	free(s2);
+	free(s3);
 	return (result);
 
 }
@@ -85,22 +105,41 @@ char	*int_to_hex(int num)
     return hexStr;
 }
 
-int	colors_to_int(int *colors)
+int	colors_to_int(int *colors, int intensity)
 {
-	char 	*c1;
-	char 	*c2;
-	char 	*c3;
 	char 	*string;
 	int		result;
+	char	*temp;
+	char	*intens;
 
-	c1 = int_to_hex(colors[0]);
-	c2 = int_to_hex(colors[1]);
-	c3 = int_to_hex(colors[2]);
-	string = strjoin_colors(c1, c2, c3);
-	result = ft_atoi_base(string, 16);
+	string = strjoin_colors(int_to_hex(colors[0]), int_to_hex(colors[1]), int_to_hex(colors[2]));
+	if (intensity == 266)
+		result = ft_atoi_baseintense(string, 16);
+	else
+	{
+		intens = int_to_hex(intensity);
+		temp = ft_strjoin(string, intens);
+		free(intens);
+		result = ft_atoi_base(temp, 16);
+		free(temp);
+	}
+	free(string);
 	return (result);
 }
 
+int	*combine_colors(int *a, int *b)
+{
+	int *result;
+
+	result = malloc(3 * sizeof(int));
+	if (!result)
+		return (NULL);
+	result[0] = ((a[0] * b[0]) / 255);
+	result[1] = ((a[1] * b[1]) / 255);
+	result[2] = ((a[2] * b[2]) / 255);
+	return (result);
+}
+/*
 static float	clamp_color(float n)
 {
 	if (n > 255)
@@ -120,4 +159,4 @@ void	conv_color_back(int *color)
 	color[0] = clamp_color(color[0] * 256);
 	color[1] = clamp_color(color[1] * 256);
 	color[2] = clamp_color(color[2] * 256);
-}
+}*/

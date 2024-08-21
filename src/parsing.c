@@ -32,7 +32,7 @@ void    validate_ambient(char **args, t_scene *scene)
         if (!ft_isdigit(args[1][0]))
             exit_error("invalid format", args, NULL);
         lightratio = ft_atof(args[1]);
-        if (lightratio < 0.0 || lightratio > 1.0)
+        if (lightratio < 0.0 || lightratio > 1.0 || (lightratio == 0.0 && args[1][0] != '0'))
             exit_error("invalid ambient light ratio", args, NULL);
         scene->alightr = lightratio;
         validate_values(args[2], args, NULL);

@@ -12,6 +12,31 @@
 
 #include "../inc/minirt.h"
 
+void	add_ambient(mlx_image_t *img, t_scene *scene)
+{
+	int x;
+	int y;
+	int color;
+	int intensity;
+
+	intensity = scene->alightr * 255;
+
+	x = 0;
+	y = 0;
+	printf("colors are: %d, %d, %d and intensity: %f", scene->amcolor[0], scene->amcolor[1], scene->amcolor[2], scene->alightr);
+	color = colors_to_int(scene->amcolor, intensity);
+	while (x < 2000)
+	{
+		while (y < 2000)
+		{
+			mlx_put_pixel(img, x, y, color);
+			y++;
+		}
+	y = 0;
+	x++;
+	}
+}
+
 int	paint_sphere_shadow(mlx_image_t *img, t_sphere *sphere, t_scene *scene)
 {
 	//t_sphere sphere;
@@ -36,6 +61,7 @@ int	paint_sphere_shadow(mlx_image_t *img, t_sphere *sphere, t_scene *scene)
 	sphere.coord[2] = 0;
 	sphere.diameter = 1;*/
 	//scene->camc[3] = 1;
+	add_ambient(img, scene);
 	
 	for (y = 0; y < canvas_pixels - 1; y++)
 	{
@@ -48,7 +74,7 @@ int	paint_sphere_shadow(mlx_image_t *img, t_sphere *sphere, t_scene *scene)
 			xs = intersects(sphere, ray);
 			if (hit(xs).t != -1)
 			{
-				mlx_put_pixel(img, x, y, colors_to_int(sphere->color));
+				mlx_put_pixel(img, x, y, colors_to_int(sphere->color, 266));
 			}
 		}
 	}

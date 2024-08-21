@@ -156,7 +156,7 @@ int	main(int argc, char **argv)
     mlx_image_t* img = mlx_new_image(mlx, 2000, 2000);
 
     // Set the channels of each pixel in our image to the maximum byte value of 255. 
-    memset(img->pixels, 180, img->width * img->height * sizeof(int));
+    memset(img->pixels, 150, img->width * img->height * sizeof(int));
 
     // Draw the image at coordinate (0, 0).
     mlx_image_to_window(mlx, img, 0, 0);

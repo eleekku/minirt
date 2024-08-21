@@ -129,7 +129,8 @@ t_bool  validate_line(char **args, t_scene *scene);
 void    free_objects_exit(t_scene *scene, char *message, char **array, char **args);
 
 
-int	colors_to_int(int *colors);
+int	colors_to_int(int *colors, int intensity);
+int	*combine_colors(int *a, int *b);
 
 
 
