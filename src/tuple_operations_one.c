@@ -46,7 +46,10 @@ float	*tuple_subs(float *a, float *b)
 		i++;
 	}
 	if (p[3] < 0)
+	{
 		printf("Error: Substracting wrong parameters. Unexpected result\n");
+		exit(1);
+	}
 	return (p);
 }
 

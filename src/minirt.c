@@ -105,6 +105,7 @@ int	main(int argc, char **argv)
     //printf("Ray-Sphere intersection\nNumber of intersections: %d\nIntersection distance: [%f] [%f]\n", xs.count, xs.t[0], xs.t[1]);
     //i1 = hit(xs);
     //printf("%f\n", i1.t);
+    
     scene.spheres = 0;
     scene.planes = 0;
     scene.planes = 0;
@@ -114,11 +115,12 @@ int	main(int argc, char **argv)
         ft_printf(2, "Error\nPlease input one and only one file\n");
         exit (1);
     }
-    check_file(argv[1], &scene, FALSE); 
+    check_file(argv[1], &scene, FALSE);
+    /*
     float a[] = {8,-5,9,2};
     float b[] = {7,5,6,1};
     float c[] = {-6,0,9,6};
-    float d[] = {-3,0,-9,-4};
+  //  float d[] = {-3,0,-9,-4};
     //float ab[] = {-2,1,2,3};
     //float bb[] = {3, 2, 1, -1};
     //float cb[] = {4,3,6,5};
@@ -135,11 +137,11 @@ int	main(int argc, char **argv)
     //float   **m4;
     //float   **m5;
 
-    m1 = matrix(4, a, b, c, d);
-    print_matrix(m1.m, 4);
-    m2 = inverse_matrix(m1);
-	print_matrix(m2.m, 4);
-    print_matrix(transpose(m1).m, 4);
+ //   m1 = matrix(4, a, b, c, d);
+  //  print_matrix(m1.m, 4);
+ //   m2 = inverse_matrix(m1);
+//	print_matrix(m2.m, 4);
+ //   print_matrix(transpose(m1).m, 4);
     //print_float_array(tuple(1, 2, 3, 1));
     //print_float_array(tuple(1, 2, 3, 0));
     //print_float_array(tuple_add(tuple(1, 2, 3, 1), tuple(1, 1, 1, 0)));
@@ -147,7 +149,7 @@ int	main(int argc, char **argv)
     //printf("%f\n", dot_product(tuple(1,2,3,0), tuple(2,3,4,0)));
     //print_float_array(vector_cross_prod(tuple(1,2,3,0), tuple(2,3,4,0)));
     //print_matrix(matrix_multiply(matrix(a, b, c, d), matrix(ab,bb,cb,db)));
-    
+*/    
 	mlx_t* mlx = mlx_init(1080, 1080, "MLX42", true);
     
     if (!mlx) exit(1);

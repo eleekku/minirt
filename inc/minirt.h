@@ -67,7 +67,7 @@ typedef struct s_object
 
 typedef struct  s_sphere
 {
-    float   coord[3];
+    float   center[4];
     float   diameter;
     int     color[3];
     float   **transform;
@@ -89,17 +89,6 @@ typedef struct  s_cylinder
     int     color[3];
 }   t_cylinder;
 
-<<<<<<< HEAD
-typedef struct	s_sphere
-{
-    float	center[4];
-    float	diameter;
-	int 	color[3];
-}	t_sphere;
-
-
-=======
->>>>>>> master
 typedef struct s_scene
 {
     float       alightr;
@@ -131,7 +120,6 @@ typedef struct s_intersection
 	char	object;
 }	t_intersection;
 
-<<<<<<< HEAD
 /*** Parsing ***/
 void  check_file(char *file, t_scene *scene, t_bool flag);
 char    **safe_split(char *string, char separator);
@@ -152,13 +140,11 @@ int	colors_to_int(int *colors, int intensity);
 int	*combine_colors(int *a, int *b);
 
 
-=======
 void        free_array(char **args);
 void        exit_error(char *msg, char **args, t_scene *scene);
 t_bool      validate_values(char *arg, char **args, t_scene *scene);
 char        **safe_split(char *string, char separator);
 float       fill_value(char *arg, char **args, char **coordinates, t_scene *scene);
->>>>>>> master
 
 /*** Definitions ***/
 float	        *tuple(float a, float b, float c, float w);
@@ -203,21 +189,18 @@ float			**create_ray(float *origin, float *direction);
 float			*ray_position(float **r, float t);
 
 /*** Spheres  ***/
-t_intersections	intersects(t_object *sp, float **r);
+t_intersections	intersects(t_sphere *sp, float **r);
 t_intersection	intersection(float t, char object);
 t_intersections	intersections(int n, t_intersection i, ...);
 t_intersection	hit(t_intersections xs);
 
-<<<<<<< HEAD
 /*** Printing ***/
 int paint_sphere_shadow(mlx_image_t *img, t_sphere *sphere, t_scene *scene);
-=======
 float	        *normal_at(t_object *object, float *world_p);
 float	*reflect(float *vector, float *normal);
->>>>>>> master
 
 /*** Printing ***/
-int	paint_sphere_shadow(mlx_image_t *img);
+//int	paint_sphere_shadow(mlx_image_t *img);
 int print_matrix(float **m, int size);
 
 /*** Matrix utils ***/

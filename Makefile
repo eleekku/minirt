@@ -14,6 +14,7 @@ LIBFT		:= $(LIBFT_DIR)/libft.a
 HEADERS	:= -I ./inc -I $(LIBMLX)/include
 LIBS	:= $(LIBMLX)/build/libmlx42.a -Iinclude -lglfw	
 SRCS	:= $(SRCDIR)/minirt.c $(SRCDIR)/definitions.c \
+			$(SRCDIR)/color_utils.c \
 			$(SRCDIR)/parsing.c \
 			$(SRCDIR)/parsing_utils.c \
 			$(SRCDIR)/filehandler.c \

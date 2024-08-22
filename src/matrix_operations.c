@@ -52,15 +52,6 @@ float	*four_one_multiply(float **a, float *b)
 
 t_matrix	matrix_multiply(float **a, float **b)
 {
-<<<<<<< HEAD
-	float	**matrix;
-	int		i;
-	int		j;
-
-	matrix = malloc(4 * sizeof(float *));
-	if (!matrix)
-		return (NULL);
-=======
 	t_matrix	matrix;
 	int			i;
 	int			j;
@@ -69,7 +60,6 @@ t_matrix	matrix_multiply(float **a, float **b)
 	matrix.m = malloc(4 * sizeof(float *));
 	if (!matrix.m)
 		return (matrix);
->>>>>>> master
 	i = -1;
 	while (++i < 4)
 	{
