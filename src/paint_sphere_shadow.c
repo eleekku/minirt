@@ -24,9 +24,9 @@ void	add_ambient(mlx_image_t *img, t_scene *scene)
 	x = 0;
 	y = 0;
 	color = colors_to_int(scene->amcolor, intensity);
-	while (x < 1000)
+	while (x < 2000)
 	{
-		while (y < 1000)
+		while (y < 2000)
 		{
 			mlx_put_pixel(img, x, y, color);
 			y++;
@@ -49,7 +49,7 @@ int	paint_sphere_shadow(mlx_image_t *img, t_sphere *sphere, t_scene *scene)
 	int y;
 
 	wall_z = 10;
-	canvas_pixels = 1000;
+	canvas_pixels = 2000;
 	wall_size = 7;
 	half = wall_size / 2;
 	pixel_size = wall_size / canvas_pixels;
@@ -64,7 +64,6 @@ int	paint_sphere_shadow(mlx_image_t *img, t_sphere *sphere, t_scene *scene)
 	sphere.coord[2] = 0;
 	sphere.diameter = 1;*/
 	//scene->camc[3] = 1;
-
 	add_ambient(img, scene);
 	int spcol;
 

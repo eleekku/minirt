@@ -33,7 +33,7 @@ void    parse_cylinder(char **args, t_scene *scene, int index)
         char    **values;
         int     i;
         float   temp;
- 
+
         validate_values(args[1], args, scene);
         i = -1;
         values = safe_split(args[1], ',');

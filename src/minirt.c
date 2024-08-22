@@ -108,7 +108,7 @@ int	main(int argc, char **argv)
     
     scene.spheres = 0;
     scene.planes = 0;
-    scene.planes = 0;
+    scene.cylinders = 0;
 
     if (argc != 2)
     {
@@ -116,6 +116,11 @@ int	main(int argc, char **argv)
         exit (1);
     }
     check_file(argv[1], &scene, FALSE);
+    scene.material = material(&scene, 0);
+    scene.light.color[0] = 200;
+    scene.light.color[1] = 200;
+    scene.light.color[2] = 200;
+
     /*
     float a[] = {8,-5,9,2};
     float b[] = {7,5,6,1};

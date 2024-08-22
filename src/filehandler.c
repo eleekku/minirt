@@ -18,7 +18,6 @@ void    recon_object(char **args, t_scene *scene)
     }
     else if (!ft_strncmp(args[0], "cy", ft_strlen(args[0])))
     {
-
         parse_cylinder(args, scene, cyl);
         cyl++;
     }

@@ -96,8 +96,10 @@ typedef struct s_scene
     float         camc[4];
     float         normv[4];
     int         fow;
-    float       lightc[4];
-    float       brightness;
+    t_light     light;
+    t_material  material;
+   // float       lightc[4];
+    //float       brightness;
     t_object    *objects;
     int         spheres;
     int         planes;
@@ -138,13 +140,9 @@ void    free_objects_exit(t_scene *scene, char *message, char **array, char **ar
 
 int	colors_to_int(int *colors, int intensity);
 int	*combine_colors(int *a, int *b);
+int	*multiply_scale(int *color, float scale);
 
-
-void        free_array(char **args);
-void        exit_error(char *msg, char **args, t_scene *scene);
-t_bool      validate_values(char *arg, char **args, t_scene *scene);
-char        **safe_split(char *string, char separator);
-float       fill_value(char *arg, char **args, char **coordinates, t_scene *scene);
+t_material  material(t_scene *scene, int i);
 
 /*** Definitions ***/
 float	        *tuple(float a, float b, float c, float w);

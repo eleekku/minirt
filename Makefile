@@ -12,9 +12,10 @@ LIBFT_DIR	:= ./lib/Libft/
 LIBFT		:= $(LIBFT_DIR)/libft.a
 
 HEADERS	:= -I ./inc -I $(LIBMLX)/include
-LIBS	:= $(LIBMLX)/build/libmlx42.a -Iinclude -lglfw	
+LIBS	:= $(LIBMLX)/build/libmlx42.a -Iinclude -ldl -lglfw -pthread -lm	
 SRCS	:= $(SRCDIR)/minirt.c $(SRCDIR)/definitions.c \
 			$(SRCDIR)/color_utils.c \
+			$(SRCDIR)/light.c \
 			$(SRCDIR)/parsing.c \
 			$(SRCDIR)/parsing_utils.c \
 			$(SRCDIR)/filehandler.c \

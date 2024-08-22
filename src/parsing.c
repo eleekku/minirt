@@ -9,14 +9,15 @@ void    validate_light(char **args, t_scene *scene)
     i = -1;
     coordinates = safe_split(args[1], ',');
     while (++i <= 2)
-        scene->lightc[i] = fill_value(coordinates[i], args, coordinates, NULL);
-    scene->lightc[i] = 0;
+        scene->light.position[i] = fill_value(coordinates[i], args, coordinates, NULL);
+    scene->light.position[i] = 0;
     free_array(coordinates);
     if (!ft_isdigit(args[2][0]))
         exit_error("invalid light brightness format", args, NULL);
     brightness = fill_value(args[2], args, NULL, NULL);
     if (!(brightness >= 0.0 && brightness <= 1.0))
         exit_error("Invalid light brightness value", args, NULL);
+    scene->light.brightness = brightness;
     if (args[3])
         exit_error("too many values in light", args, NULL);
 };

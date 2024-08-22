@@ -6,7 +6,7 @@ void    malloc_objects(t_scene *scene)
     {
     scene->sp = malloc(sizeof(t_sphere) * scene->spheres);
         if (!scene->sp)
-            exit_error("malloc error", NULL, NULL);        
+            exit_error("malloc error", NULL, NULL);
     }
     if (scene->planes > 0)
     {
@@ -17,7 +17,7 @@ void    malloc_objects(t_scene *scene)
             exit_error("malloc error", NULL, NULL);
         }
     }
-    if (scene->spheres > 0)
+    if (scene->cylinders > 0)
     {
     scene->cy = malloc(sizeof(t_cylinder) * scene->cylinders);
         if (!scene->cy)

@@ -15,13 +15,14 @@
 
 typedef struct	s_light
 {
-	float	*color;
-	float	*position;
+	int		color[3];
+	float	position[4];
+	float	brightness;
 }	t_light;
 
 typedef struct s_material
 {
-	float	*color;
+	float	*color[4];
 	float	ambient;
 	float	diffuse;
 	float	specular;

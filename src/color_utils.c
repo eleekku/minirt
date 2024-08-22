@@ -139,6 +139,20 @@ int	*combine_colors(int *a, int *b)
 	result[2] = ((a[2] * b[2]) / 255);
 	return (result);
 }
+
+int	*multiply_scale(int *color, float scale)
+{
+	int *result;
+
+	result = malloc(3 * sizeof(int));
+	if (!result)
+		return (NULL);
+	result[0] = color[0] * scale;
+	result[1] = color[1] * scale;
+	result[2] = color[2] * scale;
+	return (result);
+
+}
 /*
 static float	clamp_color(float n)
 {
