@@ -22,11 +22,26 @@ typedef struct	s_light
 
 typedef struct s_material
 {
-	float	*color[4];
+	int	*color[4];
 	float	ambient;
 	float	diffuse;
 	float	specular;
 	float	shininess;
 }	t_material;
+
+typedef struct s_lightdot
+{
+	int 	*ambient;
+	int 	*diffuse;
+	int		*specular;
+	int		result[3];
+	int		*effective_color;
+    float	*lightv; 
+    int	*temp;
+    float	light_dot_normal;
+    float	*reflectv;
+    float	reflect_dot_eye;
+    float	factor;
+}	t_lightdot;
 
 #endif
