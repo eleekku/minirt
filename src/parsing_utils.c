@@ -2,6 +2,7 @@
 
 void    malloc_objects(t_scene *scene)
 {
+   // printf("im here spheres is %d\n", scene->spheres);
     if (scene->spheres > 0)
     {
     scene->sp = malloc(sizeof(t_sphere) * scene->spheres);

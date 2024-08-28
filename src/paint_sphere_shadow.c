@@ -47,6 +47,7 @@ int	paint_sphere_shadow(mlx_image_t *img, t_sphere *sphere, t_scene *scene)
 	float **ray;
 	int x;
 	int y;
+	float *normal;
 
 	wall_z = 10;
 	canvas_pixels = 2000;
@@ -65,9 +66,24 @@ int	paint_sphere_shadow(mlx_image_t *img, t_sphere *sphere, t_scene *scene)
 	sphere.diameter = 1;*/
 	//scene->camc[3] = 1;
 	add_ambient(img, scene);
-	int spcol;
+	//int spcol;
+	t_object	object;
+	object.s = SPHERE;
+	object.coord = scene->sp[0].center;
+	object.diameter = scene->sp[0].diameter;
+	object.color[0] = scene->sp[0].color[0];
+	object.color[1] = scene->sp[0].color[1];
+	object.color[2] = scene->sp[0].color[2];
+	object.transform = create_identity();
+	object.normv[0] = 0;
+	object.normv[1] = 0;
+	object.normv[2] = 0;
+	object.height = 0;
+	object.material = material(scene, 0);
+	float	*eyev;
+	int *spcol;
 
-	spcol = colors_to_int(sphere->color, 266);
+//	spcol = colors_to_int(sphere->color, 266);
 	
 	for (y = 0; y < canvas_pixels - 1; y++)
 	{
@@ -80,7 +96,12 @@ int	paint_sphere_shadow(mlx_image_t *img, t_sphere *sphere, t_scene *scene)
 			xs = intersects(sphere, ray);
 			if (hit(xs).t != -1)
 			{
-				mlx_put_pixel(img, x, y, spcol);
+			position = ray_position(ray, hit(xs).t);
+			normal = normal_at(&object, position);
+			eyev = negate_vector(ray[1]);
+			spcol = lighting(scene, scene->light.position, eyev, normal);
+			int color = colors_to_int(spcol, 255);
+			mlx_put_pixel(img, x, y, color);
 			}
 		}
 	}

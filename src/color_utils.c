@@ -151,7 +151,6 @@ int	*multiply_scale(int *color, float scale)
 	result[1] = color[1] * scale;
 	result[2] = color[2] * scale;
 	return (result);
-
 }
 /*
 static float	clamp_color(float n)

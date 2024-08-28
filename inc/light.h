@@ -37,7 +37,7 @@ typedef struct s_lightdot
 	int		result[3];
 	int		*effective_color;
     float	*lightv; 
-    int	*temp;
+    int		*temp;
     float	light_dot_normal;
     float	*reflectv;
     float	reflect_dot_eye;

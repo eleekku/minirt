@@ -27,24 +27,23 @@ void    free_lightutils(t_lightdot *light)
 
 int    *lighting(t_scene *scene, float *point, float *eyev, float *normalv)
 {
-    t_lightdot  lightdot;
-
-    lightdot.effective_color = combine_colors(scene->sp[0].color, scene->light.color);
-    if (!lightdot.effective_color)
+    scene->lightdot.effective_color = combine_colors(scene->sp[0].color, scene->light.color);
+    if (!scene->lightdot.effective_color)
         exit (1);
-    lightdot.lightv = normalize(tuple_subs(scene->light.position, point));
-    lightdot.ambient = multiply_scale(lightdot.effective_color, scene->material.ambient);
-    lightdot.light_dot_normal = dot_product(normalv, lightdot.lightv);
-    lightdot.temp = multiply_scale(lightdot.effective_color, scene->material.diffuse);
-    lightdot.diffuse = multiply_scale(lightdot.temp, lightdot.light_dot_normal);
-    free (lightdot.temp);
-    lightdot.reflectv = reflect(negate_vector(lightdot.lightv), normalv);
-    lightdot.reflect_dot_eye = dot_product(lightdot.reflectv, eyev);
-    lightdot.factor = pow(lightdot.reflect_dot_eye, scene->material.shininess);
-    lightdot.temp = multiply_scale(scene->light.color, scene->material.specular);
-    lightdot.specular = multiply_scale(lightdot.temp, lightdot.factor);
-    lightdot.result[0] = lightdot.ambient[0] + lightdot.diffuse[0] + lightdot.specular[0];
-    lightdot.result[1] = lightdot.ambient[1] + lightdot.diffuse[1] + lightdot.specular[1];
-    lightdot.result[2] = lightdot.ambient[2] + lightdot.diffuse[2] + lightdot.specular[2];
-    free_lightutils(&lightdot);
+    scene->lightdot.lightv = normalize(tuple_subs(scene->light.position, point));
+    scene->lightdot.ambient = multiply_scale(scene->lightdot.effective_color, scene->material.ambient);
+    scene->lightdot.light_dot_normal = dot_product(normalv, scene->lightdot.lightv);
+    scene->lightdot.temp = multiply_scale(scene->lightdot.effective_color, scene->material.diffuse);
+    scene->lightdot.diffuse = multiply_scale(scene->lightdot.temp, scene->lightdot.light_dot_normal);
+    free (scene->lightdot.temp);
+    scene->lightdot.reflectv = reflect(negate_vector(scene->lightdot.lightv), normalv);
+    scene->lightdot.reflect_dot_eye = dot_product(scene->lightdot.reflectv, eyev);
+    scene->lightdot.factor = pow(scene->lightdot.reflect_dot_eye, scene->material.shininess);
+    scene->lightdot.temp = multiply_scale(scene->light.color, scene->material.specular);
+    scene->lightdot.specular = multiply_scale(scene->lightdot.temp, scene->lightdot.factor);
+    scene->lightdot.result[0] = scene->lightdot.ambient[0] + scene->lightdot.diffuse[0] + scene->lightdot.specular[0];
+    scene->lightdot.result[1] = scene->lightdot.ambient[1] + scene->lightdot.diffuse[1] + scene->lightdot.specular[1];
+    scene->lightdot.result[2] = scene->lightdot.ambient[2] + scene->lightdot.diffuse[2] + scene->lightdot.specular[2];
+    free_lightutils(&scene->lightdot);
+    return(scene->lightdot.result);
 }

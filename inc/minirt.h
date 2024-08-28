@@ -98,6 +98,7 @@ typedef struct s_scene
     int         fow;
     t_light     light;
     t_material  material;
+    t_lightdot  lightdot;
    // float       lightc[4];
     //float       brightness;
     t_object    *objects;
@@ -143,6 +144,7 @@ int	*combine_colors(int *a, int *b);
 int	*multiply_scale(int *color, float scale);
 
 t_material  material(t_scene *scene, int i);
+int    *lighting(t_scene *scene, float *point, float *eyev, float *normalv);
 
 /*** Definitions ***/
 float	        *tuple(float a, float b, float c, float w);
