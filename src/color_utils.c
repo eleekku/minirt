@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 15:03:01 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/07/17 15:24:00 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/08/29 15:16:59 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,24 +19,30 @@ static float	clamp_color(float n)
 	return (n);
 }
 
-t_tuple	conv_color_for(t_tuple a)
+float	*conv_color_for(float *a)
 {
-	t_tuple	r;
+	float	*r;
 
-	r.x = a.x / 256;
-	r.y = a.y / 256;
-	r.z = a.z / 256;
-	r.w = 0;
+	r = create_vector(0, 0, 0);
+	if (!r)
+		return (NULL);
+	r[0] = a[0] / 256;
+	r[1] = a[1] / 256;
+	r[2] = a[2] / 256;
+	r[3] = 0;
 	return (r);
 }
 
-t_tuple	conv_color_back(t_tuple a)
+float	*conv_color_back(float *a)
 {
-	t_tuple	r;
+	float	*r;
 
-	r.x = clamp_color(a.x * 256);
-	r.y = clamp_color(a.y * 256);
-	r.z = clamp_color(a.z * 256);
-	r.w = 0;
+	r = create_vector(0, 0, 0);
+	if (!r)
+		return (NULL);
+	r[0] = clamp_color(a[0] * 256);
+	r[1] = clamp_color(a[1] * 256);
+	r[2] = clamp_color(a[2] * 256);
+	r[3] = 0;
 	return (r);
 }
