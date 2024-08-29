@@ -113,7 +113,7 @@ int	colors_to_int(int *colors, int intensity)
 	char	*intens;
 
 	string = strjoin_colors(int_to_hex(colors[0]), int_to_hex(colors[1]), int_to_hex(colors[2]));
-	if (intensity == 266)
+	if (intensity == 256)
 		result = ft_atoi_baseintense(string, 16);
 	else
 	{
