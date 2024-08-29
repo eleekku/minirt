@@ -83,7 +83,7 @@ void  check_file(char *file, t_scene *scene, t_bool flag)
     int fd;
 
 
-    printf("spheres is %d planes is %d and cylinders is %d\n", scene->spheres, scene->planes, scene->cylinders);
+ //   printf("spheres is %d planes is %d and cylinders is %d\n", scene->spheres, scene->planes, scene->cylinders);
     len = ft_strlen(file);
     if (ft_strncmp(file + (len - 3), ".rt", 3) != 0)
         exit_error("File must be in format .rt", NULL, NULL);

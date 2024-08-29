@@ -39,7 +39,10 @@ float   *normalize(float *a)
 	i = 0;
     mag = magnitude(a);
 	if (mag == 0)
+	{
+	printf("normalise float is %f %f %f %f\n", a[0], a[1], a[2], a[3]);
 	printf("mag is %f\n", mag);
+	}
 	while (i < 4)
 	{
 		p[i] = a[i] / mag;

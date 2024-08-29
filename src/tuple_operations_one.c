@@ -40,6 +40,7 @@ float	*tuple_subs(float *a, float *b)
 	if (!p)
 		return (NULL);
 	i = 0;
+//	printf("float a is %f, %f, %f, %f\n", a[0], a[1], a[2], a[3]);
 	while (i < 4)
 	{
 		p[i] = a[i] - b[i];
@@ -55,6 +56,7 @@ float	*tuple_subs(float *a, float *b)
 
 float	*negate_vector(float *a)
 {
+//	printf("this is what u passed %f\n", a[3]);
 	return (tuple_subs(tuple(0, 0, 0, 0), a));
 }
 

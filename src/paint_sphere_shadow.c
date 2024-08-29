@@ -84,9 +84,12 @@ int	paint_sphere_shadow(mlx_image_t *img, t_sphere *sphere, t_scene *scene)
 	int *spcol;
 
 //	spcol = colors_to_int(sphere->color, 266);
-	
+//	printf("hola\n");
+	printf("ligh values: %f %f %f %f\n", scene->light.position[0], scene->light.position[1], scene->light.position[2], scene->light.position[3]);	
 	for (y = 0; y < canvas_pixels - 1; y++)
 	{
+	//	if (y == 0)
+	//		exit (1);
 		world_y = half - pixel_size * y;
 		for (x = 0; x < canvas_pixels - 1; x++)
 		{
@@ -96,12 +99,20 @@ int	paint_sphere_shadow(mlx_image_t *img, t_sphere *sphere, t_scene *scene)
 			xs = intersects(sphere, ray);
 			if (hit(xs).t != -1)
 			{
-			position = ray_position(ray, hit(xs).t);
-			normal = normal_at(&object, position);
-			eyev = negate_vector(ray[1]);
-			spcol = lighting(scene, scene->light.position, eyev, normal);
-			int color = colors_to_int(spcol, 255);
-			mlx_put_pixel(img, x, y, color);
+				printf("I did hit\n");
+			//	(void)eyev;
+			//	(void)normal;
+			float	*rayposition = ray_position(ray, hit(xs).t);
+			//	printf("position is %f\n", position[3]);
+				normal = normal_at(&object, rayposition);
+			//	printf("we have normal\n");
+				eyev = negate_vector(ray[1]);
+			//	printf("we have eyev\n");
+				spcol = lighting(scene, position, eyev, normal);
+			//	printf("CONGRAZ YOU CALCULATED LIGHTNIN\n");
+				int color = colors_to_int(spcol, 255);
+				mlx_put_pixel(img, x, y, color);
+			//	printf("i printed in theory");
 			}
 		}
 	}

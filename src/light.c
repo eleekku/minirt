@@ -30,12 +30,14 @@ int    *lighting(t_scene *scene, float *point, float *eyev, float *normalv)
     scene->lightdot.effective_color = combine_colors(scene->sp[0].color, scene->light.color);
     if (!scene->lightdot.effective_color)
         exit (1);
+//printf("ligh values: %f %f %f %f\n", scene->light.position[0], scene->light.position[1], scene->light.position[2], scene->light.position[3]);	
     scene->lightdot.lightv = normalize(tuple_subs(scene->light.position, point));
     scene->lightdot.ambient = multiply_scale(scene->lightdot.effective_color, scene->material.ambient);
     scene->lightdot.light_dot_normal = dot_product(normalv, scene->lightdot.lightv);
     scene->lightdot.temp = multiply_scale(scene->lightdot.effective_color, scene->material.diffuse);
     scene->lightdot.diffuse = multiply_scale(scene->lightdot.temp, scene->lightdot.light_dot_normal);
     free (scene->lightdot.temp);
+//    printf("halfway there the lightv is %f %f %f %f\n", scene->lightdot.lightv[0], scene->lightdot.lightv[1], scene->lightdot.lightv[2], scene->lightdot.lightv[3]);
     scene->lightdot.reflectv = reflect(negate_vector(scene->lightdot.lightv), normalv);
     scene->lightdot.reflect_dot_eye = dot_product(scene->lightdot.reflectv, eyev);
     scene->lightdot.factor = pow(scene->lightdot.reflect_dot_eye, scene->material.shininess);
