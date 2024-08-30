@@ -117,9 +117,9 @@ int	main(int argc, char **argv)
     }
     check_file(argv[1], &scene, FALSE);
     scene.material = material(&scene, 0);
-    scene.light.color[0] = 200;
-    scene.light.color[1] = 200;
-    scene.light.color[2] = 200;
+    scene.light.color[0] = 201;
+    scene.light.color[1] = 201;
+    scene.light.color[2] = 201;
 
     /*
     float a[] = {8,-5,9,2};
@@ -160,7 +160,7 @@ int	main(int argc, char **argv)
     if (!mlx) exit(1);
 
     // Create a 250x250 image.
-    mlx_image_t* img = mlx_new_image(mlx, 2000, 2000);
+    mlx_image_t* img = mlx_new_image(mlx, 1200, 1200);
 
     // Set the channels of each pixel in our image to the maximum byte value of 255. 
     memset(img->pixels, 150, img->width * img->height * sizeof(int));

@@ -24,9 +24,9 @@ void	add_ambient(mlx_image_t *img, t_scene *scene)
 	x = 0;
 	y = 0;
 	color = colors_to_int(scene->amcolor, intensity);
-	while (x < 2000)
+	while (x < 1200)
 	{
-		while (y < 2000)
+		while (y < 1200)
 		{
 			mlx_put_pixel(img, x, y, color);
 			y++;
@@ -50,7 +50,7 @@ int	paint_sphere_shadow(mlx_image_t *img, t_sphere *sphere, t_scene *scene)
 	float *normal;
 
 	wall_z = 10;
-	canvas_pixels = 2000;
+	canvas_pixels = 1200;
 	wall_size = 7;
 	half = wall_size / 2;
 	pixel_size = wall_size / canvas_pixels;
@@ -65,7 +65,7 @@ int	paint_sphere_shadow(mlx_image_t *img, t_sphere *sphere, t_scene *scene)
 	sphere.coord[2] = 0;
 	sphere.diameter = 1;*/
 	//scene->camc[3] = 1;
-	add_ambient(img, scene);
+//	add_ambient(img, scene);
 	//int spcol;
 	t_object	object;
 	object.s = SPHERE;
@@ -83,9 +83,9 @@ int	paint_sphere_shadow(mlx_image_t *img, t_sphere *sphere, t_scene *scene)
 	float	*eyev;
 	int *spcol;
 	(void)img;
+	t_intersection hitpoint;
 //	spcol = colors_to_int(sphere->color, 266);
 //	printf("hola\n");
-	printf("ligh values: %f %f %f %f\n", scene->light.position[0], scene->light.position[1], scene->light.position[2], scene->light.position[3]);	
 	for (y = 0; y < canvas_pixels - 1; y++)
 	{
 	//	if (y == 0)
@@ -97,12 +97,13 @@ int	paint_sphere_shadow(mlx_image_t *img, t_sphere *sphere, t_scene *scene)
 			position = tuple(world_x, world_y, wall_z, 1);
 			ray = create_ray(scene->camc, normalize(tuple_subs(position, scene->camc)));
 			xs = intersects(sphere, ray);
-			if (hit(xs).t != -1)
+			hitpoint = hit(xs);
+			if (hitpoint.t != -1)
 			{
 			//	printf("I did hit\n");
 			//	(void)eyev;
 			//	(void)normal;
-			float	*rayposition = ray_position(ray, hit(xs).t);
+			float	*rayposition = ray_position(ray, hitpoint.t);
 			//	printf("position is %f\n", position[3]);
 				normal = normal_at(&object, rayposition);
 			//	printf("we have normal\n");
@@ -114,8 +115,14 @@ int	paint_sphere_shadow(mlx_image_t *img, t_sphere *sphere, t_scene *scene)
 			//	printf("CONGRAZ YOU CALCULATED LIGHTNIN\n");
 				int color = colors_to_int(spcol, 256);
 				mlx_put_pixel(img, x, y, color);
+				free(eyev);
+				free(normal);
+				free(rayposition);
 			//	printf("i printed in theory");
 			}
+			free(position);
+			free(ray);
+
 		}
 	}
 	return (1);
