@@ -10,7 +10,7 @@ t_material  material(t_scene *scene, int i)
     material.ambient = scene->alightr;
     material.diffuse = 0.9;
     material.specular = 0.9;
-    material.shininess = 200.0;
+    material.shininess = 900.0;
     return (material);
 }
 
