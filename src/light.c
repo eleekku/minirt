@@ -71,9 +71,9 @@ int    *lighting(t_scene *scene, float *point, float *eyev, float *normalv)
     scene->lightdot.temp = multiply_scale(scene->light.color, scene->material.specular);
     scene->lightdot.specular = multiply_scale(scene->lightdot.temp, scene->lightdot.factor);
     }
-    scene->lightdot.result[0] = scene->lightdot.ambient[0] + scene->lightdot.diffuse[0] + scene->lightdot.specular[0];
-    scene->lightdot.result[1] = scene->lightdot.ambient[1] + scene->lightdot.diffuse[1] + scene->lightdot.specular[1];
-    scene->lightdot.result[2] = scene->lightdot.ambient[2] + scene->lightdot.diffuse[2] + scene->lightdot.specular[2];
+    scene->lightdot.result[0] = clamp_color(scene->lightdot.ambient[0] + scene->lightdot.diffuse[0] + scene->lightdot.specular[0]);
+    scene->lightdot.result[1] = clamp_color(scene->lightdot.ambient[1] + scene->lightdot.diffuse[1] + scene->lightdot.specular[1]);
+    scene->lightdot.result[2] = clamp_color(scene->lightdot.ambient[2] + scene->lightdot.diffuse[2] + scene->lightdot.specular[2]);
     free_lightutils(&scene->lightdot);
     return(scene->lightdot.result);
 }

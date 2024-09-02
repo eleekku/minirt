@@ -113,6 +113,8 @@ int	paint_sphere_shadow(mlx_image_t *img, t_sphere *sphere, t_scene *scene)
 			//	if (spcol[0] != 20 || spcol[1] != 20 || spcol[2] != 20)
 			///	printf("calculated color is %d %d %d\n", spcol[0], spcol[1], spcol[2]);
 			//	printf("CONGRAZ YOU CALCULATED LIGHTNIN\n");
+				if (spcol[1] > 0)
+					printf("color values are %d %d %d\n", spcol[0], spcol[1], spcol[2]);
 				int color = colors_to_int(spcol, 256);
 				mlx_put_pixel(img, x, y, color);
 				free(eyev);

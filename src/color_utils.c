@@ -152,14 +152,14 @@ int	*multiply_scale(int *color, float scale)
 	result[2] = color[2] * scale;
 	return (result);
 }
-/*
-static float	clamp_color(float n)
+
+int	clamp_color(int n)
 {
 	if (n > 255)
 		return (255);
 	return (n);
 }
-
+/*
 void	conv_color_for(int *color)
 {
 	color[0] = color[0] / 256;

@@ -142,6 +142,7 @@ void    free_objects_exit(t_scene *scene, char *message, char **array, char **ar
 int	colors_to_int(int *colors, int intensity);
 int	*combine_colors(int *a, int *b);
 int	*multiply_scale(int *color, float scale);
+int	clamp_color(int n);
 
 t_material  material(t_scene *scene, int i);
 int    *lighting(t_scene *scene, float *point, float *eyev, float *normalv);
