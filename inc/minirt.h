@@ -145,7 +145,7 @@ int	*multiply_scale(int *color, float scale);
 int	clamp_color(int n);
 
 t_material  material(t_scene *scene, int i);
-int    *lighting(t_scene *scene, float *point, float *eyev, float *normalv);
+int    *lighting(t_scene *scene, float *point, float *eyev, float *normalv, int i);
 
 /*** Definitions ***/
 float	        *tuple(float a, float b, float c, float w);
@@ -196,7 +196,7 @@ t_intersections	intersections(int n, t_intersection i, ...);
 t_intersection	hit(t_intersections xs);
 
 /*** Printing ***/
-int paint_sphere_shadow(mlx_image_t *img, t_sphere *sphere, t_scene *scene);
+int paint_sphere_shadow(mlx_image_t *img, t_sphere *sphere, t_scene *scene, int index);
 float	        *normal_at(t_object *object, float *world_p);
 float	*reflect(float *vector, float *normal);
 

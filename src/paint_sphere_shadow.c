@@ -36,7 +36,7 @@ void	add_ambient(mlx_image_t *img, t_scene *scene)
 	}
 }
 
-int	paint_sphere_shadow(mlx_image_t *img, t_sphere *sphere, t_scene *scene)
+int	paint_sphere_shadow(mlx_image_t *img, t_sphere *sphere, t_scene *scene, int index)
 {
 	//t_sphere sphere;
 	t_intersections	xs;
@@ -69,11 +69,11 @@ int	paint_sphere_shadow(mlx_image_t *img, t_sphere *sphere, t_scene *scene)
 	//int spcol;
 	t_object	object;
 	object.s = SPHERE;
-	object.coord = scene->sp[0].center;
-	object.diameter = scene->sp[0].diameter;
-	object.color[0] = scene->sp[0].color[0];
-	object.color[1] = scene->sp[0].color[1];
-	object.color[2] = scene->sp[0].color[2];
+	object.coord = scene->sp[index].center;
+	object.diameter = scene->sp[index].diameter;
+	object.color[0] = scene->sp[index].color[0];
+	object.color[1] = scene->sp[index].color[1];
+	object.color[2] = scene->sp[index].color[2];
 	object.transform = create_identity();
 	object.normv[0] = 0;
 	object.normv[1] = 0;
@@ -109,12 +109,12 @@ int	paint_sphere_shadow(mlx_image_t *img, t_sphere *sphere, t_scene *scene)
 			//	printf("we have normal\n");
 				eyev = negate_vector(ray[1]);
 			//	printf("we have eyev\n");
-				spcol = lighting(scene, position, eyev, normal);
+				spcol = lighting(scene, position, eyev, normal, index);
 			//	if (spcol[0] != 20 || spcol[1] != 20 || spcol[2] != 20)
 			///	printf("calculated color is %d %d %d\n", spcol[0], spcol[1], spcol[2]);
 			//	printf("CONGRAZ YOU CALCULATED LIGHTNIN\n");
-				if (spcol[1] > 0)
-					printf("color values are %d %d %d\n", spcol[0], spcol[1], spcol[2]);
+			//	if (spcol[1] > 0)
+			//		printf("color values are %d %d %d\n", spcol[0], spcol[1], spcol[2]);
 				int color = colors_to_int(spcol, 256);
 				mlx_put_pixel(img, x, y, color);
 				free(eyev);

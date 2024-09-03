@@ -164,12 +164,12 @@ int	main(int argc, char **argv)
 
     // Set the channels of each pixel in our image to the maximum byte value of 255. 
     memset(img->pixels, 150, img->width * img->height * sizeof(int));
-
+    int i = -1;
     // Draw the image at coordinate (0, 0).
     mlx_image_to_window(mlx, img, 0, 0);
-    paint_sphere_shadow(img, &scene.sp[0], &scene);
-    if (scene.spheres == 2)
-        paint_sphere_shadow(img, &scene.sp[1], &scene);
+    while (++i < scene.spheres)
+        paint_sphere_shadow(img, &scene.sp[i], &scene, i);
+    
 
     // Run the main loop and terminate on quit.  
     mlx_loop(mlx);
