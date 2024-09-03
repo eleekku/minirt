@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 14:40:31 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/08/29 15:22:40 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/03 17:30:05 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,6 +187,7 @@ t_matrix		create_shearing(float *p);
 /*** Rays ***/
 float			**create_ray(float *origin, float *direction);
 float			*ray_position(float **r, float t);
+void	        transform_ray(float **ray, float **matrix);
 
 /*** Spheres  ***/
 t_intersections	intersects(t_sphere *sp, float **r);
