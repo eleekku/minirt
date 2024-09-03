@@ -67,7 +67,7 @@ typedef struct s_object
 
 typedef struct  s_sphere
 {
-    float   coord[3];
+    float   center[4];
     float   diameter;
     int     color[3];
     float   **transform;
@@ -75,15 +75,15 @@ typedef struct  s_sphere
 
 typedef struct  s_plane
 {
-    float       coord[3];
-    float       normv[3];
+    float       coord[4];
+    float       normv[4];
     int         color[3];
 }   t_plane;
 
 typedef struct  s_cylinder
 {
-    float   coord[3];
-    float   normv[3];
+    float   coord[4];
+    float   normv[4];
     float   diameter;
     float   height;
     int     color[3];
@@ -93,11 +93,14 @@ typedef struct s_scene
 {
     float       alightr;
     int         amcolor[3];
-    float         camc[3];
-    float         normv[3];
+    float         camc[4];
+    float         normv[4];
     int         fow;
-    float       lightc[3];
-    float       brightness;
+    t_light     light;
+    t_material  material;
+    t_lightdot  lightdot;
+   // float       lightc[4];
+    //float       brightness;
     t_object    *objects;
     int         spheres;
     int         planes;
@@ -120,11 +123,28 @@ typedef struct s_intersection
 	char	object;
 }	t_intersection;
 
-void        free_array(char **args);
-void        exit_error(char *msg, char **args, t_scene *scene);
-t_bool      validate_values(char *arg, char **args, t_scene *scene);
-char        **safe_split(char *string, char separator);
-float       fill_value(char *arg, char **args, char **coordinates, t_scene *scene);
+/*** Parsing ***/
+void  check_file(char *file, t_scene *scene, t_bool flag);
+char    **safe_split(char *string, char separator);
+void    free_array(char **args);
+void    exit_error(char *msg, char **args, t_scene *scene);
+t_bool    validate_values(char *arg, char **args, t_scene *scene);
+float    fill_value(char *arg, char **args, char **coordinates, t_scene *scene);
+void    free_objects(t_scene *scene);
+void    malloc_objects(t_scene *scene);
+void    parse_sphere(char **args, t_scene *scene, int index);
+void    parse_plane(char **args, t_scene *scene, int index);
+void    parse_cylinder(char **args, t_scene *scene, int index);
+t_bool  validate_line(char **args, t_scene *scene);
+void    free_objects_exit(t_scene *scene, char *message, char **array, char **args);
+
+
+int	colors_to_int(int *colors, int intensity);
+int	*combine_colors(int *a, int *b);
+int	*multiply_scale(int *color, float scale);
+
+t_material  material(t_scene *scene, int i);
+int    *lighting(t_scene *scene, float *point, float *eyev, float *normalv);
 
 /*** Definitions ***/
 float	        *tuple(float a, float b, float c, float w);
@@ -169,16 +189,18 @@ float			**create_ray(float *origin, float *direction);
 float			*ray_position(float **r, float t);
 
 /*** Spheres  ***/
-t_intersections	intersects(t_object *sp, float **r);
+t_intersections	intersects(t_sphere *sp, float **r);
 t_intersection	intersection(float t, char object);
 t_intersections	intersections(int n, t_intersection i, ...);
 t_intersection	hit(t_intersections xs);
 
+/*** Printing ***/
+int paint_sphere_shadow(mlx_image_t *img, t_sphere *sphere, t_scene *scene);
 float	        *normal_at(t_object *object, float *world_p);
 float	*reflect(float *vector, float *normal);
 
 /*** Printing ***/
-int	paint_sphere_shadow(mlx_image_t *img);
+//int	paint_sphere_shadow(mlx_image_t *img);
 int print_matrix(float **m, int size);
 
 /*** Matrix utils ***/

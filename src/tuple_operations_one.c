@@ -40,13 +40,17 @@ float	*tuple_subs(float *a, float *b)
 	if (!p)
 		return (NULL);
 	i = 0;
+//	printf("float a is %f, %f, %f, %f\n", a[0], a[1], a[2], a[3]);
 	while (i < 4)
 	{
 		p[i] = a[i] - b[i];
 		i++;
 	}
 	if (p[3] < 0)
+	{
 		printf("Error: Substracting wrong parameters. Unexpected result\n");
+		exit(1);
+	}
 	return (p);
 }
 

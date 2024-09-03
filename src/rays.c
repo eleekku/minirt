@@ -42,10 +42,14 @@ float	*ray_position(float **r, float t)
 	if (!p)
 		return (NULL);
 	i = 0;
+//	printf("float t is %f\n", t);
 	while (i < 3)
-	{
+	{	
+//		printf("r[0][i] = %f and r[1][i] = %f\n", r[0][i], r[1][i]);
 		p[i] = r[0][i] + r[1][i] * t;
+//		printf("p[i] is %f\n", p[i]);
 		i++;
 	}
+	p[i] = 1;
 	return (p);
 }

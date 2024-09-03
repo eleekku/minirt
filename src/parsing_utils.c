@@ -1,35 +1,33 @@
 #include "../inc/minirt.h"
 
-void    free_array(char **args)
+void    malloc_objects(t_scene *scene)
 {
-    int i;
-
-    i = -1;
-    if (!args)
-        return;
-    while(args[++i])
-        free(args[i]);
-    free(args);
-}
-
-void    free_objects(t_scene *scene)
-{
-    if (scene->sp)
-        free(scene->sp);
-    if (scene->pl)
-        free(scene->pl);
-    if (scene->cy)
-        free(scene->cy);
-}
-
-void    exit_error(char *msg, char **args, t_scene *scene)
-{
-    if (args)
-        free_array(args);
-    if (scene)
-        free_objects(scene);
-    ft_printf(2, "Error\n%s\n", msg);
-    exit(1);
+   // printf("im here spheres is %d\n", scene->spheres);
+    if (scene->spheres > 0)
+    {
+    scene->sp = malloc(sizeof(t_sphere) * scene->spheres);
+        if (!scene->sp)
+            exit_error("malloc error", NULL, NULL);
+    }
+    if (scene->planes > 0)
+    {
+    scene->pl = malloc(sizeof(t_plane) * scene->planes);
+        if (!scene->pl)
+        {
+            free(scene->sp);
+            exit_error("malloc error", NULL, NULL);
+        }
+    }
+    if (scene->cylinders > 0)
+    {
+    scene->cy = malloc(sizeof(t_cylinder) * scene->cylinders);
+        if (!scene->cy)
+        {
+            free(scene->sp);
+            free(scene->pl);
+            exit_error("malloc error", NULL, NULL);
+        }
+    }
 }
 
 t_bool    validate_values(char *arg, char **args, t_scene *scene)
