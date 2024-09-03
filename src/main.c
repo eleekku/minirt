@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 17:47:42 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/08/21 15:04:52 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/02 15:07:12 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,8 @@ int	main(void)
     v = create_vector(0, -1, 0);
     n = create_vector(sqrt(2)/2, sqrt(2)/2, 0);
     print_float_array(reflect(v, n));
+    free(v);
+    free(n);
 	//mlx_t* mlx = mlx_init(1080, 1080, "MLX42", true);
     
   //  if (!mlx) exit(1);

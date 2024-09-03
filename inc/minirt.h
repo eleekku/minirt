@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 14:40:31 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/08/21 16:20:10 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/08/29 15:22:40 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,4 +209,7 @@ void        clear_matrix(t_matrix *matrix, int i);
 
 /*** Possible to remove maybe later who knows */
 float	*four_one_multiply(float **a, float *b);
+
+/*** Color ***/
+float	*conv_color_for(float *a);
 #endif
