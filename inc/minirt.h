@@ -144,7 +144,7 @@ int	*combine_colors(int *a, int *b);
 int	*multiply_scale(int *color, float scale);
 int	clamp_color(int n);
 
-t_material  material(t_scene *scene, int i);
+t_material  material(t_scene *scene);
 int    *lighting(t_scene *scene, float *point, float *eyev, float *normalv, int i);
 
 /*** Definitions ***/

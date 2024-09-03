@@ -2,7 +2,7 @@ NAME	:= minirt
 
 #Compiler options#
 CC		:= cc
-CFLAGS	:= -Wextra -Wall -Werror -Wunreachable-code -Ofast
+CFLAGS	:= -Wextra -Wall -Werror -g -Wunreachable-code -Ofast
 
 LIBMLX	:= ./lib/MLX42
 SRCDIR  := ./src

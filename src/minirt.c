@@ -116,7 +116,7 @@ int	main(int argc, char **argv)
         exit (1);
     }
     check_file(argv[1], &scene, FALSE);
-    scene.material = material(&scene, 0);
+    scene.material = material(&scene);
     scene.light.color[0] = 201;
     scene.light.color[1] = 201;
     scene.light.color[2] = 201;
@@ -154,7 +154,8 @@ int	main(int argc, char **argv)
     //printf("%f\n", dot_product(tuple(1,2,3,0), tuple(2,3,4,0)));
     //print_float_array(vector_cross_prod(tuple(1,2,3,0), tuple(2,3,4,0)));
     //print_matrix(matrix_multiply(matrix(a, b, c, d), matrix(ab,bb,cb,db)));
-*/    
+*/
+ 
 	mlx_t* mlx = mlx_init(1080, 1080, "MLX42", true);
     
     if (!mlx) exit(1);
@@ -173,8 +174,10 @@ int	main(int argc, char **argv)
 
     // Run the main loop and terminate on quit.  
     mlx_loop(mlx);
-    mlx_terminate(mlx);
-
+    mlx_terminate(mlx); 
+    free(scene.sp);
+    free(scene.cy);
+    free(scene.pl);
     
     return (0);
 }

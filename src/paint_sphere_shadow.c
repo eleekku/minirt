@@ -79,7 +79,7 @@ int	paint_sphere_shadow(mlx_image_t *img, t_sphere *sphere, t_scene *scene, int 
 	object.normv[1] = 0;
 	object.normv[2] = 0;
 	object.height = 0;
-	object.material = material(scene, 0);
+	object.material = material(scene);
 	float	*eyev;
 	int *spcol;
 	(void)img;
@@ -116,6 +116,7 @@ int	paint_sphere_shadow(mlx_image_t *img, t_sphere *sphere, t_scene *scene, int 
 			//	if (spcol[1] > 0)
 			//		printf("color values are %d %d %d\n", spcol[0], spcol[1], spcol[2]);
 				int color = colors_to_int(spcol, 256);
+				(void)color;
 				mlx_put_pixel(img, x, y, color);
 				free(eyev);
 				free(normal);

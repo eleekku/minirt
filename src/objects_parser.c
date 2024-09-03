@@ -1,12 +1,13 @@
 #include "../inc/minirt.h"
 
-void    parse_cylinder2(char **args, t_scene *scene, int index)
+void    parse_cylinder2(char **args, t_scene *scene, int index, char **freethis)
 {
         float   value;
         char    **rgb;
         int     i;
         int     temp;
 
+        free_array(freethis);
         value = fill_value(args[3], args, NULL, scene);
         if (value <= 0.0)
             free_objects_exit(scene, "Invalid cylinder diameter value", args, NULL);
@@ -54,16 +55,17 @@ void    parse_cylinder(char **args, t_scene *scene, int index)
             scene->pl[index].normv[i] = temp;
         }
         scene->pl[index].normv[i] = 0;
-        parse_cylinder2(args, scene, index);
+        parse_cylinder2(args, scene, index, values);
 }
 
-static void    parse_planergb(char **args, t_scene *scene, int index)
+static void    parse_planergb(char **args, t_scene *scene, int index, char **values)
 {
         char    **rgb;
         int     i;
         int     temp;
 
         i = -1;
+        free_array(values);
         validate_values(args[3], args, scene);
         rgb = safe_split(args[3], ',');
         while (++i < 2)
@@ -102,7 +104,7 @@ void    parse_plane(char **args, t_scene *scene, int index)
             scene->pl[index].normv[i] = temp;
         }
         scene->pl[index].normv[i] = 0;
-        parse_planergb(args, scene, index); 
+        parse_planergb(args, scene, index, values); 
 }
 
 void    parse_sphere(char **args, t_scene *scene, int index)
