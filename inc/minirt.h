@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 14:40:31 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/03 17:30:05 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/04 11:14:53 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,6 +207,8 @@ int print_matrix(float **m, int size);
 /*** Matrix utils ***/
 t_matrix    create_identity(void);
 void        clear_matrix(t_matrix *matrix, int i);
+void	    free_matrix(float	**matrix);
+
 
 /*** Possible to remove maybe later who knows */
 float	*four_one_multiply(float **a, float *b);

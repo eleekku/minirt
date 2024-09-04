@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 15:46:54 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/03 17:33:13 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/04 13:06:33 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 void	transform_ray(float **ray, float **matrix)
 {
-	float	*tmp;
+	//float	*tmp;
 	
-	tmp = ray[0];
+	//tmp = ray[0];
 	ray[0] = four_one_multiply(matrix, ray[0]);
-	tmp = ray[1];
+	//tmp = ray[1];
 	ray[1] = four_one_multiply(matrix, ray[1]);
 }
 
