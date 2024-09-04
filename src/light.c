@@ -3,10 +3,11 @@
 t_material  material(t_scene *scene)
 {
     t_material material;
+
     material.ambient = scene->alightr;
     material.diffuse = 0.9;
     material.specular = 0.9;
-    material.shininess = 900.0;
+    material.shininess = 400.0;
     return (material);
 }
 
@@ -39,12 +40,14 @@ int *fill_color(int rgbvalue)
 int    *lighting(t_scene *scene, float *point, float *eyev, float *normalv, int i)
 {
     scene->lightdot.effective_color = combine_colors(scene->sp[i].color, scene->light.color);
-    scene->lightdot.effective_color = combine_colors(scene->lightdot.effective_color, scene->amcolor);
+  //  scene->lightdot.effective_color = combine_colors(scene->lightdot.effective_color, scene->amcolor);
     if (!scene->lightdot.effective_color)
         exit (1);
 //printf("ligh values: %f %f %f %f\n", scene->light.position[0], scene->light.position[1], scene->light.position[2], scene->light.position[3]);	
     scene->lightdot.lightv = normalize(tuple_subs(scene->light.position, point));
-    scene->lightdot.ambient = multiply_scale(scene->lightdot.effective_color, scene->material.ambient);
+    scene->lightdot.temp = combine_colors(scene->lightdot.effective_color, scene->amcolor);
+    scene->lightdot.ambient = multiply_scale(scene->lightdot.temp, scene->material.ambient);
+    free(scene->lightdot.temp);
     scene->lightdot.light_dot_normal = dot_product(normalv, scene->lightdot.lightv);
     if (scene->lightdot.light_dot_normal < 0)
     {
