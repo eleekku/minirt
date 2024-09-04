@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 12:01:28 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/08/20 13:53:30 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/03 17:38:19 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	add_ambient(mlx_image_t *img, t_scene *scene)
 
 int	paint_sphere_shadow(mlx_image_t *img, t_sphere *sphere, t_scene *scene, int index)
 {
+	t_matrix motrix;
 	//t_sphere sphere;
 	t_intersections	xs;
 	float *position;
@@ -86,6 +87,9 @@ int	paint_sphere_shadow(mlx_image_t *img, t_sphere *sphere, t_scene *scene, int 
 	t_intersection hitpoint;
 //	spcol = colors_to_int(sphere->color, 266);
 //	printf("hola\n");
+	//motrix = create_identity();
+	//motrix = create_translate(3, 4, 5);
+	motrix = create_scaling(9, 9, 9);
 	for (y = 0; y < canvas_pixels - 1; y++)
 	{
 	//	if (y == 0)
@@ -96,6 +100,7 @@ int	paint_sphere_shadow(mlx_image_t *img, t_sphere *sphere, t_scene *scene, int 
 			world_x = -half + pixel_size * x;
 			position = tuple(world_x, world_y, wall_z, 1);
 			ray = create_ray(scene->camc, normalize(tuple_subs(position, scene->camc)));
+			transform_ray(ray, inverse_matrix(motrix).m);
 			xs = intersects(sphere, ray);
 			hitpoint = hit(xs);
 			if (hitpoint.t != -1)

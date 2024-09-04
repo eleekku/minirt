@@ -77,3 +77,23 @@ int    *lighting(t_scene *scene, float *point, float *eyev, float *normalv, int 
     free_lightutils(&scene->lightdot);
     return(scene->lightdot.result);
 }
+/*
+t_light	*point_light(float *pos, float *intensity)
+{
+	t_light	*light;
+
+	light = malloc(sizeof(t_light));
+	if (!light)
+		return (NULL);
+	light->position = pos;
+	light->color = conv_color_for(intensity);
+	return (light);
+}
+
+float	*lighting(t_material	*m, t_light *l, float *point, t_vectors v)
+{
+	t_lighting	lighting;
+	
+	lighting.eff_color = 
+}
+*/

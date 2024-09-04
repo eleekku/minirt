@@ -44,42 +44,6 @@
 	return (1);
 }*/
 
-int print_matrix(float **m, int size)
-{
-    int i;
-    int j;
-
-    i = 0;
-    printf("Matrix: \n");
-    while (i < size)
-    {
-        j = 0;
-        while (j < size)
-        {
-            printf("%f ", m[i][j]);
-            j++;
-        }
-        printf("\n");
-        i++;
-    }
-    return (1);
-}
-
-int print_float_array(float *a)
-{   
-    int i;
-    
-    i = 0;
-    printf("Vector: [");
-    while (i < 3)
-    {
-        printf("%f, ", a[i]);
-        i++;
-    }
-    printf("%f]\n", a[3]);
-    return (0);
-}
-
 int	main(int argc, char **argv)
 {
     t_scene scene;
@@ -116,10 +80,17 @@ int	main(int argc, char **argv)
         exit (1);
     }
     check_file(argv[1], &scene, FALSE);
+<<<<<<< HEAD
     scene.material = material(&scene);
     scene.light.color[0] = 201;
     scene.light.color[1] = 201;
     scene.light.color[2] = 201;
+=======
+    //scene.material = material(&scene, 0);
+    //scene.light.color[0] = 201;
+    //scene.light.color[1] = 201;
+    //scene.light.color[2] = 201;
+>>>>>>> master
 
     /*
     float a[] = {8,-5,9,2};

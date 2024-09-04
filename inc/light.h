@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 16:16:14 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/08/21 16:19:09 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/03 14:30:27 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,21 @@ typedef struct s_lightdot
     float	factor;
 }	t_lightdot;
 
+/*
+typedef struct s_vectors
+{
+	float	*eyev;
+	float	*normal;
+}	t_vectors;
+
+typedef struct s_lighting
+{
+	float	*eff_color;
+	float	*lightv;
+	float	*ambient;
+}	t_lighting;
+
+
+t_light	*point_light(float *pos, float *intensity);
+*/
 #endif

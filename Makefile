@@ -31,7 +31,8 @@ SRCS	:= $(SRCDIR)/minirt.c $(SRCDIR)/definitions.c \
 			$(SRCDIR)/paint_sphere_shadow.c \
 			$(SRCDIR)/normal.c \
 			$(SRCDIR)/matrix_utils.c \
-			$(SRCDIR)/reflection.c
+			$(SRCDIR)/reflection.c \
+			$(SRCDIR)/free.c
 OBJS	:= ${SRCS:.c=.o}
 
 all: libmlx $(LIBFT) $(NAME)

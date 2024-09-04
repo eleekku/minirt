@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   reflection.c                                       :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/21 14:49:26 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/02 15:01:48 by xriera-c         ###   ########.fr       */
+/*   Created: 2024/09/04 11:08:54 by xriera-c          #+#    #+#             */
+/*   Updated: 2024/09/04 11:12:18 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minirt.h"
+#include <stdlib.h>
 
-float	*reflect(float *vector, float *normal)
+void	free_matrix(float	**matrix)
 {
-	float	r;
-	float	*sca_mult_tuple;
-	float	*result;
+	int	i;
 
-	r = 2 * dot_product(vector, normal);
-	sca_mult_tuple = scalar_multi_tuple(normal, r);
-	result = tuple_subs(vector, sca_mult_tuple);
-	free(sca_mult_tuple);
-	return (result);
+	i = 0;
+	while (matrix[i])
+	{
+		free(matrix[i]);
+		i++;
+	}
+	free(matrix);
+	matrix = NULL;
 }
