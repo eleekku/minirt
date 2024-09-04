@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 12:07:16 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/08/12 15:27:30 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/04 11:38:10 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ t_matrix	submatrix(t_matrix a, int i, int j)
 	int			k;
 
 	subm.size = a.size - 1;
-	matrix = malloc((a.size - 1) * sizeof(float *));
+	matrix = malloc(a.size * sizeof(float *));
 	if (!matrix)
 		return (subm);
 	k = -1;
@@ -60,13 +60,20 @@ t_matrix	submatrix(t_matrix a, int i, int j)
 		matrix[k] = copy_row(a.m[k], j);
 	while (++k < a.size)
 		matrix[k - 1] = copy_row(a.m[k], j);
+	matrix[a.size - 1] = NULL;
 	subm.m = matrix;
 	return (subm);
 }
 
 float	minor(t_matrix a, int i, int j)
 {
-	return (determinant(submatrix(a, i, j)));
+	t_matrix	matrix;
+	float		det;
+
+	matrix = submatrix(a, i, j);
+	det = determinant(matrix);
+	free_matrix(matrix.m);
+	return (det);
 }
 
 t_matrix	inverse_matrix(t_matrix a)
@@ -79,16 +86,16 @@ t_matrix	inverse_matrix(t_matrix a)
 	inv.m = NULL;
 	if (determinant(a) == 0)
 		return (inv);
-	inv.m = malloc(a.size * sizeof(float *));
+	inv.m = malloc(4 * sizeof(float *));
 	if (!inv.m)
 		return (inv);
-	inv.size = a.size;
+	inv.size = 4;
 	initialize_matrix(inv);
 	i = -1;
-	while (++i < a.size)
+	while (++i < 4)
 	{
 		j = -1;
-		while (++j < a.size)
+		while (++j < 4)
 		{
 			c = cofactor(a, i, j);
 			inv.m[j][i] = c / determinant(a);

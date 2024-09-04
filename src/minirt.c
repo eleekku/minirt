@@ -44,42 +44,6 @@
 	return (1);
 }*/
 
-int print_matrix(float **m, int size)
-{
-    int i;
-    int j;
-
-    i = 0;
-    printf("Matrix: \n");
-    while (i < size)
-    {
-        j = 0;
-        while (j < size)
-        {
-            printf("%f ", m[i][j]);
-            j++;
-        }
-        printf("\n");
-        i++;
-    }
-    return (1);
-}
-
-int print_float_array(float *a)
-{   
-    int i;
-    
-    i = 0;
-    printf("Vector: [");
-    while (i < 3)
-    {
-        printf("%f, ", a[i]);
-        i++;
-    }
-    printf("%f]\n", a[3]);
-    return (0);
-}
-
 int	main(int argc, char **argv)
 {
     t_scene scene;
@@ -116,10 +80,10 @@ int	main(int argc, char **argv)
         exit (1);
     }
     check_file(argv[1], &scene, FALSE);
-    scene.material = material(&scene, 0);
-    scene.light.color[0] = 201;
-    scene.light.color[1] = 201;
-    scene.light.color[2] = 201;
+    //scene.material = material(&scene, 0);
+    //scene.light.color[0] = 201;
+    //scene.light.color[1] = 201;
+    //scene.light.color[2] = 201;
 
     /*
     float a[] = {8,-5,9,2};
@@ -155,6 +119,7 @@ int	main(int argc, char **argv)
     //print_float_array(vector_cross_prod(tuple(1,2,3,0), tuple(2,3,4,0)));
     //print_matrix(matrix_multiply(matrix(a, b, c, d), matrix(ab,bb,cb,db)));
 */    
+
 	mlx_t* mlx = mlx_init(1080, 1080, "MLX42", true);
     
     if (!mlx) exit(1);
@@ -173,6 +138,5 @@ int	main(int argc, char **argv)
     mlx_loop(mlx);
     mlx_terminate(mlx);
 
-    
     return (0);
 }

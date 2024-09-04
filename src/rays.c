@@ -6,11 +6,21 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 15:46:54 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/07/24 11:38:16 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/04 13:06:33 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minirt.h"
+
+void	transform_ray(float **ray, float **matrix)
+{
+	//float	*tmp;
+	
+	//tmp = ray[0];
+	ray[0] = four_one_multiply(matrix, ray[0]);
+	//tmp = ray[1];
+	ray[1] = four_one_multiply(matrix, ray[1]);
+}
 
 float	**create_ray(float *origin, float *direction)
 {

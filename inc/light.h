@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 16:16:14 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/08/29 16:42:42 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/03 14:30:27 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ typedef struct s_lighting
 }	t_lighting;
 
 
-/*** Light ***/
 t_light	*point_light(float *pos, float *intensity);
 */
 #endif
