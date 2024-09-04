@@ -36,9 +36,14 @@ void	add_ambient(mlx_image_t *img, t_scene *scene)
 	}
 }
 
+void	transfer_vector(float *vector, float **matrix)
+{
+	vector = four_one_multiply(matrix, vector);
+}
+
 int	paint_sphere_shadow(mlx_image_t *img, t_sphere *sphere, t_scene *scene, int index)
 {
-	t_matrix motrix;
+//	t_matrix motrix;
 	//t_sphere sphere;
 	t_intersections	xs;
 	float *position;
@@ -75,7 +80,9 @@ int	paint_sphere_shadow(mlx_image_t *img, t_sphere *sphere, t_scene *scene, int 
 	object.color[0] = scene->sp[index].color[0];
 	object.color[1] = scene->sp[index].color[1];
 	object.color[2] = scene->sp[index].color[2];
-	object.transform = create_identity();
+	float radius = scene->sp[index].diameter / 2;
+//	printf("radius is %f\n", radius);
+	object.transform = create_scaling(radius, radius, radius);
 	object.normv[0] = 0;
 	object.normv[1] = 0;
 	object.normv[2] = 0;
@@ -85,11 +92,15 @@ int	paint_sphere_shadow(mlx_image_t *img, t_sphere *sphere, t_scene *scene, int 
 	int *spcol;
 	(void)img;
 	t_intersection hitpoint;
+//	float **rayforlight;
 //	spcol = colors_to_int(sphere->color, 266);
 //	printf("hola\n");
 	//motrix = create_identity();
 	//motrix = create_translate(3, 4, 5);
-	motrix = create_scaling(9, 9, 9);
+//	float radius = scene->sp[index].diameter / 2;
+//	motrix = create_scaling(radius, radius, radius);
+//	t_matrix inversedmotrix = inverse_matrix(object.transform);
+//	object.transform = motrix;
 	for (y = 0; y < canvas_pixels - 1; y++)
 	{
 	//	if (y == 0)
@@ -100,7 +111,7 @@ int	paint_sphere_shadow(mlx_image_t *img, t_sphere *sphere, t_scene *scene, int 
 			world_x = -half + pixel_size * x;
 			position = tuple(world_x, world_y, wall_z, 1);
 			ray = create_ray(scene->camc, normalize(tuple_subs(position, scene->camc)));
-			transform_ray(ray, inverse_matrix(motrix).m);
+	//		transform_ray(ray, inversedmotrix.m);
 			xs = intersects(sphere, ray);
 			hitpoint = hit(xs);
 			if (hitpoint.t != -1)
@@ -111,6 +122,7 @@ int	paint_sphere_shadow(mlx_image_t *img, t_sphere *sphere, t_scene *scene, int 
 			float	*rayposition = ray_position(ray, hitpoint.t);
 			//	printf("position is %f\n", position[3]);
 				normal = normal_at(&object, rayposition);
+			//	transfer_vector(normal, motrix.m);
 			//	printf("we have normal\n");
 				eyev = negate_vector(ray[1]);
 			//	printf("we have eyev\n");

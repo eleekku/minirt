@@ -7,7 +7,7 @@ t_material  material(t_scene *scene)
     material.ambient = scene->alightr;
     material.diffuse = 0.9;
     material.specular = 0.9;
-    material.shininess = 400.0;
+    material.shininess = 500.0;
     return (material);
 }
 
@@ -15,10 +15,12 @@ void    free_lightutils(t_lightdot *light)
 {
     free(light->ambient);
     free(light->diffuse);
-    free(light->specular);
+    if (light->specular)
+        free(light->specular);
     free(light->effective_color);
     free(light->lightv);
-    free(light->temp);
+    if (light->temp)
+        free(light->temp);
     free(light->reflectv);
 }
 
@@ -59,6 +61,7 @@ int    *lighting(t_scene *scene, float *point, float *eyev, float *normalv, int 
         scene->lightdot.temp = multiply_scale(scene->lightdot.effective_color, scene->material.diffuse);
         scene->lightdot.diffuse = multiply_scale(scene->lightdot.temp, scene->lightdot.light_dot_normal);
         free (scene->lightdot.temp);
+        scene->lightdot.temp = NULL;
     }
 //    printf("halfway there the lightv is %f %f %f %f\n", scene->lightdot.lightv[0], scene->lightdot.lightv[1], scene->lightdot.lightv[2], scene->lightdot.lightv[3]);
     scene->lightdot.reflectv = reflect(negate_vector(scene->lightdot.lightv), normalv);
@@ -70,6 +73,8 @@ int    *lighting(t_scene *scene, float *point, float *eyev, float *normalv, int 
         scene->lightdot.factor = pow(scene->lightdot.reflect_dot_eye, scene->material.shininess);
         scene->lightdot.temp = multiply_scale(scene->light.color, scene->material.specular);
         scene->lightdot.specular = multiply_scale(scene->lightdot.temp, scene->lightdot.factor);
+        free(scene->lightdot.temp);
+        scene->lightdot.temp = NULL;
     }
     scene->lightdot.result[0] = clamp_color(scene->lightdot.ambient[0] + scene->lightdot.diffuse[0] + scene->lightdot.specular[0]);
     scene->lightdot.result[1] = clamp_color(scene->lightdot.ambient[1] + scene->lightdot.diffuse[1] + scene->lightdot.specular[1]);

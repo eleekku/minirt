@@ -80,17 +80,10 @@ int	main(int argc, char **argv)
         exit (1);
     }
     check_file(argv[1], &scene, FALSE);
-<<<<<<< HEAD
     scene.material = material(&scene);
     scene.light.color[0] = 201;
     scene.light.color[1] = 201;
     scene.light.color[2] = 201;
-=======
-    //scene.material = material(&scene, 0);
-    //scene.light.color[0] = 201;
-    //scene.light.color[1] = 201;
-    //scene.light.color[2] = 201;
->>>>>>> master
 
     /*
     float a[] = {8,-5,9,2};
