@@ -84,7 +84,7 @@ int	paint_sphere_shadow(mlx_image_t *img, t_sphere *sphere, t_scene *scene, int 
 //	printf("radius is %f\n", radius);
 	object.transform = create_scaling(radius, radius, radius);
 	object.normv[0] = 0;
-	object.normv[1] = 0;
+	object.normv[1] = 100;
 	object.normv[2] = 0;
 	object.height = 0;
 	object.material = material(scene);
@@ -98,8 +98,8 @@ int	paint_sphere_shadow(mlx_image_t *img, t_sphere *sphere, t_scene *scene, int 
 	//motrix = create_identity();
 	//motrix = create_translate(3, 4, 5);
 //	float radius = scene->sp[index].diameter / 2;
-//	motrix = create_scaling(radius, radius, radius);
-//	t_matrix inversedmotrix = inverse_matrix(object.transform);
+//	t_matrix motrix = create_scaling(radius, radius, radius);
+//	t_matrix inversedmotrix = inverse_matrix(motrix);
 //	object.transform = motrix;
 	for (y = 0; y < canvas_pixels - 1; y++)
 	{
