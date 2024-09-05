@@ -7,20 +7,23 @@ t_material  material(t_scene *scene)
     material.ambient = scene->alightr;
     material.diffuse = 0.9;
     material.specular = 0.9;
-    material.shininess = 500.0;
+    material.shininess = 900.0;
     return (material);
 }
 
 void    free_lightutils(t_lightdot *light)
 {
+//    printf("im here\n");
     free(light->ambient);
     free(light->diffuse);
     if (light->specular)
         free(light->specular);
     free(light->effective_color);
     free(light->lightv);
-    if (light->temp)
-        free(light->temp);
+ //   printf("next im gonna free temp\n");
+ //   if (light->temp)
+ //       free(light->temp);
+ //   printf("done\n");
     free(light->reflectv);
 }
 

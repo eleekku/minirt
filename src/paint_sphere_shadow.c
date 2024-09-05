@@ -55,9 +55,9 @@ int	paint_sphere_shadow(mlx_image_t *img, t_sphere *sphere, t_scene *scene, int 
 	int y;
 	float *normal;
 
-	wall_z = 10;
+	wall_z = 550;
 	canvas_pixels = 1200;
-	wall_size = 7;
+	wall_size = 1200;
 	half = wall_size / 2;
 	pixel_size = wall_size / canvas_pixels;
 //	ray_origin = tuple(0.5, 0.5, -50, 1);
@@ -99,8 +99,9 @@ int	paint_sphere_shadow(mlx_image_t *img, t_sphere *sphere, t_scene *scene, int 
 	//motrix = create_translate(3, 4, 5);
 //	float radius = scene->sp[index].diameter / 2;
 //	t_matrix motrix = create_scaling(radius, radius, radius);
-//	t_matrix inversedmotrix = inverse_matrix(motrix);
-//	object.transform = motrix;
+	t_matrix inversedmotrix = inverse_matrix(object.transform);
+//	object.transform = motrix
+	(void)inversedmotrix;
 	for (y = 0; y < canvas_pixels - 1; y++)
 	{
 	//	if (y == 0)
@@ -111,7 +112,7 @@ int	paint_sphere_shadow(mlx_image_t *img, t_sphere *sphere, t_scene *scene, int 
 			world_x = -half + pixel_size * x;
 			position = tuple(world_x, world_y, wall_z, 1);
 			ray = create_ray(scene->camc, normalize(tuple_subs(position, scene->camc)));
-	//		transform_ray(ray, inversedmotrix.m);
+			transform_ray(ray, inversedmotrix.m);
 			xs = intersects(sphere, ray);
 			hitpoint = hit(xs);
 			if (hitpoint.t != -1)

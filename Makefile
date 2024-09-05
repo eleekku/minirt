@@ -21,6 +21,7 @@ SRCS	:= $(SRCDIR)/minirt.c $(SRCDIR)/definitions.c \
 			$(SRCDIR)/filehandler.c \
 			$(SRCDIR)/error_functions.c \
 			$(SRCDIR)/objects_parser.c \
+			$(SRCDIR)/print_object.c \
 			$(SRCDIR)/tuple_operations_one.c \
 			$(SRCDIR)/tuple_operations_two.c \
 			$(SRCDIR)/rays.c $(SRCDIR)/sphere.c \

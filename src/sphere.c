@@ -36,6 +36,7 @@ t_intersections	intersects(t_sphere *sp, float **r)
 		cross.object[1] = 's';
 		cross.count = cross.count + 2;
 	}
+	free(sp_to_ray);
 	free(values);
 	return (cross);
 }

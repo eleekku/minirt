@@ -89,6 +89,13 @@ typedef struct  s_cylinder
     int     color[3];
 }   t_cylinder;
 
+typedef struct s_translation
+{
+    int x;
+    int y;
+    int z;
+}   t_translation;
+
 typedef struct s_scene
 {
     float       alightr;
@@ -105,6 +112,10 @@ typedef struct s_scene
     int         spheres;
     int         planes;
     int         cylinders;
+    t_translation   movement;
+    mlx_image_t		*img;
+	mlx_t			*mlx;
+    t_bool         key;
     t_sphere    *sp;
     t_plane     *pl;
     t_cylinder  *cy;
@@ -198,6 +209,7 @@ t_intersection	hit(t_intersections xs);
 
 /*** Printing ***/
 int paint_sphere_shadow(mlx_image_t *img, t_sphere *sphere, t_scene *scene, int index);
+void    print_object(t_scene *scene, mlx_image_t *img);
 float	        *normal_at(t_object *object, float *world_p);
 float	*reflect(float *vector, float *normal);
 

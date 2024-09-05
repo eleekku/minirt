@@ -43,36 +43,68 @@
 	}
 	return (1);
 }*/
+void	movement(t_scene *scene, int direction)
+{
+	scene->key = 1;
+	ft_memset(scene->img->pixels, 150, 1200 * 1200 * sizeof(int32_t));
+	if (direction == 1)
+	{
+		scene->movement.y += -1;
+	}
+	if (direction == 2)
+	{
+        scene->movement.y += +1;
+	}
+	if (direction == 3)
+	{
+        scene->movement.x += -1;
+	}
+	if (direction == 4)
+	{
+        scene->movement.x += +1;
+	}
+	print_object(scene, scene->img);
+}
+
+void	ft_hook(mlx_key_data_t keydata, void *param)
+{
+	t_scene	*scene;
+
+	scene = param;
+	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
+		mlx_close_window(scene->mlx);
+	if (keydata.key == MLX_KEY_DOWN && (keydata.action == MLX_PRESS
+			|| keydata.action == MLX_REPEAT))
+		movement(scene, 1);
+	if (keydata.key == MLX_KEY_UP && (keydata.action == MLX_PRESS
+			|| keydata.action == MLX_REPEAT))
+		movement(scene, 2);
+	if (keydata.key == MLX_KEY_LEFT && (keydata.action == MLX_PRESS
+			|| keydata.action == MLX_REPEAT))
+		movement(scene, 3);
+	if (keydata.key == MLX_KEY_RIGHT && (keydata.action == MLX_PRESS
+			|| keydata.action == MLX_REPEAT))
+		movement(scene, 4);
+/*
+	if (keydata.key == MLX_KEY_1 && (keydata.action == MLX_PRESS
+			|| keydata.action == MLX_REPEAT))
+		modify_altitude(map, 1);
+	if (keydata.key == MLX_KEY_2 && (keydata.action == MLX_PRESS
+			|| keydata.action == MLX_REPEAT))
+		modify_altitude(map, -1);
+*/
+}
 
 int	main(int argc, char **argv)
 {
     t_scene scene;
-    //float   **r;
-    //t_intersections xs;
-    //t_intersection  i1;
-    //t_intersection  i2, i3;
-    //t_sphere    sp;
-    //float   a[] = {0,0,5,PNT};
-    //float   b[] = {0,0,1,0};
-    //float   c[] = {0,0,0,1};
 
-    //r = create_ray(a, b);
-    //sp.center = c;
-    //sp.diameter = 1;
-
-    //xs = intersects(sp, r);
-    //printf("Ray-Sphere intersection\nNumber of intersections: %d\nIntersection distance: [%f] [%f]\n", xs.count, xs.t[0], xs.t[1]);
-    //i1 = intersection(-1,'s');
-    //i2 = intersection(-3,'s');
-    //i3 = intersection(-2, 's');
-    //xs = intersections(3, i2, i1, i3);
-    //printf("Ray-Sphere intersection\nNumber of intersections: %d\nIntersection distance: [%f] [%f]\n", xs.count, xs.t[0], xs.t[1]);
-    //i1 = hit(xs);
-    //printf("%f\n", i1.t);
-    
     scene.spheres = 0;
     scene.planes = 0;
     scene.cylinders = 0;
+    scene.movement.x = 0;
+    scene.movement.y = 0;
+    scene.movement.z = 0;
 
     if (argc != 2)
     {
@@ -85,60 +117,23 @@ int	main(int argc, char **argv)
     scene.light.color[1] = 201;
     scene.light.color[2] = 201;
 
-    /*
-    float a[] = {8,-5,9,2};
-    float b[] = {7,5,6,1};
-    float c[] = {-6,0,9,6};
-  //  float d[] = {-3,0,-9,-4};
-    //float ab[] = {-2,1,2,3};
-    //float bb[] = {3, 2, 1, -1};
-    //float cb[] = {4,3,6,5};
-    //float db[] = {1,2,7,8};
-    //float ac[] = {1,0,0,0};
-    //float bc[] = {0,1,0,0};
-    //float cc[] = {0,0,1,0};
-    //float dc[] = {0,0,0,1};
-    t_matrix  m1;
-    t_matrix    m2;
-    //t_matrix    m3;
-	//float	**m2;
-	//float	**m3;
-    //float   **m4;
-    //float   **m5;
-
- //   m1 = matrix(4, a, b, c, d);
-  //  print_matrix(m1.m, 4);
- //   m2 = inverse_matrix(m1);
-//	print_matrix(m2.m, 4);
- //   print_matrix(transpose(m1).m, 4);
-    //print_float_array(tuple(1, 2, 3, 1));
-    //print_float_array(tuple(1, 2, 3, 0));
-    //print_float_array(tuple_add(tuple(1, 2, 3, 1), tuple(1, 1, 1, 0)));
-    //print_float_array(normalize(tuple(4,0,0,0)));
-    //printf("%f\n", dot_product(tuple(1,2,3,0), tuple(2,3,4,0)));
-    //print_float_array(vector_cross_prod(tuple(1,2,3,0), tuple(2,3,4,0)));
-    //print_matrix(matrix_multiply(matrix(a, b, c, d), matrix(ab,bb,cb,db)));
-*/
- 
-	mlx_t* mlx = mlx_init(1080, 1080, "MLX42", true);
+	scene.mlx = mlx_init(1080, 1080, "MLX42", true);
     
-    if (!mlx) exit(1);
+        if (!scene.mlx) exit(1);
 
     // Create a 250x250 image.
-    mlx_image_t* img = mlx_new_image(mlx, 1200, 1200);
+    scene.img = mlx_new_image(scene.mlx, 1200, 1200);
 
     // Set the channels of each pixel in our image to the maximum byte value of 255. 
-    memset(img->pixels, 150, img->width * img->height * sizeof(int));
-    int i = -1;
+    memset(scene.img->pixels, 150, scene.img->width * scene.img->height * sizeof(int));
     // Draw the image at coordinate (0, 0).
-    mlx_image_to_window(mlx, img, 0, 0);
-    while (++i < scene.spheres)
-        paint_sphere_shadow(img, &scene.sp[i], &scene, i);
-    
-
+    mlx_image_to_window(scene.mlx, scene.img, 0, 0);
+    print_object(&scene, scene.img);
+//   paint_sphere_shadow(scene.img, &scene.sp[0], &scene, 0);
+    mlx_key_hook(scene.mlx, &ft_hook, &scene);
     // Run the main loop and terminate on quit.  
-    mlx_loop(mlx);
-    mlx_terminate(mlx); 
+    mlx_loop(scene.mlx);
+    mlx_terminate(scene.mlx); 
     free(scene.sp);
     free(scene.cy);
     free(scene.pl);
