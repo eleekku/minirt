@@ -13,7 +13,7 @@ LIBFT		:= $(LIBFT_DIR)/libft.a
 
 HEADERS	:= -I ./inc -I $(LIBMLX)/include
 LIBS	:= $(LIBMLX)/build/libmlx42.a -Iinclude -ldl -lglfw -pthread -lm	
-SRCS	:= $(SRCDIR)/minirt.c $(SRCDIR)/definitions.c \
+SRCS	:= $(SRCDIR)/definitions.c \
 			$(SRCDIR)/color_utils.c \
 			$(SRCDIR)/light.c \
 			$(SRCDIR)/parsing.c \
@@ -28,11 +28,12 @@ SRCS	:= $(SRCDIR)/minirt.c $(SRCDIR)/definitions.c \
 			$(SRCDIR)/matrix_operations.c \
 			$(SRCDIR)/matrix_inverse.c \
 			$(SRCDIR)/matrix_transformations.c \
-			$(SRCDIR)/paint_sphere_shadow.c \
 			$(SRCDIR)/normal.c \
 			$(SRCDIR)/matrix_utils.c \
 			$(SRCDIR)/reflection.c \
-			$(SRCDIR)/free.c
+			$(SRCDIR)/free.c \
+			$(SRCDIR)/world.c \
+			$(SRCDIR)/testing_main.c
 OBJS	:= ${SRCS:.c=.o}
 
 all: libmlx $(LIBFT) $(NAME)

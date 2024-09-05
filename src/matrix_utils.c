@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 12:17:23 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/08/21 15:02:19 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/05 13:44:36 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_matrix    create_identity(void)
     int         i;
 
     matrix.size = 4;
-    matrix.m = malloc(4 * sizeof(float *));
+    matrix.m = malloc(5 * sizeof(float *));
     if (!matrix.m)
         return (matrix);
     matrix.m[0] = tuple(1, 0, 0, 0);
@@ -48,5 +48,6 @@ t_matrix    create_identity(void)
             break ;
         }
     }
+    matrix.m[4] = NULL;
     return (matrix);
 }

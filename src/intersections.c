@@ -6,13 +6,13 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 14:57:03 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/07/26 12:41:18 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/05 15:34:02 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minirt.h"
 
-static t_intersections	sort_intersect(int n, t_intersections xs)
+t_intersections	sort_intersect(int n, t_intersections xs)
 {
 	float	ftmp;
 	char	ctmp;
@@ -25,14 +25,14 @@ static t_intersections	sort_intersect(int n, t_intersections xs)
 		j = 0;
 		while (j < n)
 		{
-			if (xs.t[j] > xs.t[k])
+			if (xs.int_list[j].t > xs.int_list[k].t)
 			{
-				ftmp = xs.t[j];
-				ctmp = xs.object[j];
-				xs.t[j] = xs.t[k];
-				xs.object[j] = xs.object[k];
-				xs.t[k] = ftmp;
-				xs.object[k] = ctmp;
+				ftmp = xs.int_list[j].t;
+				ctmp = xs.int_list[j].object;
+				xs.int_list[j].t = xs.int_list[k].t;
+				xs.int_list[j].object = xs.int_list[k].object;
+				xs.int_list[k].t = ftmp;
+				xs.int_list[k].object = ctmp;
 			}
 			j++;
 		}
@@ -65,8 +65,8 @@ t_intersections	intersections(int n, t_intersection i, ...)
 		tmp = i;
 		if (k > 0)
 			tmp = va_arg(ap, t_intersection);
-		xs.object[k] = tmp.object;
-		xs.t[k] = tmp.t;
+		xs.int_list[k].object = tmp.object;
+		xs.int_list[k].t = tmp.t;
 		k++;
 	}
 	va_end(ap);
@@ -82,10 +82,10 @@ t_intersection	hit(t_intersections xs)
 	k = 0;
 	while (k < xs.count)
 	{
-		if (xs.t[k] >= 0)
+		if (xs.int_list[k].t >= 0)
 		{
-			i.t = xs.t[k];
-			i.object = xs.object[k];
+			i.t = xs.int_list[k].t;
+			i.object = xs.int_list[k].object;
 			return (i);
 		}
 		k++;

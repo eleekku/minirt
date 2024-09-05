@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 12:07:16 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/04 11:38:10 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/05 13:41:12 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ t_matrix	inverse_matrix(t_matrix a)
 	inv.m = NULL;
 	if (determinant(a) == 0)
 		return (inv);
-	inv.m = malloc(4 * sizeof(float *));
+	inv.m = malloc(5 * sizeof(float *));
 	if (!inv.m)
 		return (inv);
 	inv.size = 4;
@@ -101,5 +101,6 @@ t_matrix	inverse_matrix(t_matrix a)
 			inv.m[j][i] = c / determinant(a);
 		}
 	}
+	inv.m[4] = NULL;
 	return (inv);
 }

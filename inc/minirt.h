@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 14:40:31 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/04 11:14:53 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/05 15:16:16 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,18 +110,24 @@ typedef struct s_scene
     t_cylinder  *cy;
 }   t_scene;
 
-typedef struct s_intersections
+/*typedef struct s_intersections
 {
 	int		count;
 	char	object[100];
 	float	t[100];
 }	t_intersections;
-
+*/
 typedef struct s_intersection
 {
 	float	t;
 	char	object;
 }	t_intersection;
+
+typedef struct  s_intersections
+{
+    int count;
+    t_intersection *int_list;
+}   t_intersections;
 
 /*** Parsing ***/
 void  check_file(char *file, t_scene *scene, t_bool flag);
@@ -187,13 +193,14 @@ t_matrix		create_shearing(float *p);
 /*** Rays ***/
 float			**create_ray(float *origin, float *direction);
 float			*ray_position(float **r, float t);
-void	        transform_ray(float **ray, float **matrix);
+float	        **transform_ray(float **ray, float **matrix);
 
 /*** Spheres  ***/
 t_intersections	intersects(t_sphere *sp, float **r);
 t_intersection	intersection(float t, char object);
 t_intersections	intersections(int n, t_intersection i, ...);
 t_intersection	hit(t_intersections xs);
+t_intersections	sphere_intersect(t_object sp, float **r);
 
 /*** Printing ***/
 int paint_sphere_shadow(mlx_image_t *img, t_sphere *sphere, t_scene *scene);
@@ -215,4 +222,7 @@ float	*four_one_multiply(float **a, float *b);
 
 /*** Color ***/
 float	*conv_color_for(float *a);
+
+
+t_intersections	sort_intersect(int n, t_intersections xs);
 #endif

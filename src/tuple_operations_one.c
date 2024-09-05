@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 13:22:27 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/02 14:57:47 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/05 10:53:41 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ float	*tuple_subs(float *a, float *b)
 	if (!p)
 		return (NULL);
 	i = 0;
-//	printf("float a is %f, %f, %f, %f\n", a[0], a[1], a[2], a[3]);
 	while (i < 4)
 	{
 		p[i] = a[i] - b[i];

@@ -6,27 +6,42 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 15:46:54 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/04 13:06:33 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/05 14:02:47 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minirt.h"
 
-void	transform_ray(float **ray, float **matrix)
+float	**transform_ray(float **ray, float **matrix)
 {
-	//float	*tmp;
+	float	**trans;
+	float	*p;
+	float	*v;
 	
-	//tmp = ray[0];
-	ray[0] = four_one_multiply(matrix, ray[0]);
-	//tmp = ray[1];
-	ray[1] = four_one_multiply(matrix, ray[1]);
+	p = four_one_multiply(matrix, ray[0]);
+	if (!p)
+		return (NULL);
+	v = four_one_multiply(matrix, ray[1]);
+	if (!v)
+	{
+		free(p);
+		return (NULL);
+	}
+	trans = create_ray(p, v);
+	if (!trans)
+	{
+		free(v);
+		free(p);
+		return (NULL);
+	}
+	return (trans);
 }
 
 float	**create_ray(float *origin, float *direction)
 {
 	float	**r;
 
-	r = malloc(2 * sizeof(float *));
+	r = malloc(3 * sizeof(float *));
 	if (!r)
 		return (NULL);
 	if (origin[3] == 0)
@@ -41,6 +56,7 @@ float	**create_ray(float *origin, float *direction)
 	}
 	r[0] = origin;
 	r[1] = direction;
+	r[2] = NULL;
 	return (r);
 }
 float	*ray_position(float **r, float t)
