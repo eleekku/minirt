@@ -6,12 +6,38 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:52:53 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/06 12:24:19 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/06 14:31:51 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/world.h"
 #include "../inc/minirt.h"
+
+static t_comp	*create_comp(t_intersection i)
+{
+	t_comp	*comp;
+
+	comp = malloc(sizeof(t_comp));
+	if (!comp)
+		return (NULL);
+	comp->point = NULL;
+	comp->eyev = NULL;
+	comp->normalv = NULL;
+	comp->t = i.t;
+	comp->object = i.object;
+	return (comp);
+}
+
+static void	clean_comp(t_comp *comp)
+{
+	if (comp->point)
+		free(comp->point);
+	if (comp->eyev)
+		free(comp->eyev);
+	if (comp->normalv)
+		free(comp->normalv);
+	free(comp);
+}
 
 static t_intersections	*create_world_intersections(void)
 {
@@ -60,4 +86,30 @@ t_intersections	*intersect_world(t_world w, float **r)
 	return (w_inters);	
 }
 
-void	prepare_computations()
+t_comp	*prepare_computations(t_intersection i, float **ray)
+{
+	t_comp	*comp;
+	float	*tmp;
+
+	comp = create_comp(i);
+	if (!comp)
+		return (NULL);
+	comp->point = ray_position(ray, comp->t);
+	comp->eyev = negate_vector(ray[1]);
+	comp->normalv = normal_at(&comp->object, comp->point);
+	if (!comp->point || !comp->eyev || !comp->normalv)
+	{
+		clean_comp(comp);
+		return (NULL);
+	}
+	if (dot_product(comp->normalv, comp->eyev) < 0)
+	{
+		comp->inside = TRUE;
+		tmp = comp->normalv;
+		comp->normalv = negate_vector(comp->normalv);
+		free(tmp);
+	}
+	else
+		comp->inside = FALSE;
+	return (comp);
+}

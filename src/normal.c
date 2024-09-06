@@ -6,11 +6,13 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 14:14:21 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/02 15:27:40 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/06 15:17:46 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minirt.h"
+
+static float	*normal_helper()
 
 float	*normal_at(t_object *object, float *world_p)
 {
@@ -35,5 +37,8 @@ float	*normal_at(t_object *object, float *world_p)
 	world_normal = four_one_multiply(transpose(inverse).m, object_normal);
 	world_normal[3] = 0;
 	free(p);
+	free(object_p);
+	free(object_normal);
+	free_matrix(inverse.m);
 	return (normalize(world_normal));
 }

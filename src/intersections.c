@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 14:57:03 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/06 12:15:38 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/06 14:26:05 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 t_intersections	*sort_intersect(int n, t_intersections *xs)
 {
-	float	ftmp;
-	char	ctmp;
-	int		k;
-	int		j;
+	float		ftmp;
+	t_object	ctmp;
+	int			k;
+	int			j;
 
 	k = 0;
 	while (k < n)
@@ -41,7 +41,7 @@ t_intersections	*sort_intersect(int n, t_intersections *xs)
 	return (xs);
 }
 
-t_intersection	intersection(float t, char object)
+t_intersection	intersection(float t, t_object object)
 {
 	t_intersection	i;
 

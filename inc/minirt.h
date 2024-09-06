@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 14:40:31 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/06 12:34:21 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/06 14:53:59 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,8 +119,8 @@ typedef struct s_scene
 */
 typedef struct s_intersection
 {
-	float	t;
-	char	object;
+	float	    t;
+	t_object	object;
 }	t_intersection;
 
 typedef struct  s_intersections
@@ -197,7 +197,7 @@ float	        **transform_ray(float **ray, float **matrix);
 
 /*** Spheres  ***/
 t_intersections	intersects(t_sphere *sp, float **r);
-t_intersection	intersection(float t, char object);
+t_intersection	intersection(float t, t_object object);
 t_intersections	intersections(int n, t_intersection i, ...);
 t_intersection	hit(t_intersections xs);
 t_intersections	sphere_intersect(t_object sp, float **r);
@@ -210,6 +210,7 @@ float	*reflect(float *vector, float *normal);
 /*** Printing ***/
 //int	paint_sphere_shadow(mlx_image_t *img);
 int print_matrix(float **m, int size);
+int print_float_array(float *a);
 
 /*** Matrix utils ***/
 t_matrix    create_identity(void);

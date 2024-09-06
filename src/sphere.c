@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 10:50:17 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/06 12:06:57 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/06 14:40:11 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ t_intersections	sphere_intersect(t_object sp, float **r)
 	{
 		cross.int_list[0].t = (-vals[1] - sqrt(discriminant)) / (2 * vals[0]);
 		cross.int_list[1].t = (-vals[1] + sqrt(discriminant)) / (2 * vals[0]);
-		cross.int_list[0].object = 's';
-		cross.int_list[1].object = 's';
+		cross.int_list[0].object = sp;
+		cross.int_list[1].object = sp;
 		cross.count = cross.count + 2;
 	}
 	free(vals);

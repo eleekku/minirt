@@ -6,9 +6,11 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 11:34:34 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/03 11:35:08 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/06 15:06:33 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include <stdio.h>
 
 int print_matrix(float **m, int size)
 {

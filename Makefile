@@ -33,7 +33,8 @@ SRCS	:= $(SRCDIR)/definitions.c \
 			$(SRCDIR)/reflection.c \
 			$(SRCDIR)/free.c \
 			$(SRCDIR)/world.c \
-			$(SRCDIR)/testing_main.c
+			$(SRCDIR)/testing_main.c \
+			$(SRCDIR)/debug.c
 OBJS	:= ${SRCS:.c=.o}
 
 all: libmlx $(LIBFT) $(NAME)

@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:57:02 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/06 12:16:42 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/06 14:51:25 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,17 @@ typedef struct s_world
 	float		**light;
 }	t_world;
 
+typedef struct s_comp
+{
+	t_object	object;
+	float		t;
+	float		*point;
+	float		*eyev;
+	float		*normalv;
+	t_bool		inside;
+}	t_comp;
+
 t_intersections	*intersect_world(t_world w, float **r);
+t_comp			*prepare_computations(t_intersection i, float **ray);
 
 #endif
