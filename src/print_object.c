@@ -70,7 +70,7 @@ void    print_sphere(t_scene *scene, int index, mlx_image_t *img)
             if (hitpoint.t != -1)
             {
                // printf("y:%d x:%d\n", y, x);
-               rayposition = ray_position(ray, hitpoint.t);
+                rayposition = ray_position(ray, hitpoint.t);
                 normal = normal_at(&object, rayposition);
                 eyev = negate_vector(ray[1]);
                 pcol = lighting(scene, position, eyev, normal, index);
