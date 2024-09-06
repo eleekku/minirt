@@ -156,7 +156,7 @@ int	*multiply_scale(int *color, float scale);
 int	clamp_color(int n);
 
 t_material  material(t_scene *scene);
-int    *lighting(t_scene *scene, float *point, float *eyev, float *normalv, int i);
+int    *lighting(t_scene *scene, float *point, float *eyev, float *normalv, int i, t_bool shadow);
 
 /*** Definitions ***/
 float	        *tuple(float a, float b, float c, float w);

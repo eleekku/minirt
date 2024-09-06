@@ -73,7 +73,7 @@ void    print_sphere(t_scene *scene, int index, mlx_image_t *img)
                 rayposition = ray_position(ray, hitpoint.t);
                 normal = normal_at(&object, rayposition);
                 eyev = negate_vector(ray[1]);
-                pcol = lighting(scene, position, eyev, normal, index);
+                pcol = lighting(scene, position, eyev, normal, index, FALSE);
                 endcolor = colors_to_int(pcol, 256);
                 mlx_put_pixel(img, x, y, endcolor);
                 free(eyev);

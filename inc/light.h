@@ -22,7 +22,7 @@ typedef struct	s_light
 
 typedef struct s_material
 {
-	int	*color[4];
+	int		color[4];
 	float	ambient;
 	float	diffuse;
 	float	specular;

@@ -127,7 +127,7 @@ int	paint_sphere_shadow(mlx_image_t *img, t_sphere *sphere, t_scene *scene, int 
 			//	printf("we have normal\n");
 				eyev = negate_vector(ray[1]);
 			//	printf("we have eyev\n");
-				spcol = lighting(scene, position, eyev, normal, index);
+				spcol = lighting(scene, position, eyev, normal, index, false);
 			//	if (spcol[0] != 20 || spcol[1] != 20 || spcol[2] != 20)
 			///	printf("calculated color is %d %d %d\n", spcol[0], spcol[1], spcol[2]);
 			//	printf("CONGRAZ YOU CALCULATED LIGHTNIN\n");
