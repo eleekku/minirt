@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:57:02 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/06 14:51:25 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/06 16:41:32 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,6 @@ typedef struct s_comp
 
 t_intersections	*intersect_world(t_world w, float **r);
 t_comp			*prepare_computations(t_intersection i, float **ray);
+void	clean_comp(t_comp *comp);
 
 #endif

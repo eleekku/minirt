@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:52:53 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/06 14:31:51 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/06 16:41:19 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static t_comp	*create_comp(t_intersection i)
 	return (comp);
 }
 
-static void	clean_comp(t_comp *comp)
+void	clean_comp(t_comp *comp)
 {
 	if (comp->point)
 		free(comp->point);

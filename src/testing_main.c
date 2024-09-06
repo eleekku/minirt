@@ -41,6 +41,7 @@ int	main(void)
 	free(sp2.coord);
 	free_matrix(sp1.transform.m);
 	free_matrix(sp2.transform.m);
+	clean_comp(comp);
 	free(world->int_list);
 	free(world);
 	free(w.objects);

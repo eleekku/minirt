@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 11:14:29 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/08/21 12:15:45 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/06 16:59:54 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ t_matrix	transpose(t_matrix a)
 	int			j;
 
 	trans.size = a.size;
-	trans.m = malloc(a.size * sizeof(float *));
+	trans.m = malloc((a.size + 1) * sizeof(float *));
 	if (!trans.m)
 		return (trans);
 	initialize_matrix(trans);
@@ -92,6 +92,7 @@ t_matrix	transpose(t_matrix a)
 		while (++j < a.size)
 			trans.m[i][j] = a.m[j][i];
 	}
+	trans.m[a.size] = NULL;
 	return (trans);
 }
 
