@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:57:02 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/05 15:45:46 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/06 12:16:42 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,6 @@ typedef struct s_world
 	float		**light;
 }	t_world;
 
-t_intersections	intersect_world(t_world w, float **r);
+t_intersections	*intersect_world(t_world w, float **r);
 
 #endif

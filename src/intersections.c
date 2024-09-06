@@ -6,13 +6,13 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 14:57:03 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/05 15:34:02 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/06 12:15:38 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minirt.h"
 
-t_intersections	sort_intersect(int n, t_intersections xs)
+t_intersections	*sort_intersect(int n, t_intersections *xs)
 {
 	float	ftmp;
 	char	ctmp;
@@ -25,14 +25,14 @@ t_intersections	sort_intersect(int n, t_intersections xs)
 		j = 0;
 		while (j < n)
 		{
-			if (xs.int_list[j].t > xs.int_list[k].t)
+			if (xs->int_list[j].t > xs->int_list[k].t)
 			{
-				ftmp = xs.int_list[j].t;
-				ctmp = xs.int_list[j].object;
-				xs.int_list[j].t = xs.int_list[k].t;
-				xs.int_list[j].object = xs.int_list[k].object;
-				xs.int_list[k].t = ftmp;
-				xs.int_list[k].object = ctmp;
+				ftmp = xs->int_list[j].t;
+				ctmp = xs->int_list[j].object;
+				xs->int_list[j].t = xs->int_list[k].t;
+				xs->int_list[j].object = xs->int_list[k].object;
+				xs->int_list[k].t = ftmp;
+				xs->int_list[k].object = ctmp;
 			}
 			j++;
 		}
@@ -50,29 +50,29 @@ t_intersection	intersection(float t, char object)
 	return (i);
 }
 
-t_intersections	intersections(int n, t_intersection i, ...)
+/*t_intersections	intersections(int n, t_intersection i, ...)
 {
 	va_list			ap;
 	t_intersection	tmp;
-	t_intersections	xs;
+	t_intersections	*xs;
 	int				k;
 
 	k = 0;
-	xs.count = n;
+	xs->count = n;
 	va_start(ap, i);
 	while (k < n)
 	{
 		tmp = i;
 		if (k > 0)
 			tmp = va_arg(ap, t_intersection);
-		xs.int_list[k].object = tmp.object;
+		xs->int_list[k].object = tmp.object;
 		xs.int_list[k].t = tmp.t;
 		k++;
 	}
 	va_end(ap);
-	xs = sort_intersect(n, xs);
+	xs = sort_intersect(n, *xs);
 	return (xs);
-}
+}*/
 
 t_intersection	hit(t_intersections xs)
 {

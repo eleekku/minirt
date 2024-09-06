@@ -6,7 +6,7 @@
 int	main(void)
 {
 	t_object	sp1, sp2;
-	t_intersections	world;
+	t_intersections	*world;
 	t_world		w;
 	t_matrix	tmp;
 	float		**r, *v, *p;
@@ -29,11 +29,13 @@ int	main(void)
 	v = create_vector(0, 0, 1);
 	r = create_ray(p, v);
 	world = intersect_world(w, r);
-	printf("World %d %f %f %f %f", world.count, world.int_list[0].t, world.int_list[1].t, world.int_list[2].t, world.int_list[3].t);
+	printf("World %d %f %f %f %f", world->count, world->int_list[0].t, world->int_list[1].t, world->int_list[2].t, world->int_list[3].t);
 	free(sp1.coord);
 	free(sp2.coord);
 	free_matrix(sp1.transform.m);
 	free_matrix(sp2.transform.m);
+	free(world->int_list);
+	free(world);
 	free(w.objects);
 	free(p);
 	free(v);

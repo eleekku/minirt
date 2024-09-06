@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 10:50:17 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/05 15:30:26 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/06 12:06:57 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@ t_intersections	sphere_intersect(t_object sp, float **r)
 
 	cross.count = 0;
 	sp_to_ray = tuple_subs(r[ORIGIN], sp.coord);
+	if (!sp_to_ray)
+		return (cross);
+	cross.int_list = malloc(5 * sizeof(t_intersection));
+	if (!cross.int_list)
+		return (cross);
 	vals = tuple(1,1,1,1);
 	if (!vals)
 		return (cross);

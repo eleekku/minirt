@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 14:40:31 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/05 15:16:16 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/06 12:34:21 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,5 +224,5 @@ float	*four_one_multiply(float **a, float *b);
 float	*conv_color_for(float *a);
 
 
-t_intersections	sort_intersect(int n, t_intersections xs);
+t_intersections	*sort_intersect(int n, t_intersections *xs);
 #endif
