@@ -45,9 +45,9 @@ void    print_sphere(t_scene *scene, int index, mlx_image_t *img)
     x = 0;
     y = 0;    
     ray_origin = create_point(scene->camc[0], scene->camc[1], scene->camc[2]);
-    wall_z = 7;
+    wall_z = 12;
     canvas_pixels = 1200;
-	wall_size = 14;
+	wall_size = 25;
 	half = wall_size / 2;
 	pixel_size = wall_size / canvas_pixels;
     (void)img;
