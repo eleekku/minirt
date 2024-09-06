@@ -72,6 +72,11 @@ float    fill_value(char *arg, char **args, char **coordinates, t_scene *scene)
     int     i;
 
     i = -1;
+    if (!arg)
+    {
+        free_array(coordinates);
+        exit_error("Invalid line format", args, NULL);
+    }
     while(arg[++i] && arg[i] != '\n')
     {
         if (arg[i] && arg[i] != '.' && arg[i] != '-' && !(arg[i] >= '0' && arg[i] <= '9'))

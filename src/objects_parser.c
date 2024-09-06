@@ -19,11 +19,11 @@ void    parse_cylinder2(char **args, t_scene *scene, int index, char **freethis)
         i = -1;
         validate_values(args[5], args, scene);
         rgb = safe_split(args[5], ',');
-        while (++i < 2)
+        while (++i <= 2)
         {
             temp = ft_atoi(rgb[i]);
             if (!(temp >= 0 && temp <= 255))
-                exit_error("invalid plane rgb value", args, scene);
+                exit_error("invalid cylinder rgb value", args, scene);
             scene->cy[index].color[i] = temp;
         }
         free_array(rgb);
