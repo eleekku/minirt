@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 12:01:28 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/03 17:38:19 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/04 15:38:33 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ void	transfer_vector(float *vector, float **matrix)
 
 int	paint_sphere_shadow(mlx_image_t *img, t_sphere *sphere, t_scene *scene, int index)
 {
-//	t_matrix motrix;
+	t_matrix motrix;
+	t_matrix mutrix;
 	//t_sphere sphere;
 	t_intersections	xs;
 	float *position;
@@ -97,11 +98,10 @@ int	paint_sphere_shadow(mlx_image_t *img, t_sphere *sphere, t_scene *scene, int 
 //	printf("hola\n");
 	//motrix = create_identity();
 	//motrix = create_translate(3, 4, 5);
-//	float radius = scene->sp[index].diameter / 2;
-//	t_matrix motrix = create_scaling(radius, radius, radius);
-	t_matrix inversedmotrix = inverse_matrix(object.transform);
-//	object.transform = motrix
-	(void)inversedmotrix;
+	motrix = create_scaling(2, 2, 2);
+	mutrix = create_translate(3, 3, 3);
+	motrix = matrix_multiply(mutrix.m, motrix.m);
+	t_matrix	metrix  = inverse_matrix(motrix);
 	for (y = 0; y < canvas_pixels - 1; y++)
 	{
 	//	if (y == 0)
@@ -112,7 +112,7 @@ int	paint_sphere_shadow(mlx_image_t *img, t_sphere *sphere, t_scene *scene, int 
 			world_x = -half + pixel_size * x;
 			position = tuple(world_x, world_y, wall_z, 1);
 			ray = create_ray(scene->camc, normalize(tuple_subs(position, scene->camc)));
-			transform_ray(ray, inversedmotrix.m);
+			transform_ray(ray, metrix.m);
 			xs = intersects(sphere, ray);
 			hitpoint = hit(xs);
 			if (hitpoint.t != -1)
