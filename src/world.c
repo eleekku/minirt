@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:52:53 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/06 16:41:19 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/07 18:08:17 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static t_comp	*create_comp(t_intersection i)
 	comp->eyev = NULL;
 	comp->normalv = NULL;
 	comp->t = i.t;
-	comp->object = i.object;
+	comp->object = &i.object;
 	return (comp);
 }
 
@@ -56,7 +56,7 @@ static t_intersections	*create_world_intersections(void)
 	return (world);
 }
 
-t_intersections	*intersect_world(t_world w, float **r)
+t_intersections	*intersect_world(t_world *w, float **r)
 {
 	t_intersections	*w_inters;
 	t_intersections	temp;
@@ -68,11 +68,11 @@ t_intersections	*intersect_world(t_world w, float **r)
 	w_inters = create_world_intersections();
 	if (!w_inters->int_list)
 		return (w_inters);
-	while (++i < w.number_objects)
+	while (++i < w->number_objects)
 	{
 		j = -1;
-		r_temp = transform_ray(r, w.objects[i].transform.m);
-		temp = sphere_intersect(w.objects[i], r_temp);
+		r_temp = transform_ray(r, w->objects[i].transform.m);
+		temp = sphere_intersect(w->objects[i], r_temp);
 		while (++j < temp.count)
 		{
 			w_inters->count++;
@@ -96,7 +96,7 @@ t_comp	*prepare_computations(t_intersection i, float **ray)
 		return (NULL);
 	comp->point = ray_position(ray, comp->t);
 	comp->eyev = negate_vector(ray[1]);
-	comp->normalv = normal_at(&comp->object, comp->point);
+	comp->normalv = normal_at(comp->object, comp->point);
 	if (!comp->point || !comp->eyev || !comp->normalv)
 	{
 		clean_comp(comp);

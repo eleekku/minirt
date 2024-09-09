@@ -6,11 +6,12 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 14:14:21 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/06 17:00:59 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/07 18:01:31 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minirt.h"
+#include "../inc/world.h"
 
 static float	*create_world_normal(t_matrix m, float *object_n)
 {

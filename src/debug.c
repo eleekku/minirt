@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 11:34:34 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/06 15:06:33 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/07 17:33:23 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,6 @@ int print_float_array(float *a)
         printf("%f, ", a[i]);
         i++;
     }
-    printf("%f]\n", a[3]);
+    printf("]\n");
     return (0);
 }

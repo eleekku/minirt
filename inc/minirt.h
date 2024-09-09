@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 14:40:31 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/06 14:53:59 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/07 17:54:17 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 # include <fcntl.h>
 # include "../lib/Libft/libft.h"
 # include "MLX42/MLX42.h"
-# include "light.h"
 
 # define PI 3.14159265358979323846
 # define EPS 0.00001
@@ -53,7 +52,7 @@ typedef struct s_matrix
     t_transformation    type;
 }	t_matrix;
 
-typedef struct s_object
+/*typedef struct s_object
 {
     t_shape s;
     float   *coord;
@@ -64,7 +63,7 @@ typedef struct s_object
     float   height;
     t_material  material;
 }   t_object;
-
+*/
 typedef struct  s_sphere
 {
     float   center[4];
@@ -89,7 +88,7 @@ typedef struct  s_cylinder
     int     color[3];
 }   t_cylinder;
 
-typedef struct s_scene
+/*typedef struct s_scene
 {
     float       alightr;
     int         amcolor[3];
@@ -98,7 +97,7 @@ typedef struct s_scene
     int         fow;
     t_light     light;
     t_material  material;
-    t_lightdot  lightdot;
+    //t_lightdot  lightdot;
    // float       lightc[4];
     //float       brightness;
     t_object    *objects;
@@ -109,14 +108,14 @@ typedef struct s_scene
     t_plane     *pl;
     t_cylinder  *cy;
 }   t_scene;
-
+*/
 /*typedef struct s_intersections
 {
 	int		count;
 	char	object[100];
 	float	t[100];
 }	t_intersections;
-*/
+
 typedef struct s_intersection
 {
 	float	    t;
@@ -129,7 +128,7 @@ typedef struct  s_intersections
     t_intersection *int_list;
 }   t_intersections;
 
-/*** Parsing ***/
+Parsing
 void  check_file(char *file, t_scene *scene, t_bool flag);
 char    **safe_split(char *string, char separator);
 void    free_array(char **args);
@@ -143,14 +142,14 @@ void    parse_plane(char **args, t_scene *scene, int index);
 void    parse_cylinder(char **args, t_scene *scene, int index);
 t_bool  validate_line(char **args, t_scene *scene);
 void    free_objects_exit(t_scene *scene, char *message, char **array, char **args);
-
+*/
 
 int	colors_to_int(int *colors, int intensity);
 int	*combine_colors(int *a, int *b);
 int	*multiply_scale(int *color, float scale);
 
-t_material  material(t_scene *scene, int i);
-int    *lighting(t_scene *scene, float *point, float *eyev, float *normalv);
+//t_material  material(t_scene *scene, int i);
+//int    *lighting(t_scene *scene, float *point, float *eyev, float *normalv);
 
 /*** Definitions ***/
 float	        *tuple(float a, float b, float c, float w);
@@ -158,6 +157,7 @@ float           *create_point(float a, float b, float c);
 float           *create_vector(float a, float b, float c);
 t_matrix	    matrix(float *a, float *b, float *c, float *d);
 t_matrix		initialize_matrix(t_matrix matrix);
+float	        *color(float a, float b, float c);
 
 /*** Tuple Operations ***/
 int				equal_float(float a, float b);
@@ -195,16 +195,15 @@ float			**create_ray(float *origin, float *direction);
 float			*ray_position(float **r, float t);
 float	        **transform_ray(float **ray, float **matrix);
 
-/*** Spheres  ***/
+/*** Spheres
 t_intersections	intersects(t_sphere *sp, float **r);
 t_intersection	intersection(float t, t_object object);
 t_intersections	intersections(int n, t_intersection i, ...);
 t_intersection	hit(t_intersections xs);
 t_intersections	sphere_intersect(t_object sp, float **r);
-
-/*** Printing ***/
-int paint_sphere_shadow(mlx_image_t *img, t_sphere *sphere, t_scene *scene);
-float	        *normal_at(t_object *object, float *world_p);
+ ***/
+//int paint_sphere_shadow(mlx_image_t *img, t_sphere *sphere, t_scene *scene);
+//float	        *normal_at(t_object *object, float *world_p);
 float	*reflect(float *vector, float *normal);
 
 /*** Printing ***/
@@ -225,5 +224,5 @@ float	*four_one_multiply(float **a, float *b);
 float	*conv_color_for(float *a);
 
 
-t_intersections	*sort_intersect(int n, t_intersections *xs);
+//t_intersections	*sort_intersect(int n, t_intersections *xs);
 #endif

@@ -6,11 +6,12 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 10:50:17 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/06 14:40:11 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/07 17:55:43 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minirt.h"
+#include "../inc/world.h"
 
 t_intersections	sphere_intersect(t_object sp, float **r)
 {
