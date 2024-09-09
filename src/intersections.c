@@ -6,18 +6,19 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 14:57:03 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/07/26 12:41:18 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/09 14:37:09 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minirt.h"
+#include "../inc/world.h"
 
-static t_intersections	sort_intersect(int n, t_intersections xs)
+t_intersections	*sort_intersect(int n, t_intersections *xs)
 {
-	float	ftmp;
-	char	ctmp;
-	int		k;
-	int		j;
+	float		ftmp;
+	t_object	*ctmp;
+	int			k;
+	int			j;
 
 	k = 0;
 	while (k < n)
@@ -25,14 +26,14 @@ static t_intersections	sort_intersect(int n, t_intersections xs)
 		j = 0;
 		while (j < n)
 		{
-			if (xs.t[j] > xs.t[k])
+			if (xs->int_list[j].t > xs->int_list[k].t)
 			{
-				ftmp = xs.t[j];
-				ctmp = xs.object[j];
-				xs.t[j] = xs.t[k];
-				xs.object[j] = xs.object[k];
-				xs.t[k] = ftmp;
-				xs.object[k] = ctmp;
+				ftmp = xs->int_list[j].t;
+				ctmp = xs->int_list[j].object;
+				xs->int_list[j].t = xs->int_list[k].t;
+				xs->int_list[j].object = xs->int_list[k].object;
+				xs->int_list[k].t = ftmp;
+				xs->int_list[k].object = ctmp;
 			}
 			j++;
 		}
@@ -41,55 +42,37 @@ static t_intersections	sort_intersect(int n, t_intersections xs)
 	return (xs);
 }
 
-t_intersection	intersection(float t, char object)
+t_intersection	*intersection(float t, t_object *object)
 {
-	t_intersection	i;
+	t_intersection	*i;
 
-	i.t = t;
-	i.object = object;
+	i = malloc(sizeof(t_intersection));
+	if (!i)
+		return (NULL);
+	i->t = t;
+	i->object = object;
 	return (i);
 }
 
-t_intersections	intersections(int n, t_intersection i, ...)
+t_intersection	*hit(t_intersections *xs)
 {
-	va_list			ap;
-	t_intersection	tmp;
-	t_intersections	xs;
+	t_intersection	*i;
 	int				k;
 
 	k = 0;
-	xs.count = n;
-	va_start(ap, i);
-	while (k < n)
+	i = malloc(sizeof(t_intersection));
+	if (!i)
+		return (NULL);
+	while (k < xs->count)
 	{
-		tmp = i;
-		if (k > 0)
-			tmp = va_arg(ap, t_intersection);
-		xs.object[k] = tmp.object;
-		xs.t[k] = tmp.t;
-		k++;
-	}
-	va_end(ap);
-	xs = sort_intersect(n, xs);
-	return (xs);
-}
-
-t_intersection	hit(t_intersections xs)
-{
-	t_intersection	i;
-	int				k;
-
-	k = 0;
-	while (k < xs.count)
-	{
-		if (xs.t[k] >= 0)
+		if (xs->int_list[k].t >= 0)
 		{
-			i.t = xs.t[k];
-			i.object = xs.object[k];
+			i->t = xs->int_list[k].t;
+			i->object = xs->int_list[k].object;
 			return (i);
 		}
 		k++;
 	}
-	i.t = -1;
+	i->t = -1;
 	return (i);
 }

@@ -13,14 +13,8 @@ LIBFT		:= $(LIBFT_DIR)/libft.a
 
 HEADERS	:= -I ./inc -I $(LIBMLX)/include
 LIBS	:= $(LIBMLX)/build/libmlx42.a -Iinclude -ldl -lglfw -pthread -lm	
-SRCS	:= $(SRCDIR)/minirt.c $(SRCDIR)/definitions.c \
+SRCS	:= $(SRCDIR)/definitions.c \
 			$(SRCDIR)/color_utils.c \
-			$(SRCDIR)/light.c \
-			$(SRCDIR)/parsing.c \
-			$(SRCDIR)/parsing_utils.c \
-			$(SRCDIR)/filehandler.c \
-			$(SRCDIR)/error_functions.c \
-			$(SRCDIR)/objects_parser.c \
 			$(SRCDIR)/tuple_operations_one.c \
 			$(SRCDIR)/tuple_operations_two.c \
 			$(SRCDIR)/rays.c $(SRCDIR)/sphere.c \
@@ -28,11 +22,15 @@ SRCS	:= $(SRCDIR)/minirt.c $(SRCDIR)/definitions.c \
 			$(SRCDIR)/matrix_operations.c \
 			$(SRCDIR)/matrix_inverse.c \
 			$(SRCDIR)/matrix_transformations.c \
-			$(SRCDIR)/paint_sphere_shadow.c \
 			$(SRCDIR)/normal.c \
 			$(SRCDIR)/matrix_utils.c \
 			$(SRCDIR)/reflection.c \
-			$(SRCDIR)/free.c
+			$(SRCDIR)/free.c \
+			$(SRCDIR)/world.c \
+			$(SRCDIR)/testing_main.c \
+			$(SRCDIR)/debug.c \
+			$(SRCDIR)/new_light.c \
+			$(SRCDIR)/color_operations.c
 OBJS	:= ${SRCS:.c=.o}
 
 all: libmlx $(LIBFT) $(NAME)

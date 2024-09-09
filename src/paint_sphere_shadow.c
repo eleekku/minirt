@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 12:01:28 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/04 15:38:33 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/04 18:28:40 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	add_ambient(mlx_image_t *img, t_scene *scene)
 
 int	paint_sphere_shadow(mlx_image_t *img, t_sphere *sphere, t_scene *scene)
 {
-	t_matrix motrix, mutrix;
+	//t_matrix motrix, mutrix;
 	//t_sphere sphere;
 	t_intersections	xs;
 	float *position;
@@ -89,10 +89,10 @@ int	paint_sphere_shadow(mlx_image_t *img, t_sphere *sphere, t_scene *scene)
 //	printf("hola\n");
 	//motrix = create_identity();
 	//motrix = create_translate(3, 4, 5);
-	motrix = create_scaling(2, 2, 2);
-	mutrix = create_translate(3, 3, 3);
-	motrix = matrix_multiply(mutrix.m, motrix.m);
-	t_matrix	metrix  = inverse_matrix(motrix);
+	object.transform = create_scaling(100, 100, 100);
+	//mutrix = create_translate(3, 3, 3);
+	//motrix = matrix_multiply(object.transform.m, motrix.m);
+	t_matrix metrix  = inverse_matrix(object.transform);
 	for (y = 0; y < canvas_pixels - 1; y++)
 	{
 	//	if (y == 0)

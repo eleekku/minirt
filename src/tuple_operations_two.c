@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 14:46:25 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/08/20 16:50:32 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/09 14:25:52 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,16 @@ float   *normalize(float *a)
     float   mag;
 	int		i;
 
+	mag = magnitude(a);
+	if (mag == 0)
+	{
+		printf("Magnitude is 0\n");
+		return (NULL);
+	}
 	p = malloc(4 * sizeof(float));
 	if (!p)
 		return (NULL);
 	i = 0;
-    mag = magnitude(a);
-	if (mag == 0)
-	{
-	printf("normalise float is %f %f %f %f\n", a[0], a[1], a[2], a[3]);
-	printf("mag is %f\n", mag);
-	}
 	while (i < 4)
 	{
 		p[i] = a[i] / mag;
