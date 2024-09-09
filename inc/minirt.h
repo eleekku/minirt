@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 14:40:31 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/07 17:54:17 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/09 15:10:08 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,9 +155,11 @@ int	*multiply_scale(int *color, float scale);
 float	        *tuple(float a, float b, float c, float w);
 float           *create_point(float a, float b, float c);
 float           *create_vector(float a, float b, float c);
-t_matrix	    matrix(float *a, float *b, float *c, float *d);
-t_matrix		initialize_matrix(t_matrix matrix);
+t_matrix	    *create_matrix(int n);
 float	        *color(float a, float b, float c);
+t_material	    *create_material(void);
+t_object	    *create_object(t_shape shape);
+t_matrix        *create_identity(int n);
 
 /*** Tuple Operations ***/
 int				equal_float(float a, float b);
@@ -174,9 +176,9 @@ float			*vector_cross_prod(float *a, float *b);
 
 /*** Matrix operations ***/
 int				matrix_are_equal(t_matrix a, t_matrix b);
-t_matrix		matrix_multiply(float **a, float **b);
+t_matrix	    *matrix_multiply(t_matrix *a, t_matrix *b);
 t_matrix		submatrix(t_matrix a, int i, int j);
-t_matrix		transpose(t_matrix a);
+t_matrix		*transpose(t_matrix *a);
 float			minor(t_matrix a, int i, int j);
 float			cofactor(t_matrix a, int i, int j);
 float			determinant(t_matrix a);
@@ -212,8 +214,7 @@ int print_matrix(float **m, int size);
 int print_float_array(float *a);
 
 /*** Matrix utils ***/
-t_matrix    create_identity(void);
-void        clear_matrix(t_matrix *matrix, int i);
+
 void	    free_matrix(float	**matrix);
 
 
@@ -223,6 +224,12 @@ float	*four_one_multiply(float **a, float *b);
 /*** Color ***/
 float	*conv_color_for(float *a);
 
-
 //t_intersections	*sort_intersect(int n, t_intersections *xs);
+
+/*** Cleaning structs ***/
+void	    clean_material(t_material *mat);
+void	    clean_object(t_object *obj);
+void        clean_matrix(t_matrix *matrix, int n);
+void	    clean_comp(t_comp *comp);
+
 #endif

@@ -6,21 +6,21 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 14:14:21 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/07 18:01:31 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/09 15:12:02 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minirt.h"
 #include "../inc/world.h"
 
-static float	*create_world_normal(t_matrix m, float *object_n)
+static float	*create_world_normal(t_matrix *m, float *object_n)
 {
-	t_matrix	transposed;
+	t_matrix	*transposed;
 	float		*result;
 
 	transposed = transpose(m);
-	result = four_one_multiply(transposed.m, object_n);
-	free_matrix(transposed.m);
+	result = four_one_multiply(transposed->m, object_n);
+	clean_matrix(transposed, transposed->size);
 	return (result);
 }
 

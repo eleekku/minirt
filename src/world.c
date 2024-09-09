@@ -6,38 +6,12 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:52:53 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/07 18:08:17 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/09 14:18:06 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/world.h"
 #include "../inc/minirt.h"
-
-static t_comp	*create_comp(t_intersection i)
-{
-	t_comp	*comp;
-
-	comp = malloc(sizeof(t_comp));
-	if (!comp)
-		return (NULL);
-	comp->point = NULL;
-	comp->eyev = NULL;
-	comp->normalv = NULL;
-	comp->t = i.t;
-	comp->object = &i.object;
-	return (comp);
-}
-
-void	clean_comp(t_comp *comp)
-{
-	if (comp->point)
-		free(comp->point);
-	if (comp->eyev)
-		free(comp->eyev);
-	if (comp->normalv)
-		free(comp->normalv);
-	free(comp);
-}
 
 static t_intersections	*create_world_intersections(void)
 {

@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:57:02 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/08 16:09:09 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/09 14:09:11 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@ typedef struct s_object
     t_shape s;
     float   *coord;
     float   diameter;
-    int     color[3];
-    t_matrix	transform;
-    float   normv[3];
+    float	*color;
+    t_matrix	*transform;
+    float   *normv;
     float   height;
-    t_material  material;
+    t_material  *material;
 }   t_object;
 
 typedef struct s_world
@@ -61,7 +61,7 @@ typedef struct s_comp
 typedef struct s_intersection
 {
 	float	    t;
-	t_object	object;
+	t_object	*object;
 }	t_intersection;
 
 typedef struct  s_intersections

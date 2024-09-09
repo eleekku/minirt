@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 11:14:29 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/06 16:59:54 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/09 15:07:16 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,49 +50,43 @@ float	*four_one_multiply(float **a, float *b)
 	return (result);
 }
 
-t_matrix	matrix_multiply(float **a, float **b)
+t_matrix	*matrix_multiply(t_matrix *a, t_matrix *b)
 {
-	t_matrix	matrix;
+	t_matrix	*matrix;
 	int			i;
 	int			j;
 
-	matrix.size = 4;
-	matrix.m = malloc(4 * sizeof(float *));
-	if (!matrix.m)
-		return (matrix);
+	matrix = create_matrix(a->size);
+	if (!matrix)
+		return (NULL);
 	i = -1;
 	while (++i < 4)
 	{
-		matrix.m[i] = tuple(0,0,0,0);
-		if (matrix.m[i] == NULL)
-			return (matrix);
 		j = -1;
 		while (++j < 4)
-			matrix.m[i][j] = (a[i][0] * b[0][j]) + (a[i][1] * b[1][j]) 
-				+ (a[i][2] * b[2][j]) + (a[i][3] * b[3][j]);
+			matrix->m[i][j] = (a->m[i][0] * b->m[0][j]) + (a->m[i][1] * b->m[1][j]) 
+				+ (a->m[i][2] * b->m[2][j]) + (a->m[i][3] * b->m[3][j]);
 	}
 	return (matrix);
 }
 
-t_matrix	transpose(t_matrix a)
+t_matrix	*transpose(t_matrix *a)
 {
-	t_matrix	trans;
+	t_matrix	*trans;
 	int			i;
 	int			j;
 
-	trans.size = a.size;
-	trans.m = malloc((a.size + 1) * sizeof(float *));
-	if (!trans.m)
-		return (trans);
-	initialize_matrix(trans);
+	trans = create_matrix(a->size);
+	if (!trans)
+		return (NULL);
 	i = -1;
-	while (++i < a.size)
+	while (++i < a->size)
 	{
 		j = -1;
-		while (++j < a.size)
-			trans.m[i][j] = a.m[j][i];
+		while (++j < a->size)
+			trans->m[i][j] = a->m[j][i];
 	}
-	trans.m[a.size] = NULL;
+	trans->m[a->size] = NULL;
 	return (trans);
 }
 
