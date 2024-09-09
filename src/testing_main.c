@@ -10,4 +10,5 @@ int	main(void)
 	t1 = create_point(3, -2, 5);
 	t2 = create_vector(-2, 3, 1);
 	t3 = tuple_add(t1, t2);
+	t4 = 
 }
