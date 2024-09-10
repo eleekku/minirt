@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 12:07:16 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/10 10:46:18 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/10 13:05:04 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,12 @@ t_matrix	*submatrix(t_matrix *a, int i, int j)
 	subm = malloc(sizeof(t_matrix));
 	if (!subm)
 		return (NULL);
+	subm->m = malloc((a->size - 1) * sizeof(float *));
+	if (!subm->m)
+	{
+		free(subm);
+		return (NULL);
+	}
 	subm->size = a->size - 1;
 	k = -1;
 	while (++k < i)
