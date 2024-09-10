@@ -27,6 +27,7 @@ SRCS	:= $(SRCDIR)/definitions.c \
 			$(SRCDIR)/reflection.c \
 			$(SRCDIR)/world.c \
 			$(SRCDIR)/testing_main.c \
+			$(SRCDIR)/plane.c \
 			$(SRCDIR)/debug.c \
 			$(SRCDIR)/color_operations.c \
 			$(SRCDIR)/create_structs.c \

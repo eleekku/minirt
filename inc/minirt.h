@@ -189,6 +189,9 @@ t_matrix        *create_identity(int n);
 t_comp	        *create_comp(t_intersection *i);
 t_intersections	*create_intersections(void);
 
+/*** Shapes  ***/
+t_object *test_object(t_shape type);
+
 /*** Tuple Operations ***/
 int				equal_float(float a, float b);
 float			*tuple_add(float *a, float *b);

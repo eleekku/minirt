@@ -75,3 +75,19 @@ t_intersection	*hit(t_intersections *xs)
 	i->t = -1;
 	return (i);
 }
+
+t_intersections *pre_intersect(t_object *object, float **ray)
+{
+	float **local_ray;
+	t_intersections *result;
+
+	local_ray = transform_ray(ray, object->transform);
+	if (object->s == SPHERE)
+		result = sphere_intersect(object, local_ray);
+	if (object->s == PLANE)
+		result = plane_intersect(object, local_ray);
+	if (object->s == CYLINDER)
+		result = cylinder_intersect(object, local_ray);
+	free(local_ray);
+	return (result);
+}
