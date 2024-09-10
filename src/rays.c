@@ -6,13 +6,13 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 15:46:54 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/05 14:02:47 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/10 13:20:04 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minirt.h"
 
-float	**transform_ray(float **ray, float **matrix)
+float	**transform_ray(float **ray, t_matrix *matrix)
 {
 	float	**trans;
 	float	*p;
@@ -41,24 +41,19 @@ float	**create_ray(float *origin, float *direction)
 {
 	float	**r;
 
-	r = malloc(3 * sizeof(float *));
+	if (origin[3] == 0 || direction[3] == 1)
+	{
+		printf("Error: Wrong ray input\n");
+		return (NULL);
+	}
+	r = malloc(2 * sizeof(float *));
 	if (!r)
 		return (NULL);
-	if (origin[3] == 0)
-	{
-		printf("Error: Origin is a vector\n");
-		; //Need to change
-	}
-	if (direction[3] == 1)
-	{
-		printf("Error: Direction is a point\n");
-		; //Need to change
-	}
 	r[0] = origin;
 	r[1] = direction;
-	r[2] = NULL;
 	return (r);
 }
+
 float	*ray_position(float **r, float t)
 {
 	float	*p;
@@ -68,12 +63,9 @@ float	*ray_position(float **r, float t)
 	if (!p)
 		return (NULL);
 	i = 0;
-//	printf("float t is %f\n", t);
 	while (i < 3)
 	{	
-//		printf("r[0][i] = %f and r[1][i] = %f\n", r[0][i], r[1][i]);
 		p[i] = r[0][i] + r[1][i] * t;
-//		printf("p[i] is %f\n", p[i]);
 		i++;
 	}
 	p[i] = 1;

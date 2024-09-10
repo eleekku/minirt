@@ -6,26 +6,26 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 11:14:29 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/09 15:07:16 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/10 13:14:54 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minirt.h"
 
-int	matrix_are_equal(t_matrix a, t_matrix b)
+int	matrix_are_equal(t_matrix *a, t_matrix *b)
 {
 	int	i;
 	int	j;
 
-	if (a.size != b.size)
+	if (a->size != b->size)
 		return (0);
 	i = 0;
-	while (i < a.size)
+	while (i < a->size)
 	{
 		j = 0;
-		while (j < a.size)
+		while (j < a->size)
 		{
-			if (equal_float(a.m[i][j], b.m[i][j] == 0))
+			if (equal_float(a->m[i][j], b->m[i][j] == 0))
 				return (0);
 			j++;
 		}
@@ -33,7 +33,8 @@ int	matrix_are_equal(t_matrix a, t_matrix b)
 	}
 	return (1);
 }
-float	*four_one_multiply(float **a, float *b)
+
+float	*four_one_multiply(t_matrix *a, float *b)
 {
 	float	*result;
 	int		i;
@@ -44,7 +45,7 @@ float	*four_one_multiply(float **a, float *b)
 		return (NULL);
 	while (i < 4)
 	{
-		result[i] = dot_product(a[i], b);
+		result[i] = dot_product(a->m[i], b);
 		i++;
 	}
 	return (result);
@@ -90,7 +91,7 @@ t_matrix	*transpose(t_matrix *a)
 	return (trans);
 }
 
-float	cofactor(t_matrix a, int i, int j)
+float	cofactor(t_matrix *a, int i, int j)
 {
 	int		k;
 	float	min;

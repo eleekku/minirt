@@ -6,25 +6,25 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 12:07:16 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/05 13:41:12 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/10 13:05:04 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minirt.h"
 
-float	determinant(t_matrix a)
+float	determinant(t_matrix *a)
 {
 	float	d;
 	int		i;
 
-	if (a.size == 2)
-		d = (a.m[0][0] * a.m[1][1]) - (a.m[0][1] * a.m[1][0]);
+	if (a->size == 2)
+		d = (a->m[0][0] * a->m[1][1]) - (a->m[0][1] * a->m[1][0]);
 	else
 	{
 		i = -1;
 		d = 0;
-		while (++i < a.size)
-			d += (a.m[0][i] * cofactor(a, 0, i));
+		while (++i < a->size)
+			d += (a->m[0][i] * cofactor(a, 0, i));
 	}
 	return (d);
 }
@@ -40,57 +40,59 @@ static	float	*copy_row(float *row, int i)
 	k = -1;
 	while (++k < i)
 		new_row[k] = row[k];
+	//Use 4 or i????
 	while (++k < 4)
 		new_row[k - 1] = row[k];
 	return (new_row);
 }
 
-t_matrix	submatrix(t_matrix a, int i, int j)
+t_matrix	*submatrix(t_matrix *a, int i, int j)
 {
-	t_matrix	subm;
-	float		**matrix;
+	t_matrix	*subm;
 	int			k;
 
-	subm.size = a.size - 1;
-	matrix = malloc(a.size * sizeof(float *));
-	if (!matrix)
-		return (subm);
+	subm = malloc(sizeof(t_matrix));
+	if (!subm)
+		return (NULL);
+	subm->m = malloc((a->size - 1) * sizeof(float *));
+	if (!subm->m)
+	{
+		free(subm);
+		return (NULL);
+	}
+	subm->size = a->size - 1;
 	k = -1;
 	while (++k < i)
-		matrix[k] = copy_row(a.m[k], j);
-	while (++k < a.size)
-		matrix[k - 1] = copy_row(a.m[k], j);
-	matrix[a.size - 1] = NULL;
-	subm.m = matrix;
+		subm->m[k] = copy_row(a->m[k], j);
+	while (++k < a->size)
+		subm->m[k - 1] = copy_row(a->m[k], j);
 	return (subm);
 }
 
-float	minor(t_matrix a, int i, int j)
+float	minor(t_matrix *a, int i, int j)
 {
-	t_matrix	matrix;
+	t_matrix	*matrix;
 	float		det;
 
 	matrix = submatrix(a, i, j);
 	det = determinant(matrix);
-	free_matrix(matrix.m);
+	clean_matrix(matrix, matrix->size);
 	return (det);
 }
 
-t_matrix	inverse_matrix(t_matrix a)
+//We assume all matrixes are size 4x4
+t_matrix	*inverse_matrix(t_matrix *a)
 {
-	t_matrix	inv;
+	t_matrix	*inv;
 	int			i;
 	int			j;
 	float		c;
 
-	inv.m = NULL;
 	if (determinant(a) == 0)
-		return (inv);
-	inv.m = malloc(5 * sizeof(float *));
-	if (!inv.m)
-		return (inv);
-	inv.size = 4;
-	initialize_matrix(inv);
+		return (NULL);
+	inv = create_matrix(4);
+	if (!inv)
+		return (NULL);
 	i = -1;
 	while (++i < 4)
 	{
@@ -98,9 +100,8 @@ t_matrix	inverse_matrix(t_matrix a)
 		while (++j < 4)
 		{
 			c = cofactor(a, i, j);
-			inv.m[j][i] = c / determinant(a);
+			inv->m[j][i] = c / determinant(a);
 		}
 	}
-	inv.m[4] = NULL;
 	return (inv);
 }

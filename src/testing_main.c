@@ -1,14 +1,21 @@
 
 #include "../inc/minirt.h"
-#include "../inc/world.h"
-#include <stdio.h>
 
 int	main(void)
 {
-	float	*t1, *t2, *t3, *t4;
+	float	**r;
+	t_object	*sphere;
+	t_intersections	*inter;
 
-	t1 = create_point(3, -2, 5);
-	t2 = create_vector(-2, 3, 1);
-	t3 = tuple_add(t1, t2);
-	t4 = 
+	sphere = create_object(SPHERE);
+	if (!sphere)
+	{
+		printf("BYEEE");
+		return (0);
+	}
+	r = create_ray(create_point(0, 0, -5), create_vector(0, 0, 1));
+	inter = sphere_intersect(sphere, r);
+	printf("Count: %d -----  %f %f", inter->count, inter->int_list[0].t, inter->int_list[1].t);
+	//printf("Count: %d", inter->count);
+	return (0);
 }

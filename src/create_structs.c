@@ -6,11 +6,28 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 11:34:33 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/09 15:28:30 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/10 15:35:12 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/world.h"
+#include "../inc/minirt.h"
+
+t_intersections	*create_intersections(void)
+{
+	t_intersections	*inter;
+
+	inter = malloc(sizeof(t_intersections));
+	if (!inter)
+		return (NULL);
+	inter->count = 0;
+	inter->int_list = malloc(5 * sizeof(t_intersection));
+	if (!inter->int_list)
+	{
+		free(inter);
+		return (NULL);
+	}
+	return (inter);
+}
 
 t_comp	*create_comp(t_intersection *i)
 {
@@ -62,7 +79,8 @@ t_object	*create_object(t_shape shape)
 	obj->material = create_material();
 	obj->normv = create_vector(0, 0, 0);
 	obj->transform = create_identity(4);
-	if (!obj->coord || !obj->color || !obj->material || !obj->normv || obj->transform)
+	if (!obj->coord || !obj->color || !obj->material ||
+		!obj->normv || !obj->transform)
 	{
 		clean_object(obj);
 		return (NULL);

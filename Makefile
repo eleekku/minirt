@@ -2,7 +2,7 @@ NAME	:= minirt
 
 #Compiler options#
 CC		:= cc
-CFLAGS	:= -Wextra -Wall -Werror -Wunreachable-code -Ofast
+CFLAGS	:= ##-Wextra -Wall -Werror -Wunreachable-code -Ofast
 
 LIBMLX	:= ./lib/MLX42
 SRCDIR  := ./src
@@ -25,12 +25,12 @@ SRCS	:= $(SRCDIR)/definitions.c \
 			$(SRCDIR)/normal.c \
 			$(SRCDIR)/matrix_utils.c \
 			$(SRCDIR)/reflection.c \
-			$(SRCDIR)/free.c \
 			$(SRCDIR)/world.c \
 			$(SRCDIR)/testing_main.c \
 			$(SRCDIR)/debug.c \
-			$(SRCDIR)/new_light.c \
-			$(SRCDIR)/color_operations.c
+			$(SRCDIR)/color_operations.c \
+			$(SRCDIR)/create_structs.c \
+			$(SRCDIR)/clean_structs.c
 OBJS	:= ${SRCS:.c=.o}
 
 all: libmlx $(LIBFT) $(NAME)

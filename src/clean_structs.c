@@ -6,11 +6,19 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 12:06:26 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/09 14:15:19 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/10 14:10:26 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/world.h"
+#include "../inc/minirt.h"
+
+void	clean_intersections(t_intersections *inter)
+{
+	if (inter->int_list)
+		free(inter->int_list);
+	if (inter)
+		free(inter);
+}
 
 void	clean_comp(t_comp *comp)
 {

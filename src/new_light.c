@@ -6,11 +6,10 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 11:36:08 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/08 16:08:57 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/10 11:48:50 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/world.h"
 #include "../inc/minirt.h"
 
 t_light	*point_light(float *p, float *c)
