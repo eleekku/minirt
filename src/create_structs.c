@@ -6,11 +6,11 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 11:34:33 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/09 15:28:30 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/10 11:19:42 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/world.h"
+#include "../inc/minirt.h"
 
 t_comp	*create_comp(t_intersection *i)
 {

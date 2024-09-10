@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 14:40:31 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/09 15:10:08 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/10 11:50:24 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,18 +52,62 @@ typedef struct s_matrix
     t_transformation    type;
 }	t_matrix;
 
-/*typedef struct s_object
+typedef struct s_material
+{
+	float	*color;
+	float	ambient;
+	float	diffuse;
+	float	specular;
+	float	shininess;
+}	t_material;
+
+typedef struct s_light
+{
+	float	*color;
+	float	*coord;
+}	t_light;
+
+typedef struct s_object
 {
     t_shape s;
     float   *coord;
     float   diameter;
-    int     color[3];
-    t_matrix	transform;
-    float   normv[3];
+    float	*color;
+    t_matrix	*transform;
+    float   *normv;
     float   height;
-    t_material  material;
+    t_material  *material;
 }   t_object;
-*/
+
+typedef struct s_world
+{
+	int			number_objects;
+	t_object	*objects;
+	t_light		*light;
+}	t_world;
+
+typedef struct s_comp
+{
+	t_object	*object;
+	float		t;
+	float		*point;
+	float		*eyev;
+	float		*normalv;
+	t_bool		inside;
+}	t_comp;
+
+typedef struct s_intersection
+{
+	float	    t;
+	t_object	*object;
+}	t_intersection;
+
+typedef struct  s_intersections
+{
+    int count;
+    t_intersection *int_list;
+}   t_intersections;
+
 typedef struct  s_sphere
 {
     float   center[4];
@@ -109,26 +153,8 @@ typedef struct  s_cylinder
     t_cylinder  *cy;
 }   t_scene;
 */
-/*typedef struct s_intersections
-{
-	int		count;
-	char	object[100];
-	float	t[100];
-}	t_intersections;
 
-typedef struct s_intersection
-{
-	float	    t;
-	t_object	object;
-}	t_intersection;
-
-typedef struct  s_intersections
-{
-    int count;
-    t_intersection *int_list;
-}   t_intersections;
-
-Parsing
+/* Parsing
 void  check_file(char *file, t_scene *scene, t_bool flag);
 char    **safe_split(char *string, char separator);
 void    free_array(char **args);
@@ -160,6 +186,7 @@ float	        *color(float a, float b, float c);
 t_material	    *create_material(void);
 t_object	    *create_object(t_shape shape);
 t_matrix        *create_identity(int n);
+t_comp	        *create_comp(t_intersection *i);
 
 /*** Tuple Operations ***/
 int				equal_float(float a, float b);
@@ -175,22 +202,22 @@ float			dot_product(float *a, float *b);
 float			*vector_cross_prod(float *a, float *b);
 
 /*** Matrix operations ***/
-int				matrix_are_equal(t_matrix a, t_matrix b);
+int				matrix_are_equal(t_matrix *a, t_matrix *b);
 t_matrix	    *matrix_multiply(t_matrix *a, t_matrix *b);
-t_matrix		submatrix(t_matrix a, int i, int j);
+t_matrix		*submatrix(t_matrix *a, int i, int j);
 t_matrix		*transpose(t_matrix *a);
-float			minor(t_matrix a, int i, int j);
-float			cofactor(t_matrix a, int i, int j);
-float			determinant(t_matrix a);
-t_matrix		inverse_matrix(t_matrix a);
+float			minor(t_matrix *a, int i, int j);
+float			cofactor(t_matrix *a, int i, int j);
+float			determinant(t_matrix *a);
+t_matrix		*inverse_matrix(t_matrix *a);
 
 /*** Matrix transformations ***/
-t_matrix	    create_translate(float a, float b, float c);
-t_matrix	    create_scaling(float a, float b, float c);
-t_matrix		create_x_rotation(float a);
-t_matrix		create_y_rotation(float a);
-t_matrix		create_z_rotation(float a);
-t_matrix		create_shearing(float *p);
+t_matrix	    *create_translate(float a, float b, float c);
+t_matrix	    *create_scaling(float a, float b, float c);
+t_matrix		*create_x_rotation(float a);
+t_matrix		*create_y_rotation(float a);
+t_matrix		*create_z_rotation(float a);
+t_matrix		*create_shearing(float *p);
 
 /*** Rays ***/
 float			**create_ray(float *origin, float *direction);
@@ -215,9 +242,6 @@ int print_float_array(float *a);
 
 /*** Matrix utils ***/
 
-void	    free_matrix(float	**matrix);
-
-
 /*** Possible to remove maybe later who knows */
 float	*four_one_multiply(float **a, float *b);
 
@@ -231,5 +255,24 @@ void	    clean_material(t_material *mat);
 void	    clean_object(t_object *obj);
 void        clean_matrix(t_matrix *matrix, int n);
 void	    clean_comp(t_comp *comp);
+
+
+float	*hadamard(float *a, float *b);
+float	*multiply_color(float *a, float b);
+float	*add_colors(float *a, float *b, float *c);
+float	*lighting(t_comp *comp, t_world *w, t_object object);
+t_intersections	*intersect_world(t_world *w, float **r);
+t_comp			*prepare_computations(t_intersection *i, float **ray);
+
+//t_intersections	*intersects(t_sphere *sp, float **r);
+t_intersection	*intersection(float t, t_object *object);
+//t_intersections	intersections(int n, t_intersection i, ...);
+t_intersection	*hit(t_intersections *xs);
+t_intersections	sphere_intersect(t_object *sp, float **r);
+t_intersections	*sort_intersect(int n, t_intersections *xs);
+
+
+float	        *normal_at(t_object *object, float *world_p);
+t_comp	        *create_comp(t_intersection *i);
 
 #endif

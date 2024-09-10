@@ -6,14 +6,13 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 10:50:17 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/07 17:55:43 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/10 11:21:55 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minirt.h"
-#include "../inc/world.h"
 
-t_intersections	sphere_intersect(t_object sp, float **r)
+t_intersections	sphere_intersect(t_object *sp, float **r)
 {
 	t_intersections	cross;
 	float			*sp_to_ray;
@@ -21,7 +20,7 @@ t_intersections	sphere_intersect(t_object sp, float **r)
 	float			discriminant;
 
 	cross.count = 0;
-	sp_to_ray = tuple_subs(r[ORIGIN], sp.coord);
+	sp_to_ray = tuple_subs(r[ORIGIN], sp->coord);
 	if (!sp_to_ray)
 		return (cross);
 	cross.int_list = malloc(5 * sizeof(t_intersection));

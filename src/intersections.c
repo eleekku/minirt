@@ -6,12 +6,11 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 14:57:03 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/09 14:37:09 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/10 11:19:55 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minirt.h"
-#include "../inc/world.h"
 
 t_intersections	*sort_intersect(int n, t_intersections *xs)
 {
