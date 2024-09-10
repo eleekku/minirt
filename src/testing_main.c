@@ -3,14 +3,19 @@
 
 int	main(void)
 {
-	t_matrix	*transform;
-	t_matrix	*inv;
-	float		*p, *r;
+	float	**r;
+	t_object	*sphere;
+	t_intersections	*inter;
 
-	transform = create_translate(5, -3, 2);
-	inv = inverse_matrix(transform);
-	p = create_point(-3, 4, 5);
-	r = four_one_multiply(inv->m, p);
-	print_float_array(r);
+	sphere = create_object(SPHERE);
+	if (!sphere)
+	{
+		printf("BYEEE");
+		return (0);
+	}
+	r = create_ray(create_point(0, 0, -5), create_vector(0, 0, 1));
+	inter = sphere_intersect(sphere, r);
+	printf("Count: %d -----  %f %f", inter->count, inter->int_list[0].t, inter->int_list[1].t);
+	//printf("Count: %d", inter->count);
 	return (0);
 }

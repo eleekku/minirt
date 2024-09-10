@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 14:40:31 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/10 13:15:16 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/10 15:23:43 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,6 +187,7 @@ t_material	    *create_material(void);
 t_object	    *create_object(t_shape shape);
 t_matrix        *create_identity(int n);
 t_comp	        *create_comp(t_intersection *i);
+t_intersections	*create_intersections(void);
 
 /*** Tuple Operations ***/
 int				equal_float(float a, float b);
@@ -222,7 +223,7 @@ t_matrix		*create_shearing(float *p);
 /*** Rays ***/
 float			**create_ray(float *origin, float *direction);
 float			*ray_position(float **r, float t);
-float	        **transform_ray(float **ray, float **matrix);
+float	        **transform_ray(float **ray, t_matrix *matrix);
 
 /*** Spheres
 t_intersections	intersects(t_sphere *sp, float **r);
@@ -255,6 +256,7 @@ void	    clean_material(t_material *mat);
 void	    clean_object(t_object *obj);
 void        clean_matrix(t_matrix *matrix, int n);
 void	    clean_comp(t_comp *comp);
+void	    clean_intersections(t_intersections *inter);
 
 
 float	*hadamard(float *a, float *b);
@@ -268,7 +270,7 @@ t_comp			*prepare_computations(t_intersection *i, float **ray);
 t_intersection	*intersection(float t, t_object *object);
 //t_intersections	intersections(int n, t_intersection i, ...);
 t_intersection	*hit(t_intersections *xs);
-t_intersections	sphere_intersect(t_object *sp, float **r);
+t_intersections	*sphere_intersect(t_object *sp, float **r);
 t_intersections	*sort_intersect(int n, t_intersections *xs);
 
 

@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:52:53 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/10 11:47:26 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/10 14:53:39 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static t_intersections	*create_world_intersections(void)
 t_intersections	*intersect_world(t_world *w, float **r)
 {
 	t_intersections	*w_inters;
-	t_intersections	temp;
+	t_intersections	*temp;
 	float			**r_temp;
 	int				i;
 	int				j;
@@ -44,15 +44,15 @@ t_intersections	*intersect_world(t_world *w, float **r)
 	while (++i < w->number_objects)
 	{
 		j = -1;
-		r_temp = transform_ray(r, w->objects[i].transform->m);
+		r_temp = transform_ray(r, w->objects[i].transform);
 		temp = sphere_intersect(w->objects, r_temp);
-		while (++j < temp.count)
+		while (++j < temp->count)
 		{
 			w_inters->count++;
-			w_inters->int_list[(i * 2) + j].object = temp.int_list[j].object;
-			w_inters->int_list[(i * 2) + j].t = temp.int_list[j].t;
+			w_inters->int_list[(i * 2) + j].object = temp->int_list[j].object;
+			w_inters->int_list[(i * 2) + j].t = temp->int_list[j].t;
 		}
-		free(temp.int_list);
+		free(temp->int_list);
 		free(r_temp);
 	}
 	w_inters  = sort_intersect(w_inters->count, w_inters);
