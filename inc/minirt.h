@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 14:40:31 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/10 15:23:43 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/10 16:08:39 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ typedef struct s_object
 typedef struct s_world
 {
 	int			number_objects;
-	t_object	*objects;
+	t_object	**objects;
 	t_light		*light;
 }	t_world;
 

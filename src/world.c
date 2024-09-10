@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:52:53 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/10 14:53:39 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/10 16:25:23 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ t_intersections	*intersect_world(t_world *w, float **r)
 	while (++i < w->number_objects)
 	{
 		j = -1;
-		r_temp = transform_ray(r, w->objects[i].transform);
-		temp = sphere_intersect(w->objects, r_temp);
+		r_temp = transform_ray(r, w->objects[i]->transform);
+		temp = sphere_intersect(w->objects[i], r_temp);
 		while (++j < temp->count)
 		{
 			w_inters->count++;
