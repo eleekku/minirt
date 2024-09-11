@@ -275,7 +275,8 @@ t_intersection	*intersection(float t, t_object *object);
 t_intersection	*hit(t_intersections *xs);
 t_intersections	*sphere_intersect(t_object *sp, float **r);
 t_intersections	*sort_intersect(int n, t_intersections *xs);
-
+t_intersections *pre_intersect(t_object *object, float **ray);
+t_intersections *plane_intersect(t_object *plane, float **ray);
 
 float	        *normal_at(t_object *object, float *world_p);
 t_comp	        *create_comp(t_intersection *i);

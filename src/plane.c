@@ -15,13 +15,25 @@ t_object *test_object(t_shape type)
     object->material->specular = 0.9;
     object->material->shininess = 200.0;
     free(object->material->color);
-    object->material->color = color(0, 0, 200); 
+    object->material->color = color(0, 0, 200);
+    return (object);
 }
 
 
-t_intersections plane_intersect(t_object *plane, float **ray)
+t_intersections *plane_intersect(t_object *plane, float **ray)
 {
+    t_intersections	*cross;
+    float           t;
 
+    cross = create_intersections();
+    if (!cross)
+        return (NULL);
+    if (fabs(ray[1][1]) < EPS)
+        return (cross);
+    t = (ray[0][1] * -1 / ray[1][1]);
+    cross->count++;
+    cross->int_list[0].t = t;
+    return (cross);    
 }
 
 
