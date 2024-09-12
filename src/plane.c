@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   plane.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: esalmela <esalmela@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/12 16:50:36 by esalmela          #+#    #+#             */
+/*   Updated: 2024/09/12 16:50:39 by esalmela         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../inc/minirt.h"
 
 t_object *test_object(t_shape type)
@@ -14,6 +26,8 @@ t_object *test_object(t_shape type)
     object->material->diffuse = 0.9;
     object->material->specular = 0.9;
     object->material->shininess = 200.0;
+	object->cylindermin = 1.0;
+	object->cylindermax = 2.0;
     free(object->material->color);
     object->material->color = color(0, 0, 200);
     return (object);

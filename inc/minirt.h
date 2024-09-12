@@ -67,6 +67,19 @@ typedef struct s_light
 	float	*coord;
 }	t_light;
 
+typedef struct s_cylindervalues
+{
+    float a;
+    float b;
+    float c;
+    float disc;
+    float t0;
+    float t1;
+    float y0;
+    float y1;
+}   t_cylindervalues;
+
+
 typedef struct s_object
 {
     t_shape s;
@@ -77,6 +90,9 @@ typedef struct s_object
     float   *normv;
     float   height;
     t_material  *material;
+    float   cylindermin;
+    float   cylindermax;
+    t_bool  closed;
 }   t_object;
 
 typedef struct s_world
@@ -277,6 +293,7 @@ t_intersections	*sphere_intersect(t_object *sp, float **r);
 t_intersections	*sort_intersect(int n, t_intersections *xs);
 t_intersections *pre_intersect(t_object *object, float **ray);
 t_intersections *plane_intersect(t_object *plane, float **ray);
+t_intersections *cylinder_intersect(t_object *cylinder, float **ray);
 
 float	        *normal_at(t_object *object, float *world_p);
 t_comp	        *create_comp(t_intersection *i);

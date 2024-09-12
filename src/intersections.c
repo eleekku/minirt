@@ -87,7 +87,7 @@ t_intersections *pre_intersect(t_object *object, float **ray)
 	if (object->s == PLANE)
 		result = plane_intersect(object, local_ray);
 	if (object->s == CYLINDER)
-		result = sphere_intersect(object, local_ray);
+		result = cylinder_intersect(object, local_ray);
 	free(local_ray);
 	return (result);
 }
