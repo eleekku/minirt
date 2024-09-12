@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 11:36:08 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/12 12:15:50 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/12 16:22:34 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,10 @@ t_light	*point_light(float *p, float *c)
 
 float	*shade_hit(t_world	*w, t_comp *comp)
 {
-	return (lighting(comp, w, comp->object));
+	int	n;
+
+	n = is_shadowed(w, comp->over_point);
+	return (lighting(comp, w, comp->object, n));
 }
 
 float	*color_at(t_world *w, float **ray)
@@ -55,7 +58,7 @@ float	*color_at(t_world *w, float **ray)
 	return (result);
 }
 
-float	*lighting(t_comp *comp, t_world *w, t_object *object)
+float	*lighting(t_comp *comp, t_world *w, t_object *object, int shadow)
 {
 	float	*eff_color;
 	float	*lightv;
@@ -71,7 +74,7 @@ float	*lighting(t_comp *comp, t_world *w, t_object *object)
 	eff_color = hadamard(object->material->color, w->light->color);
 	if (!eff_color)
 		return (NULL);
-	tmp = tuple_subs(w->light->coord, comp->point);
+	tmp = tuple_subs(w->light->coord, comp->over_point);
 	if (!tmp)
 	{
 		free(eff_color);
@@ -86,7 +89,7 @@ float	*lighting(t_comp *comp, t_world *w, t_object *object)
 	}
 	ambient = multiply_color(eff_color, object->material->ambient);
 	light_dot_normal = dot_product(lightv, comp->normalv);
-	if (light_dot_normal < 0)
+	if (light_dot_normal < 0 || shadow)
 	{
 		diffuse = color(0, 0, 0);
 		specular = color(0, 0, 0);
