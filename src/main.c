@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 17:47:42 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/03 14:03:22 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/11 17:58:09 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	main(void)
 	if (!mlx)
 		exit(1);
     // Create a 100x100 image.
-	mlx_image_t* img = mlx_new_image(mlx, 1000, 1000);
+	mlx_image_t* img = mlx_new_image(mlx, 1080, 1080);
     // Set the channels of each pixel in our image to the maximum byte value of 255. 
 	//REMOVE MEMSET
 	memset(img->pixels, 255, img->width * img->height * sizeof(int));

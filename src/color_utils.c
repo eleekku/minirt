@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 15:03:01 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/03 14:30:54 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/11 18:36:29 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,16 +187,14 @@ float	*conv_color_for(float *a)
 	return (r);
 }
 
-float	*conv_color_back(float *a)
+int	*conv_color_back(float *a)
 {
-	float	*r;
+	int	*r;
 
-	r = create_vector(0, 0, 0);
-	if (!r)
-		return (NULL);
+	r = malloc(3 * sizeof(int));
+
 	r[0] = clamp_color(a[0] * 256);
 	r[1] = clamp_color(a[1] * 256);
 	r[2] = clamp_color(a[2] * 256);
-	r[3] = 0;
 	return (r);
 }

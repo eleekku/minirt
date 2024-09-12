@@ -6,11 +6,37 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 12:17:23 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/09 15:04:31 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/12 11:41:21 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minirt.h"
+
+t_matrix    *create_populated_matrix(float *a, float *b, float *c, float *d)
+{
+    t_matrix	*matrix;
+    int			n;
+
+	if (a && b && c && d)
+	{
+		matrix = create_matrix(4);
+		if (!matrix)
+			return (NULL);
+		n = -1;
+		while (++n < 4)
+			free(matrix->m[n]);
+		matrix->m[0] = a;
+		matrix->m[1] = b;
+		matrix->m[2] = c;
+		matrix->m[3] = d;
+		return (matrix);
+	}
+    free(a);
+    free(b);
+    free(c);
+    free(d);
+	return (NULL);
+}
 
 t_matrix	*create_matrix(int n)
 {

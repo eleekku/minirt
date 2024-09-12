@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 11:14:29 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/10 13:14:54 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/12 14:31:09 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ t_matrix	*transpose(t_matrix *a)
 		while (++j < a->size)
 			trans->m[i][j] = a->m[j][i];
 	}
-	trans->m[a->size] = NULL;
 	return (trans);
 }
 

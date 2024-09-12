@@ -6,27 +6,32 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:52:53 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/10 14:53:39 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/12 14:23:57 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minirt.h"
 
-static t_intersections	*create_world_intersections(void)
+static t_intersections *combine_xs(t_intersections *a, t_intersections *b)
 {
-	t_intersections	*world;
-	
-	world = malloc(sizeof(t_intersections));
-	if (!world)
-		return (NULL);
-	world->count = 0;
-	world->int_list = malloc(1000 * sizeof(t_intersection));
-	if (!world->int_list)
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (a->objects[i])
+		i++;
+	while (b->objects[j])
 	{
-		free(world);
-		return (NULL);
+		a->t[i] = b->t[j];
+		a->objects[i] = b->objects[j];
+		a->count++;
+		i++;
+		j++;
 	}
-	return (world);
+	free(b->objects);
+	free(b);
+	return (a);
 }
 
 t_intersections	*intersect_world(t_world *w, float **r)
@@ -35,27 +40,22 @@ t_intersections	*intersect_world(t_world *w, float **r)
 	t_intersections	*temp;
 	float			**r_temp;
 	int				i;
-	int				j;
 
 	i = -1;
-	w_inters = create_world_intersections();
-	if (!w_inters->int_list)
-		return (w_inters);
+	w_inters = create_intersections();
+	if (!w_inters)
+		return (NULL);
 	while (++i < w->number_objects)
 	{
-		j = -1;
-		r_temp = transform_ray(r, w->objects[i].transform);
-		temp = sphere_intersect(w->objects, r_temp);
-		while (++j < temp->count)
+		r_temp = transform_ray(r, w->objects[i]->transform);
+		temp = sphere_intersect(w->objects[i], r_temp);
+		if (temp)
 		{
-			w_inters->count++;
-			w_inters->int_list[(i * 2) + j].object = temp->int_list[j].object;
-			w_inters->int_list[(i * 2) + j].t = temp->int_list[j].t;
+			combine_xs(w_inters, temp);
+			clean_ray(r_temp);
+			sort_intersect(w_inters);
 		}
-		free(temp->int_list);
-		free(r_temp);
 	}
-	w_inters  = sort_intersect(w_inters->count, w_inters);
 	return (w_inters);	
 }
 
