@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 12:19:29 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/07 16:21:15 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/11 14:55:41 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,8 @@ float	*add_colors(float *a, float *b, float *c)
 	result[0] = a[0] + b[0] + c[0];
 	result[1] = a[1] + b[1] + c[1];
 	result[2] = a[2] + b[2] + c[2];
+	free(a);
+	free(b);
+	free(c);
 	return (result);
 }
