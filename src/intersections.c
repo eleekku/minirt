@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 14:57:03 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/12 12:00:21 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/12 16:06:14 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ t_intersections	*sort_intersect(t_intersections *xs)
 	int			j;
 
 	k = 0;
-	while (k < xs->count)
+	while (xs->objects[k])
 	{
 		j = 0;
-		while (j < xs->count)
+		while (xs->objects[j])
 		{
 			if (xs->t[j] > xs->t[k])
 			{
@@ -62,7 +62,7 @@ t_intersection	*hit(t_intersections *xs)
 	i = malloc(sizeof(t_intersection));
 	if (!i)
 		return (NULL);
-	while (k < xs->count)
+	while (xs->objects[k])
 	{
 		if (xs->t[k] >= 0)
 		{

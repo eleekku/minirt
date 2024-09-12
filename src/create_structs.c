@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 11:34:33 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/12 14:03:21 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/12 15:07:25 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ t_comp	*create_comp(t_intersection *i)
 	if (!comp)
 		return (NULL);
 	comp->point = NULL;
+	comp->over_point = NULL;
 	comp->eyev = NULL;
 	comp->normalv = NULL;
 	comp->t = i->t;

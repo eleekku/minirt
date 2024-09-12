@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 14:40:31 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/12 11:50:01 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/12 16:26:06 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ typedef struct s_comp
 	t_object	*object;
 	float		t;
 	float		*point;
+    float       *over_point;
 	float		*eyev;
 	float		*normalv;
 	t_bool		inside;
@@ -284,7 +285,7 @@ float	*shade_hit(t_world	*w, t_comp *comp);
 float	*hadamard(float *a, float *b);
 float	*multiply_color(float *a, float b);
 float	*add_colors(float *a, float *b, float *c);
-float	*lighting(t_comp *comp, t_world *w, t_object *object);
+float	*lighting(t_comp *comp, t_world *w, t_object *object, int shadow);
 t_intersections	*intersect_world(t_world *w, float **r);
 t_comp			*prepare_computations(t_intersection *i, float **ray);
 t_matrix	*view_transform(float *from, float *to, float *up);
@@ -300,6 +301,7 @@ t_intersections	*sort_intersect(t_intersections *xs);
 float	        *normal_at(t_object *object, float *world_p);
 
 float	        *color_at(t_world *w, float **ray);
+int	is_shadowed(t_world *w, float *p);
 int	render(t_camera *camera, t_world *world);
 
 #endif
