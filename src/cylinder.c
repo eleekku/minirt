@@ -54,11 +54,11 @@ static void check_height(t_object *cylinder, t_cylindervalues *v, float **ray, t
         cross->count++;
         cross->int_list[cross->count - 1].t = v->t0;
     }
-    v->y1 = ray[0][1] + v.t1 * ray[1][1];
-    if (cylinder->cylindermin < v.y1 && v.y1 < cylinder->cylindermax)
+    v->y1 = ray[0][1] + v->t1 * ray[1][1];
+    if (cylinder->cylindermin - 0.00001 < v->y1 && v->y1 <= cylinder->cylindermax + 0.00001)
     {
         cross->count++;
-        cross->int_list[cross->count - 1].t = v.t1;
+        cross->int_list[cross->count - 1].t = v->t1;
     }
 }
 
@@ -88,7 +88,7 @@ t_intersections *cylinder_intersect(t_object *cylinder, float **ray)
         v.t1 = ((-v.b) + sqrt(v.disc)) / (2 * v.a);
         if (v.t0 > v.t1)
             ft_swap(&v.t0, &v.t1);
-        check_height(cylinder, &v, ray, cross)
+        check_height(cylinder, &v, ray, cross);
     }
     intersect_caps(cylinder, ray, cross);
     return (cross);
