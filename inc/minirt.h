@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 14:40:31 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/10 15:23:43 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/12 16:26:06 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ typedef struct s_object
 typedef struct s_world
 {
 	int			number_objects;
-	t_object	*objects;
+	t_object	**objects;
 	t_light		*light;
 }	t_world;
 
@@ -107,6 +107,7 @@ typedef struct s_comp
 	t_object	*object;
 	float		t;
 	float		*point;
+    float       *over_point;
 	float		*eyev;
 	float		*normalv;
 	t_bool		inside;
@@ -120,8 +121,9 @@ typedef struct s_intersection
 
 typedef struct  s_intersections
 {
-    int count;
-    t_intersection *int_list;
+    int         count;
+    t_object    **objects;
+    float       *t;
 }   t_intersections;
 
 typedef struct  s_sphere
@@ -147,6 +149,17 @@ typedef struct  s_cylinder
     float   height;
     int     color[3];
 }   t_cylinder;
+
+typedef struct s_camera
+{
+    float       hsize;
+    float       vsize;
+    float       field;
+    float       pixel_size;
+    float       half_height;
+    float       half_width;
+    t_matrix    *transform;
+}   t_camera;
 
 /*typedef struct s_scene
 {
@@ -198,12 +211,16 @@ float	        *tuple(float a, float b, float c, float w);
 float           *create_point(float a, float b, float c);
 float           *create_vector(float a, float b, float c);
 t_matrix	    *create_matrix(int n);
+t_matrix        *create_populated_matrix(float *a, float *b, float *c, float *d);
 float	        *color(float a, float b, float c);
 t_material	    *create_material(void);
 t_object	    *create_object(t_shape shape);
 t_matrix        *create_identity(int n);
 t_comp	        *create_comp(t_intersection *i);
 t_intersections	*create_intersections(void);
+t_comp	        *create_comp(t_intersection *i);
+t_camera	    *create_camera(float hsize, float vsize, float field);
+t_world			*create_world(int n, t_light *light);
 
 /*** Shapes  ***/
 t_object *test_object(t_shape type);
@@ -243,6 +260,7 @@ t_matrix		*create_shearing(float *p);
 float			**create_ray(float *origin, float *direction);
 float			*ray_position(float **r, float t);
 float	        **transform_ray(float **ray, t_matrix *matrix);
+float	        **ray_for_pixel(t_camera *c, float px, float py);
 
 /*** Spheres
 t_intersections	intersects(t_sphere *sp, float **r);
@@ -267,6 +285,7 @@ float	*four_one_multiply(t_matrix *a, float *b);
 
 /*** Color ***/
 float	*conv_color_for(float *a);
+int	    *conv_color_back(float *a);
 
 //t_intersections	*sort_intersect(int n, t_intersections *xs);
 
@@ -276,26 +295,35 @@ void	    clean_object(t_object *obj);
 void        clean_matrix(t_matrix *matrix, int n);
 void	    clean_comp(t_comp *comp);
 void	    clean_intersections(t_intersections *inter);
+void	    clean_light(t_light	*light);
+void	    clean_ray(float **ray);
+void	    clean_world(t_world	*w);
+void	    clean_points(float *a, float *b, float *c, float *d);
 
-
+float	*shade_hit(t_world	*w, t_comp *comp);
 float	*hadamard(float *a, float *b);
 float	*multiply_color(float *a, float b);
 float	*add_colors(float *a, float *b, float *c);
-float	*lighting(t_comp *comp, t_world *w, t_object object);
+float	*lighting(t_comp *comp, t_world *w, t_object *object, int shadow);
 t_intersections	*intersect_world(t_world *w, float **r);
 t_comp			*prepare_computations(t_intersection *i, float **ray);
+t_matrix	*view_transform(float *from, float *to, float *up);
 
 //t_intersections	*intersects(t_sphere *sp, float **r);
 t_intersection	*intersection(float t, t_object *object);
 //t_intersections	intersections(int n, t_intersection i, ...);
 t_intersection	*hit(t_intersections *xs);
 t_intersections	*sphere_intersect(t_object *sp, float **r);
-t_intersections	*sort_intersect(int n, t_intersections *xs);
 t_intersections *pre_intersect(t_object *object, float **ray);
 t_intersections *plane_intersect(t_object *plane, float **ray);
 t_intersections *cylinder_intersect(t_object *cylinder, float **ray);
+t_intersections	*sort_intersect(t_intersections *xs);
+
 
 float	        *normal_at(t_object *object, float *world_p);
-t_comp	        *create_comp(t_intersection *i);
+
+float	        *color_at(t_world *w, float **ray);
+int	is_shadowed(t_world *w, float *p);
+int	render(t_camera *camera, t_world *world);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 11:34:33 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/10 15:35:12 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/12 15:07:25 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,20 @@ t_intersections	*create_intersections(void)
 	if (!inter)
 		return (NULL);
 	inter->count = 0;
-	inter->int_list = malloc(5 * sizeof(t_intersection));
-	if (!inter->int_list)
+	inter->objects = malloc(100 * sizeof(t_object *));
+	if (!inter->objects)
 	{
 		free(inter);
 		return (NULL);
 	}
+	inter->t = malloc(100 * sizeof(float));
+	if (!inter->t)
+	{
+		free(inter->objects);
+		free(inter);
+		return (NULL);
+	}
+	inter->objects[0] = NULL;
 	return (inter);
 }
 
@@ -37,6 +45,7 @@ t_comp	*create_comp(t_intersection *i)
 	if (!comp)
 		return (NULL);
 	comp->point = NULL;
+	comp->over_point = NULL;
 	comp->eyev = NULL;
 	comp->normalv = NULL;
 	comp->t = i->t;
@@ -51,16 +60,16 @@ t_material	*create_material(void)
 	mat = malloc(sizeof(t_material));
 	if (!mat)
 		return (NULL);
-	mat->color = color(0, 0, 0);
+	mat->color = color(1, 1, 1);
 	if (!mat->color)
 	{
 		free(mat);
 		return (NULL);
 	}
-	mat->ambient = 0;
-	mat->diffuse = 0;
-	mat->specular = 0;
-	mat->shininess = 0;
+	mat->ambient = 0.1;
+	mat->diffuse = 0.9;
+	mat->specular = 0.9;
+	mat->shininess = 200;
 	return (mat);
 }
 
@@ -98,7 +107,7 @@ t_world	*create_world(int n, t_light *light)
 	if (!world)
 		return (NULL);
 	world->number_objects = n;
-	world->objects = malloc(n * sizeof(t_object));
+	world->objects = malloc(n * sizeof(t_object *));
 	if (!world->objects)
 	{
 		free(world);
