@@ -48,7 +48,7 @@ t_intersections	*intersect_world(t_world *w, float **r)
 	while (++i < w->number_objects)
 	{
 		r_temp = transform_ray(r, w->objects[i]->transform);
-		temp = sphere_intersect(w->objects[i], r_temp);
+		temp = pre_intersect(w->objects[i], r_temp);
 		if (temp)
 		{
 			combine_xs(w_inters, temp);
