@@ -38,7 +38,7 @@ t_intersections	*intersect_world(t_world *w, float **r)
 {
 	t_intersections	*w_inters;
 	t_intersections	*temp;
-	float			**r_temp;
+//	float			**r_temp;
 	int				i;
 
 	i = -1;
@@ -47,12 +47,12 @@ t_intersections	*intersect_world(t_world *w, float **r)
 		return (NULL);
 	while (++i < w->number_objects)
 	{
-		r_temp = transform_ray(r, w->objects[i]->transform);
-		temp = pre_intersect(w->objects[i], r_temp);
+	//	r_temp = transform_ray(r, w->objects[i]->transform);
+		temp = pre_intersect(w->objects[i], r);
 		if (temp)
 		{
 			combine_xs(w_inters, temp);
-			clean_ray(r_temp);
+		//	clean_ray(r_temp);
 		}
 	}
 	sort_intersect(w_inters);

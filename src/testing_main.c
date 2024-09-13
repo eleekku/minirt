@@ -3,7 +3,7 @@
 
 int	main(void)
 {
-	t_object	*floor, *left_wall, *right_wall, *middle, *right, *left;
+	t_object	*floor, *left_wall, *right_wall, *middle, *right, *left, *cylinder;
 	t_light		*light;
 	t_world		*world;
 	t_camera	*camera;
@@ -57,18 +57,31 @@ int	main(void)
 	left->material->color = color(1, 0.8, 0.1);
 	left->material->diffuse = 0.7;
 	left->material->specular = 0.3;
-	
+
+	cylinder = test_object(CYLINDER);
+	cylinder->cylindermax = 2;
+	cylinder->cylindermin = 1;
+	cylinder->closed = TRUE;
+	clean_matrix(cylinder->transform, 4);
+	tmp = matrix_multiply(create_translate(-1, 0.33, 0), create_scaling(0.5, 0.5, 0.5));
+	cylinder->transform = inverse_matrix(tmp);
+	clean_matrix(tmp, 4);
+	cylinder->material->color = color(0, 0, 1);
+	cylinder->material->diffuse = 0.9;
+	cylinder->material->specular = 0.9;
+	cylinder->material->shininess = 100;
+
 	light = malloc(sizeof(t_light));
 	light->coord = create_point(-10, 10, -10);
 	light->color = color(1, 1, 1);
 
-	world = create_world(6, light);
+	world = create_world(4, light);
 	world->objects[0] = floor;
 	world->objects[1] = left_wall;
 	world->objects[2] = right_wall;
-	world->objects[3] = middle;
-	world->objects[4] = right;
-	world->objects[5] = left;
+	world->objects[3] = cylinder;
+//	world->objects[4] = right;
+//	world->objects[5] = left;
 	camera = create_camera(1000, 1000, PI/3);
 	clean_matrix(camera->transform, 4);
 	//camera->transform = create_translate(1, 2, 1);

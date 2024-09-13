@@ -39,6 +39,7 @@ t_intersections *plane_intersect(t_object *plane, float **ray)
     t_intersections	*cross;
     float           t;
 
+    (void)plane;
     cross = create_intersections();
     if (!cross)
         return (NULL);
