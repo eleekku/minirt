@@ -37,13 +37,15 @@ static void intersect_caps(t_object *cylinder, float **ray, t_intersections *cro
     {
         cross->count++;
         cross->t[cross->count - 1] = t;
+        cross->objects[cross->count - 1] = cylinder;
     }
     t = (cylinder->cylindermax - ray[0][1]) / ray[1][1];
     if (check_cap(ray, t))
     {
         cross->count++;
         cross->t[cross->count - 1] = t;
-    }    
+        cross->objects[cross->count - 1] = cylinder;
+    } 
 }
 
 static void check_height(t_object *cylinder, t_cylindervalues *v, float **ray, t_intersections *cross)
@@ -53,12 +55,14 @@ static void check_height(t_object *cylinder, t_cylindervalues *v, float **ray, t
     {
         cross->count++;
         cross->t[cross->count - 1] = v->t0;
+        cross->objects[cross->count - 1] = cylinder;
     }
     v->y1 = ray[0][1] + v->t1 * ray[1][1];
     if (cylinder->cylindermin - 0.00001 < v->y1 && v->y1 <= cylinder->cylindermax + 0.00001)
     {
         cross->count++;
         cross->t[cross->count - 1] = v->t1;
+        cross->objects[cross->count - 1] = cylinder;
     }
 }
 
@@ -91,5 +95,6 @@ t_intersections *cylinder_intersect(t_object *cylinder, float **ray)
         check_height(cylinder, &v, ray, cross);
     }
     intersect_caps(cylinder, ray, cross);
+    cross->objects[cross->count] = NULL;
     return (cross);
 }

@@ -15,7 +15,7 @@
 static float	*local_normal_at(t_shape shape, float *object_p, t_object *object)
 {
 	float dist;
-	
+
 	if (shape == PLANE)
 		return (create_vector(0, 1, 0));
 	if (shape == SPHERE)

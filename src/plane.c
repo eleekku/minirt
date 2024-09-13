@@ -48,6 +48,8 @@ t_intersections *plane_intersect(t_object *plane, float **ray)
     t = (ray[0][1] * -1 / ray[1][1]);
     cross->count++;
     cross->t[0] = t;
+    cross->objects[cross->count - 1] = plane;
+    cross->objects[cross->count] = NULL;
     return (cross);    
 }
 
