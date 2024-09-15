@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 12:06:26 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/12 13:52:25 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/15 14:58:23 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ void	clean_intersections(t_intersections *inter)
 {
 	if (inter)
 	{
-		//if (inter->objects)
-		//	free(inter->objects);
-		//if (inter->t)
-			//free(inter->t);
+		if (inter->objects)
+			free(inter->objects);
+		if (inter->t)
+			free(inter->t);
 		free(inter);
 	}
 	inter = NULL;
@@ -50,6 +50,8 @@ void	clean_comp(t_comp *comp)
 			free(comp->normalv);
 		//if (comp->object)
 		//	free(comp->object);
+		if (comp->over_point)
+			free(comp->over_point);
 		free(comp);
 	}
 	comp = NULL;

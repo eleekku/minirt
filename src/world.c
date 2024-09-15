@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:52:53 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/13 14:01:11 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/15 15:00:10 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static t_intersections *combine_xs(t_intersections *a, t_intersections *b)
 		i++;
 		j++;
 	}
+	a->objects[i] = NULL;
 	free(b->objects);
 	free(b);
 	return (a);
@@ -84,6 +85,8 @@ t_comp	*prepare_computations(t_intersection *i, float **ray)
 	}
 	else
 		comp->inside = FALSE;
-	comp->over_point = tuple_add(comp->point, scalar_multi_tuple(comp->normalv, 0.01));
+	tmp = scalar_multi_tuple(comp->normalv, 0.01);
+	comp->over_point = tuple_add(comp->point, tmp);
+	free(tmp);
 	return (comp);
 }

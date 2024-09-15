@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 15:46:54 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/12 10:25:17 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/15 14:47:39 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,9 @@ static	float	**ray_pixel_help(t_matrix *inv, float x, float y)
 		pixel = four_one_multiply(inv, p1);
 		origin = four_one_multiply(inv, p2);
 		free(p1);
+		p1 = NULL;
 		free(p2);
+		p2 = NULL;
 		if (pixel && origin)
 		{
 			p1 = tuple_subs(pixel, origin);
