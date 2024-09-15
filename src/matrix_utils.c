@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 12:17:23 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/12 11:41:21 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/13 12:32:38 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,16 @@ void    clean_matrix(t_matrix *matrix, int n)
     int j;
 
     j = 0;
-    while (j < n)
+    if (matrix)
     {
-        free(matrix->m[j]);
-        j++;
+        while (j < n)
+        {
+            free(matrix->m[j]);
+            j++;
+        }
+        free(matrix->m);
+        free(matrix);
     }
-    free(matrix->m);
-    free(matrix);
     matrix = NULL;
 }
 
