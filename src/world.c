@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:52:53 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/15 15:00:10 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/15 23:38:37 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,7 @@ static t_intersections *combine_xs(t_intersections *a, t_intersections *b)
 		j++;
 	}
 	a->objects[i] = NULL;
-	free(b->objects);
-	free(b);
+	clean_intersections(b);
 	return (a);
 }
 
@@ -51,10 +50,8 @@ t_intersections	*intersect_world(t_world *w, float **r)
 		r_temp = transform_ray(r, w->objects[i]->transform);
 		temp = sphere_intersect(w->objects[i], r_temp);
 		if (temp)
-		{
 			combine_xs(w_inters, temp);
-			clean_ray(r_temp);
-		}
+		clean_ray(r_temp);
 	}
 	sort_intersect(w_inters);
 	return (w_inters);	

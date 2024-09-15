@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 11:36:08 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/12 16:22:34 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/15 23:31:23 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ float	*lighting(t_comp *comp, t_world *w, t_object *object, int shadow)
 		reflectv = reflect(tmp, comp->normalv);
 		free(tmp);
 		reflect_dot_eye = dot_product(reflectv, comp->eyev);
+		free(reflectv);
 		if (reflect_dot_eye < 0)
 			specular = color(0, 0, 0);
 		else
