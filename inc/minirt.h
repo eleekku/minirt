@@ -67,17 +67,33 @@ typedef struct s_light
 	float	*coord;
 }	t_light;
 
+typedef struct s_cylindervalues
+{
+    float a;
+    float b;
+    float c;
+    float disc;
+    float t0;
+    float t1;
+    float y0;
+    float y1;
+}   t_cylindervalues;
+
+
 typedef struct s_object
 {
-	t_shape		s;
-	float		*coord;
-	float		diameter;
-	float		*color;
-	t_matrix	*transform;
-	float		*normv;
-	float		height;
-	t_material	*material;
-}	t_object;
+    t_shape s;
+    float   *coord;
+    float   diameter;
+    float	*color;
+    t_matrix	*transform;
+    float   *normv;
+    float   height;
+    t_material  *material;
+    float   cylindermin;
+    float   cylindermax;
+    t_bool  closed;
+}   t_object;
 
 typedef struct s_world
 {
@@ -182,6 +198,9 @@ t_comp			*create_comp(t_intersection *i);
 t_camera		*create_camera(float hsize, float vsize, float field);
 t_world			*create_world(int n, t_light *light);
 
+/*** Shapes  ***/
+t_object *test_object(t_shape type);
+
 /*** Tuple Operations ***/
 int				equal_float(float a, float b);
 float			*tuple_add(float *a, float *b);
@@ -228,6 +247,9 @@ t_intersections	*sort_intersect(t_intersections *xs);
 t_intersections	*intersect_world(t_world *w, float **r);
 t_intersection	*intersection(float t, t_object *object);
 t_intersection	*hit(t_intersections *xs);
+t_intersections *pre_intersect(t_object *object, float **ray);
+t_intersections *plane_intersect(t_object *plane, float **ray);
+t_intersections *cylinder_intersect(t_object *cylinder, float **ray);
 t_comp			*prepare_computations(t_intersection *i, float **ray);
 
 /*** Color utils ***/
