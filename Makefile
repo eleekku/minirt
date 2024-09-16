@@ -15,6 +15,7 @@ HEADERS	:= -I ./inc -I $(LIBMLX)/include
 LIBS	:= $(LIBMLX)/build/libmlx42.a -Iinclude -ldl -lglfw -pthread -lm	
 SRCS	:= $(SRCDIR)/definitions.c \
 			$(SRCDIR)/color_utils.c \
+			$(SRCDIR)/cylinder.c \
 			$(SRCDIR)/tuple_operations_one.c \
 			$(SRCDIR)/tuple_operations_two.c \
 			$(SRCDIR)/rays.c $(SRCDIR)/sphere.c \
@@ -27,6 +28,7 @@ SRCS	:= $(SRCDIR)/definitions.c \
 			$(SRCDIR)/reflection.c \
 			$(SRCDIR)/world.c \
 			$(SRCDIR)/testing_main.c \
+			$(SRCDIR)/plane.c \
 			$(SRCDIR)/debug.c \
 			$(SRCDIR)/color_operations.c \
 			$(SRCDIR)/create_structs.c \
