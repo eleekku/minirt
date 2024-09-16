@@ -1,36 +1,31 @@
 #include "../inc/minirt.h"
 
-void    malloc_objects(t_scene *scene)
+t_bool fill_rgb(int *color, int str)
 {
-   // printf("im here spheres is %d\n", scene->spheres);
-    if (scene->spheres > 0)
-    {
-    scene->sp = malloc(sizeof(t_sphere) * scene->spheres);
-        if (!scene->sp)
-            exit_error("malloc error", NULL, NULL);
-    }
-    if (scene->planes > 0)
-    {
-    scene->pl = malloc(sizeof(t_plane) * scene->planes);
-        if (!scene->pl)
+    int     i;
+    char    **rgb;
+    int     value;
+    int     status;
+
+    rgb = safe_split(str, ',');
+    while (++i <= 2)
         {
-            free(scene->sp);
-            exit_error("malloc error", NULL, NULL);
+            value = ft_atoi(rgb[i]);
+            if (!(value >= 0 && value <= 255))
+            {
+                free_array(rgb);
+                return (FALSE);
+            }
+            color[i] = value;
         }
-    }
-    if (scene->cylinders > 0)
-    {
-    scene->cy = malloc(sizeof(t_cylinder) * scene->cylinders);
-        if (!scene->cy)
-        {
-            free(scene->sp);
-            free(scene->pl);
-            exit_error("malloc error", NULL, NULL);
-        }
-    }
+    status = TRUE;
+    if (rgb[i])
+        status = FALSE;
+    free_array(rgb);
+    return (status);
 }
 
-t_bool    validate_values(char *arg, char **args, t_scene *scene)
+t_bool    validate_values(char *arg)
 {
     int     i;
     int     coma;
@@ -46,11 +41,11 @@ t_bool    validate_values(char *arg, char **args, t_scene *scene)
             }
         if (arg[i] && ((arg[i] != '.' && arg[i] != '-') && (arg[i] < '0' || arg[i] > '9')) &&
         arg[i] != '\n')
-            exit_error("Invalid value format", args, scene);
+            return (FALSE);
         i++;
     }
     if (coma > 2)
-        exit_error("Invalid value format", args, scene);
+        return (FALSE);
     return (TRUE);
 }
 
@@ -66,7 +61,7 @@ char    **safe_split(char *string, char separator)
     return (arr);
 }
 
-float    fill_value(char *arg, char **args, char **coordinates, t_scene *scene)
+float    fill_value(char *arg, char **args, char **coordinates, t_object **object)
 {
     float   value;
     int     i;
@@ -78,9 +73,7 @@ float    fill_value(char *arg, char **args, char **coordinates, t_scene *scene)
         {  
             if (coordinates)
                 free_array(coordinates);
-            if (scene)
-                free_objects(scene); 
-            exit_error("Invalid value format", args, NULL);
+            exit_error("Invalid value format", args);
         }
     }
     if (ft_strchr(arg, '.'))

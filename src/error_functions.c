@@ -1,12 +1,7 @@
 #include "../inc/minirt.h"
 
-void    free_objects_exit(t_scene *scene, char *message, char **array, char **args)
+void    free_objects_exit(t_object **object, char *message, char **array, int i)
 {
-    free(scene->sp);
-    free(scene->pl);
-    free(scene->cy);
-    if (args)
-        free_array(args);
     if (message)
         exit_error(message, array, NULL);
     
@@ -24,7 +19,7 @@ void    free_array(char **args)
     free(args);
 }
 
-void    free_objects(t_scene *scene)
+void    free_objects(t_parse *parse)
 {
     if (scene->sp)
         free(scene->sp);
@@ -34,12 +29,10 @@ void    free_objects(t_scene *scene)
         free(scene->cy);
 }
 
-void    exit_error(char *msg, char **args, t_scene *scene)
+void    exit_error(char *msg, char **args)
 {
     if (args)
         free_array(args);
-    if (scene)
-        free_objects(scene);
     ft_printf(2, "Error\n%s\n", msg);
     exit(1);
 }

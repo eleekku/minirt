@@ -161,6 +161,22 @@ typedef struct s_camera
     t_matrix    *transform;
 }   t_camera;
 
+typedef struct s_parse
+{
+    float       alightr;
+    int         amcolor[3];
+    float       camc[4];
+    float       normv[4];
+    int         fow;
+    float       lcoord[4];
+    int         lcolor[3];
+    float       lbrightness;
+    int         spheres;
+    int         planes;
+    int         cylinders;
+}   t_parse;
+
+
 /*typedef struct s_scene
 {
     float       alightr;
@@ -180,31 +196,32 @@ typedef struct s_camera
     t_sphere    *sp;
     t_plane     *pl;
     t_cylinder  *cy;
-}   t_scene;
+}   t_parse;
 */
 
-/* Parsing
-void  check_file(char *file, t_scene *scene, t_bool flag);
+/* Parsing */
+void  check_file(char *file, t_parse *parse, t_bool flag);
 char    **safe_split(char *string, char separator);
 void    free_array(char **args);
-void    exit_error(char *msg, char **args, t_scene *scene);
-t_bool    validate_values(char *arg, char **args, t_scene *scene);
-float    fill_value(char *arg, char **args, char **coordinates, t_scene *scene);
-void    free_objects(t_scene *scene);
-void    malloc_objects(t_scene *scene);
-void    parse_sphere(char **args, t_scene *scene, int index);
-void    parse_plane(char **args, t_scene *scene, int index);
-void    parse_cylinder(char **args, t_scene *scene, int index);
-t_bool  validate_line(char **args, t_scene *scene);
-void    free_objects_exit(t_scene *scene, char *message, char **array, char **args);
-*/
+void    exit_error(char *msg, char **args);
+t_bool    validate_values(char *arg);
+float    fill_value(char *arg, char **args, char **coordinates, t_parse *parse);
+void    free_objects(t_parse *parse);
+void    malloc_objects(t_parse *parse);
+t_bool    parse_sphere(char **args, t_object **object, int index);
+t_bool    parse_plane(char **args, t_object **object, int index);
+t_bool    parse_cylinder(char **args, t_object **object, int index);
+t_bool  validate_line(char **args, t_parse *parse);
+t_bool fill_rgb(int *color, int str);
+void    free_objects_exit(t_parse *parse, char *message, char **array, char **args);
+
 
 int	colors_to_int(int *colors, int intensity);
 int	*combine_colors(int *a, int *b);
 int	*multiply_scale(int *color, float scale);
 
-//t_material  material(t_scene *scene, int i);
-//int    *lighting(t_scene *scene, float *point, float *eyev, float *normalv);
+//t_material  material(t_parse *parse, int i);
+//int    *lighting(t_parse *parse, float *point, float *eyev, float *normalv);
 
 /*** Definitions ***/
 float	        *tuple(float a, float b, float c, float w);
@@ -269,7 +286,7 @@ t_intersections	intersections(int n, t_intersection i, ...);
 t_intersection	hit(t_intersections xs);
 t_intersections	sphere_intersect(t_object sp, float **r);
  ***/
-//int paint_sphere_shadow(mlx_image_t *img, t_sphere *sphere, t_scene *scene);
+//int paint_sphere_shadow(mlx_image_t *img, t_sphere *sphere, t_parse *parse);
 //float	        *normal_at(t_object *object, float *world_p);
 float	*reflect(float *vector, float *normal);
 

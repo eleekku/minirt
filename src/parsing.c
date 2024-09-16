@@ -1,6 +1,6 @@
 #include "../inc/minirt.h"
 
-void    validate_light(char **args, t_scene *scene)
+void    validate_light(char **args, t_parse *parse)
 {
     char    **coordinates;
     int     i;
@@ -9,90 +9,86 @@ void    validate_light(char **args, t_scene *scene)
     i = -1;
     coordinates = safe_split(args[1], ',');
     while (++i <= 2)
-        scene->light.position[i] = fill_value(coordinates[i], args, coordinates, NULL);
-    scene->light.position[i] = 1;
+        parse->lcoord[i] = fill_value(coordinates[i], args, coordinates, NULL);
     free_array(coordinates);
     if (!ft_isdigit(args[2][0]))
-        exit_error("invalid light brightness format", args, NULL);
+        exit_error("invalid light brightness format", args);
     brightness = fill_value(args[2], args, NULL, NULL);
     if (!(brightness >= 0.0 && brightness <= 1.0))
-        exit_error("Invalid light brightness value", args, NULL);
-    scene->light.brightness = brightness;
+        exit_error("Invalid light brightness value", args);
+    parse->lbrightness = brightness;
     if (args[3])
-        exit_error("too many values in light", args, NULL);
+    {
+        if (!validate_values(args[3], args, NULL))
+            return (FALSE);
+        if (!fill_rgb(args[3], parse->lcolor))
+            return (FALSE);
+    }
+    if (args[3] && args[4])
+        return (FALSE);
+    return (TRUE);
 }
 
-void    validate_ambient(char **args, t_scene *scene)
+t_bool    validate_ambient(char **args, t_parse *parse)
 {
         float   lightratio;
-        char    **rgb;
-        int     i;
-        float   value;
 
-        i = -1;
         if (!ft_isdigit(args[1][0]))
-            exit_error("invalid format", args, NULL);
+            exit_error("invalid format", args);
         lightratio = ft_atof(args[1]);
         if (lightratio < 0.0 || lightratio > 1.0 || (lightratio == 0.0 && args[1][0] != '0'))
-            exit_error("invalid ambient light ratio", args, NULL);
-        scene->alightr = lightratio;
-        validate_values(args[2], args, NULL);
-        rgb = safe_split(args[2], ',');
-        while (++i <= 2)
-        {
-            value = ft_atoi(rgb[i]);
-            if (!(value >= 0 && value <= 255))
-                exit_error("invalid ambient rgb value", args, NULL);
-            scene->amcolor[i] = value;
-        }
-        if (args[i])
-            exit_error("too many values in ambien rgb", args, NULL);
-        free_array(rgb);      
+            return (FALSE);
+        parse->alightr = lightratio;
+        if (!validate_values(args[2], args, NULL))
+            return (FALSE);
+        if (!fill_rgb(parse->amcolor, args[2]));
+            return (FALSE);
+        if (args[3])
+            return (FALSE);
+        return (TRUE);    
 }
 
-void    validate_camera(char **args, t_scene *scene)
+t_bool    validate_camera(char **args, t_parse *parse)
 {
         int     i;
         char    **coordinates;
         int     fow;
 
         i = -1;
-        validate_values(args[1], args, NULL);
+        if (!validate_values(args[1], args))
+            return (FALSE);
         coordinates = safe_split(args[1], ',');
         while (++i <= 2)
-            scene->camc[i] = fill_value(coordinates[i], args, coordinates, NULL);
-        scene->camc[i] = 1;
+            parse->camc[i] = fill_value(coordinates[i], args, coordinates, NULL);
         i = -1;
         free_array(coordinates);
-        validate_values(args[2], args, NULL);
+        if (!validate_values(args[2], args))
+            return (FALSE);
         coordinates = safe_split(args[2], ',');
         while (++i < 2)
-            scene->normv[i] = fill_value(coordinates[i], args, coordinates, scene);
-        scene->normv[i] = 0;
+            parse->normv[i] = fill_value(coordinates[i], args, coordinates, parse);
         free_array(coordinates); 
         fow = ft_atoi(args[3]);
         if (!ft_isdigit(args[3][0]) && args[3][0] != '0')
-            exit_error("invalid fow format", args, NULL);
+            exit_error("invalid fow format", args);
         if (fow < 0 || fow > 180)
-            exit_error("invalid fow format", args, NULL);
-        scene->fow = fow;
+            exit_error("invalid fow format", args);
+        parse->fow = fow;
+        return (TRUE);
 }
 
-t_bool  validate_line(char **args, t_scene *scene)
+t_bool  validate_line(char **args, t_parse *parse)
 {
     if (!ft_strncmp(args[0], "A", ft_strlen(args[0])))
-        validate_ambient(args, scene);
+        validate_ambient(args, parse);
     else if (!ft_strncmp(args[0], "C", ft_strlen(args[0])))
-        validate_camera(args, scene);
+        return (validate_camera(args, parse));
     else if (!ft_strncmp(args[0], "L", ft_strlen(args[0])))
-        validate_light(args, scene);
-    else if (!ft_strncmp(args[0], "sp", ft_strlen(args[0])))
-        return (TRUE);
-    else if (!ft_strncmp(args[0], "pl", ft_strlen(args[0])))
-        return (TRUE);
-    else if (!ft_strncmp(args[0], "cy", ft_strlen(args[0])))
-        return (TRUE);
-    else if (!ft_strncmp(args[0], "\n", (ft_strlen(args[0]))))
+        validate_light(args, parse);
+    else if (!ft_strncmp(args[0], "sp", ft_strlen(args[0])) || 
+    !ft_strncmp(args[0], "pl", ft_strlen(args[0])) ||
+    !ft_strncmp(args[0], "cy", ft_strlen(args[0])) ||
+    !ft_strncmp(args[0], "\n", (ft_strlen(args[0]))))
         return (TRUE);
     else
         return (FALSE);
@@ -102,16 +98,16 @@ t_bool  validate_line(char **args, t_scene *scene)
 /*
 int main(int argc, char **argv)
 {
-    t_scene scene;
+    t_parse parse;
 
-    scene.spheres = 0;
-    scene.planes = 0;
-    scene.planes = 0;
+    parse.spheres = 0;
+    parse.planes = 0;
+    parse.planes = 0;
 
     if (argc != 2)
     {
         ft_printf(2, "Error\nPlease input one and only one file\n");
         exit (1);
     }
-    check_file(argv[1], &scene, FALSE);
+    check_file(argv[1], &parse, FALSE);
 }*/
