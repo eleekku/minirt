@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 11:34:33 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/12 15:07:25 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/15 15:07:09 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ t_intersections	*create_intersections(void)
 	if (!inter)
 		return (NULL);
 	inter->count = 0;
-	inter->objects = malloc(100 * sizeof(t_object *));
+	inter->objects = malloc(16 * sizeof(t_object *));
 	if (!inter->objects)
 	{
 		free(inter);
 		return (NULL);
 	}
-	inter->t = malloc(100 * sizeof(float));
+	inter->t = malloc(16 * sizeof(float));
 	if (!inter->t)
 	{
 		free(inter->objects);
