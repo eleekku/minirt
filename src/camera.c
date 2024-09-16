@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 16:47:33 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/15 14:44:59 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/16 10:07:16 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ int	render(t_camera *camera, t_world *world)
 	int	y;
 	float	**ray;
 	float	*col;
+	int		*color_back;
 
 	mlx_t* mlx = mlx_init(camera->hsize, camera->vsize, "MLX42", true);
 	if (!mlx)
@@ -72,14 +73,16 @@ int	render(t_camera *camera, t_world *world)
 		{
 			ray = ray_for_pixel(camera, x, y);
 			col = color_at(world, ray);
-			mlx_put_pixel(img, x, y, colors_to_int(conv_color_back(col),256));
+			color_back = conv_color_back(col);
+			mlx_put_pixel(img, x, y, colors_to_int(color_back,256));
+			free(color_back);
 			clean_ray(ray);
 			free(col);
 			x++;
 		}
 		y++;
 	}
-	printf("DONE\n");
+	clean_world(world);
 	mlx_loop(mlx);
     mlx_terminate(mlx);
 	return (1);
