@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 14:40:31 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/16 11:17:27 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/16 16:30:26 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,22 @@ typedef struct s_matrix
 	t_transformation	type;
 }	t_matrix;
 
+typedef struct s_pattern
+{
+	float		*colora;
+	float		*colorb;
+	t_matrix	*transf;
+}	t_pattern;
+
 typedef struct s_material
 {
-	float	*color;
-	float	ambient;
-	float	diffuse;
-	float	specular;
-	float	shininess;
+	float		*color;
+	float		ambient;
+	float		diffuse;
+	float		specular;
+	float		shininess;
+	t_pattern	*patt;
+	t_bool		pattern;
 }	t_material;
 
 typedef struct s_light
@@ -266,6 +275,9 @@ float			*reflect(float *vector, float *normal);
 float			*color_at(t_world *w, float **ray);
 int				is_shadowed(t_world *w, float *p);
 int				render(t_camera *camera, t_world *world);
+t_pattern		*create_pattern(float *a, float *b, t_matrix *transf);
+float			*checker_at_obj(t_comp *comp);
+//float			*checker_at_obj(t_pattern *patt, t_object *obj, float *wp);
 
 /*** Cleaning structs ***/
 void			clean_material(t_material *mat);

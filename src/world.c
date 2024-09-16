@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:52:53 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/16 12:06:39 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/16 16:49:57 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static void	get_over_point(t_comp *comp)
 {
 	float	*tmp;
 
-	tmp = scalar_multi_tuple(comp->normalv, 0.01);
+	tmp = scalar_multi_tuple(comp->normalv, EPS);
 	comp->over_point = tuple_add(comp->point, tmp);
 	free(tmp);
 }
