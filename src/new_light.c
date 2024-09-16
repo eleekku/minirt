@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 11:36:08 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/16 11:45:21 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/16 16:07:46 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ float	*shade_hit(t_world	*w, t_comp *comp)
 	int	n;
 
 	n = is_shadowed(w, comp->over_point);
+	if (comp->object->material->pattern == TRUE)
+		comp->object->material->color = checker_at_obj(comp);
 	return (lighting(comp, w, comp->object, n));
 }
 
@@ -115,6 +117,7 @@ float	*lighting(t_comp *comp, t_world *w, t_object *obj, int shadow)
 	{
 		diffuse = color(0, 0, 0);
 		spec = color(0, 0, 0);
+		free(eff_color);
 	}
 	else
 	{

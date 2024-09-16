@@ -37,7 +37,8 @@ SRCS	:= $(SRCDIR)/definitions.c \
 			$(SRCDIR)/new_light.c \
 			$(SRCDIR)/view_transform.c \
 			$(SRCDIR)/camera.c \
-			$(SRCDIR)/shadows.c
+			$(SRCDIR)/shadows.c \
+			$(SRCDIR)/pattern.c
 OBJS	:= ${SRCS:.c=.o}
 
 all: libmlx $(LIBFT) $(NAME)

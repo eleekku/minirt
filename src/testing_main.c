@@ -44,6 +44,10 @@ int	main(void)
 	middle->material->color = color(0.1, 1, 0.5);
 	middle->material->diffuse = 0.7;
 	middle->material->specular = 0.3;
+	middle->material->pattern = TRUE;
+	tmp = create_scaling(0.1, 0.1, 0.1);
+	middle->material->patt = create_pattern(color(0, 0, 0), color(1, 1, 1), inverse_matrix(tmp));
+	clean_matrix(tmp, 4);
 
 	right = create_object(SPHERE);
 	clean_matrix(right->transform, 4);
@@ -63,10 +67,10 @@ int	main(void)
 	left->material->diffuse = 0.7;
 	left->material->specular = 0.3;
 
-	cylinder = test_object(CYLINDER);
-	cylinder->cylindermax = 3;
-	cylinder->cylindermin = -1;
-	cylinder->closed = TRUE;
+//	cylinder = test_object(CYLINDER);
+//	cylinder->cylindermax = 3;
+//	cylinder->cylindermin = -1;
+//	cylinder->closed = TRUE;
 //	clean_matrix(cylinder->transform, 4);
 //	tmp = matrix_multiply(create_translate(-1, 0.33, 0), create_scaling(0.5, 0.5, 0.5));
 //	tmp = create_identity(4);
@@ -93,17 +97,17 @@ int	main(void)
 	light->coord = create_point(-10, 10, -10);
 	light->color = color(1, 1, 1);
 
-	world = create_world(4, light);
+	world = create_world(7, light);
 	world->objects[0] = floor;
 	world->objects[1] = cylinder;
 	world->objects[2] = right_wall;
 	world->objects[3] = left_wall;
-//	world->objects[3] = middle;
-//	world->objects[4] = right;
-//	world->objects[5] = left;
-	camera = create_camera(1000, 1000, PI/3);
+	world->objects[4] = middle;
+	world->objects[5] = right;
+	world->objects[6] = left;
+	camera = create_camera(1500, 1000, PI/3);
 	clean_matrix(camera->transform, 4);
-	tmp = view_transform(create_point(-10, 10, -10), create_point(0, 1, 0), create_vector(0, 1, 0));
+	tmp = view_transform(create_point(0, 1.5, -5), create_point(0, 1, 0), create_vector(0, 1, 0));
 	camera->transform = inverse_matrix(tmp);
 	clean_matrix(tmp, 4);
 	render(camera, world);

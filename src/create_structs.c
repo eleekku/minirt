@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 11:34:33 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/15 15:07:09 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/16 14:25:18 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ t_material	*create_material(void)
 	mat->diffuse = 0.9;
 	mat->specular = 0.9;
 	mat->shininess = 200;
+	mat->pattern = FALSE;
 	return (mat);
 }
 
