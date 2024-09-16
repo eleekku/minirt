@@ -1,0 +1,33 @@
+{
+   mlx1
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:calloc
+   fun:UnknownInlinedFun
+   fun:proxy_create
+   fun:UnknownInlinedFun
+   fun:wl_proxy_marshal_array_flags
+   fun:wl_proxy_marshal_flags
+   fun:UnknownInlinedFun
+   fun:UnknownInlinedFun
+   fun:_glfwCreateWindowWayland
+   fun:glfwCreateWindow
+   fun:mlx_init
+   fun:render
+   fun:main
+}
+{
+   MLX2
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:calloc
+   obj:*
+   obj:*
+   obj:*
+   fun:_glfwInitEGL
+   fun:_glfwCreateWindowWayland
+   fun:glfwCreateWindow
+   fun:mlx_init
+   fun:render
+   fun:main
+}

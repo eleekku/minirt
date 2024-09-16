@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 14:40:31 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/12 16:26:06 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/13 12:08:53 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,31 +25,31 @@
 # define TRUE 1
 # define FALSE 0
 
-typedef int     t_bool;
+typedef int	t_bool;
 
 # define ORIGIN 0
 # define DIRECTION 1
 
-typedef enum    e_shape
+typedef enum e_shape
 {
-    SPHERE,
-    PLANE,
-    CYLINDER
-}   t_shape;
+	SPHERE,
+	PLANE,
+	CYLINDER
+}	t_shape;
 
-typedef enum    e_transformation
+typedef enum e_transformation
 {
-    TRANSLATION,
-    SCALING,
-    ROTATE,
+	TRANSLATION,
+	SCALING,
+	ROTATE,
 	SHEARING
-}   t_transformation;
+}	t_transformation;
 
 typedef struct s_matrix
 {
-	int		            size;
-	float	            **m;
-    t_transformation    type;
+	int					size;
+	float				**m;
+	t_transformation	type;
 }	t_matrix;
 
 typedef struct s_material
@@ -107,7 +107,7 @@ typedef struct s_comp
 	t_object	*object;
 	float		t;
 	float		*point;
-    float       *over_point;
+	float		*over_point;
 	float		*eyev;
 	float		*normalv;
 	t_bool		inside;
@@ -115,51 +115,27 @@ typedef struct s_comp
 
 typedef struct s_intersection
 {
-	float	    t;
+	float		t;
 	t_object	*object;
 }	t_intersection;
 
-typedef struct  s_intersections
+typedef struct s_intersections
 {
-    int         count;
-    t_object    **objects;
-    float       *t;
-}   t_intersections;
-
-typedef struct  s_sphere
-{
-    float   center[4];
-    float   diameter;
-    int     color[3];
-    float   **transform;
-}   t_sphere;
-
-typedef struct  s_plane
-{
-    float       coord[4];
-    float       normv[4];
-    int         color[3];
-}   t_plane;
-
-typedef struct  s_cylinder
-{
-    float   coord[4];
-    float   normv[4];
-    float   diameter;
-    float   height;
-    int     color[3];
-}   t_cylinder;
+	int			count;
+	t_object	**objects;
+	float		*t;
+}	t_intersections;
 
 typedef struct s_camera
 {
-    float       hsize;
-    float       vsize;
-    float       field;
-    float       pixel_size;
-    float       half_height;
-    float       half_width;
-    t_matrix    *transform;
-}   t_camera;
+	float		hsize;
+	float		vsize;
+	float		field;
+	float		pixel_size;
+	float		half_height;
+	float		half_width;
+	t_matrix	*transform;
+}	t_camera;
 
 typedef struct s_parse
 {
@@ -216,27 +192,27 @@ t_bool fill_rgb(int *color, int str);
 void    free_objects_exit(t_parse *parse, char *message, char **array, char **args);
 
 
-int	colors_to_int(int *colors, int intensity);
-int	*combine_colors(int *a, int *b);
-int	*multiply_scale(int *color, float scale);
+int				colors_to_int(int *colors, int intensity);
+int				*combine_colors(int *a, int *b);
+int				*multiply_scale(int *color, float scale);
 
 //t_material  material(t_parse *parse, int i);
 //int    *lighting(t_parse *parse, float *point, float *eyev, float *normalv);
 
 /*** Definitions ***/
-float	        *tuple(float a, float b, float c, float w);
-float           *create_point(float a, float b, float c);
-float           *create_vector(float a, float b, float c);
-t_matrix	    *create_matrix(int n);
-t_matrix        *create_populated_matrix(float *a, float *b, float *c, float *d);
-float	        *color(float a, float b, float c);
-t_material	    *create_material(void);
-t_object	    *create_object(t_shape shape);
-t_matrix        *create_identity(int n);
-t_comp	        *create_comp(t_intersection *i);
+float			*tuple(float a, float b, float c, float w);
+float			*create_point(float a, float b, float c);
+float			*create_vector(float a, float b, float c);
+t_matrix		*create_matrix(int n);
+t_matrix		*create_populated_matrix(float *a, float *b, float *c, float *d);
+float			*color(float a, float b, float c);
+t_material		*create_material(void);
+t_object		*create_object(t_shape shape);
+t_matrix		*create_identity(int n);
+t_comp			*create_comp(t_intersection *i);
 t_intersections	*create_intersections(void);
-t_comp	        *create_comp(t_intersection *i);
-t_camera	    *create_camera(float hsize, float vsize, float field);
+t_comp			*create_comp(t_intersection *i);
+t_camera		*create_camera(float hsize, float vsize, float field);
 t_world			*create_world(int n, t_light *light);
 
 /*** Shapes  ***/
@@ -254,30 +230,33 @@ float			magnitude(float *a);
 float			*normalize(float *a);
 float			dot_product(float *a, float *b);
 float			*vector_cross_prod(float *a, float *b);
+float			*normal_at(t_object *object, float *world_p);
 
 /*** Matrix operations ***/
 int				matrix_are_equal(t_matrix *a, t_matrix *b);
-t_matrix	    *matrix_multiply(t_matrix *a, t_matrix *b);
+t_matrix		*matrix_multiply(t_matrix *a, t_matrix *b);
 t_matrix		*submatrix(t_matrix *a, int i, int j);
 t_matrix		*transpose(t_matrix *a);
 float			minor(t_matrix *a, int i, int j);
 float			cofactor(t_matrix *a, int i, int j);
 float			determinant(t_matrix *a);
 t_matrix		*inverse_matrix(t_matrix *a);
+float			*four_one_multiply(t_matrix *a, float *b);
 
 /*** Matrix transformations ***/
-t_matrix	    *create_translate(float a, float b, float c);
-t_matrix	    *create_scaling(float a, float b, float c);
+t_matrix		*create_translate(float a, float b, float c);
+t_matrix		*create_scaling(float a, float b, float c);
 t_matrix		*create_x_rotation(float a);
 t_matrix		*create_y_rotation(float a);
 t_matrix		*create_z_rotation(float a);
 t_matrix		*create_shearing(float *p);
+t_matrix		*view_transform(float *from, float *to, float *up);
 
 /*** Rays ***/
 float			**create_ray(float *origin, float *direction);
 float			*ray_position(float **r, float t);
-float	        **transform_ray(float **ray, t_matrix *matrix);
-float	        **ray_for_pixel(t_camera *c, float px, float py);
+float			**transform_ray(float **ray, t_matrix *matrix);
+float			**ray_for_pixel(t_camera *c, float px, float py);
 
 /*** Spheres
 t_intersections	intersects(t_sphere *sp, float **r);
@@ -331,16 +310,43 @@ t_intersection	*intersection(float t, t_object *object);
 //t_intersections	intersections(int n, t_intersection i, ...);
 t_intersection	*hit(t_intersections *xs);
 t_intersections	*sphere_intersect(t_object *sp, float **r);
+t_intersections	*sort_intersect(t_intersections *xs);
+t_intersections	*intersect_world(t_world *w, float **r);
+t_intersection	*intersection(float t, t_object *object);
+t_intersection	*hit(t_intersections *xs);
 t_intersections *pre_intersect(t_object *object, float **ray);
 t_intersections *plane_intersect(t_object *plane, float **ray);
 t_intersections *cylinder_intersect(t_object *cylinder, float **ray);
-t_intersections	*sort_intersect(t_intersections *xs);
+t_comp			*prepare_computations(t_intersection *i, float **ray);
 
+/*** Color utils ***/
+float			*hadamard(float *a, float *b);
+float			*multiply_color(float *a, float b);
+float			*add_colors(float *a, float *b, float *c);
+float			*conv_color_for(float *a);
+int				*conv_color_back(float *a);
 
-float	        *normal_at(t_object *object, float *world_p);
+/*** Color calculations ***/
+float			*lighting(t_comp *comp, t_world *w, t_object *object, int shadow);
+float			*shade_hit(t_world	*w, t_comp *comp);
+float			*reflect(float *vector, float *normal);
+float			*color_at(t_world *w, float **ray);
+int				is_shadowed(t_world *w, float *p);
+int				render(t_camera *camera, t_world *world);
 
-float	        *color_at(t_world *w, float **ray);
-int	is_shadowed(t_world *w, float *p);
-int	render(t_camera *camera, t_world *world);
+/*** Cleaning structs ***/
+void			clean_material(t_material *mat);
+void			clean_object(t_object *obj);
+void			clean_matrix(t_matrix *matrix, int n);
+void			clean_comp(t_comp *comp);
+void			clean_intersections(t_intersections *inter);
+void			clean_light(t_light	*light);
+void			clean_ray(float **ray);
+void			clean_world(t_world	*w);
+void			clean_points(float *a, float *b, float *c, float *d);
+
+/*** Debugging ***/
+int				print_matrix(float **m, int size);
+int				print_float_array(float *a);
 
 #endif
