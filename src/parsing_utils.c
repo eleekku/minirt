@@ -1,12 +1,13 @@
 #include "../inc/minirt.h"
 
-t_bool fill_rgb(int *color, int str)
+t_bool fill_rgb(int *color, char *str)
 {
     int     i;
     char    **rgb;
     int     value;
     int     status;
 
+    i = -1;
     rgb = safe_split(str, ',');
     while (++i <= 2)
         {
@@ -61,9 +62,8 @@ char    **safe_split(char *string, char separator)
     return (arr);
 }
 
-float    fill_value(char *arg, char **args, char **coordinates, t_object **object)
+t_bool    fill_value(char *arg, char **coordinates, float *value)
 {
-    float   value;
     int     i;
 
     i = -1;
@@ -73,12 +73,16 @@ float    fill_value(char *arg, char **args, char **coordinates, t_object **objec
         {  
             if (coordinates)
                 free_array(coordinates);
-            exit_error("Invalid value format", args);
+            return (FALSE);
         }
     }
     if (ft_strchr(arg, '.'))
-        value = ft_atof(arg);
+    {
+        *value = ft_atof(arg);
+    }
     else
-        value = ft_atoi(arg);
-    return (value);
+    {
+        *value = (float)ft_atoi(arg);
+    }
+    return (TRUE);
 }

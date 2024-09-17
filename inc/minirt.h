@@ -141,10 +141,10 @@ typedef struct s_parse
 {
     float       alightr;
     int         amcolor[3];
-    float       camc[4];
-    float       normv[4];
+    float       camc[3];
+    float       normv[3];
     int         fow;
-    float       lcoord[4];
+    float       lcoord[3];
     int         lcolor[3];
     float       lbrightness;
     int         spheres;
@@ -176,20 +176,20 @@ typedef struct s_parse
 */
 
 /* Parsing */
-void  check_file(char *file, t_parse *parse, t_bool flag);
+t_object  **check_file(char *file, t_parse *parse, t_bool flag);
 char    **safe_split(char *string, char separator);
 void    free_array(char **args);
 void    exit_error(char *msg, char **args);
 t_bool    validate_values(char *arg);
-float    fill_value(char *arg, char **args, char **coordinates, t_parse *parse);
+t_bool    fill_value(char *arg, char **coordinates, float *value);
 void    free_objects(t_parse *parse);
 void    malloc_objects(t_parse *parse);
-t_bool    parse_sphere(char **args, t_object **object, int index);
-t_bool    parse_plane(char **args, t_object **object, int index);
-t_bool    parse_cylinder(char **args, t_object **object, int index);
+t_bool    parse_sphere(char **args, int index, t_object **object);
+t_bool    parse_plane(char **args, int index, t_object **object);
+t_bool    parse_cylinder(char **args, int index, t_object **object);
 t_bool  validate_line(char **args, t_parse *parse);
-t_bool fill_rgb(int *color, int str);
-void    free_objects_exit(t_parse *parse, char *message, char **array, char **args);
+t_bool fill_rgb(int *color, char *str);
+void    free_objects_exit(t_object **object, char *message, int amount);
 
 
 int				colors_to_int(int *colors, int intensity);

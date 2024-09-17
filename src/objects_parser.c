@@ -14,32 +14,25 @@
 
 t_bool    parse_cylinder2(char **args, t_object **object, int index)
 {
-        float   value;
-        char    **rgb;
-        int     i;
-        int     temp;
-
-        value = fill_value(args[3], args, NULL, NULL);
-        if (value <= 0.0)
-            free_objects_exit(NULL, "Invalid cylinder diameter value", args, NULL);
-        object[index]->diameter = value;
-        value = fill_value(args[4], args, NULL, NULL);
-        if (value <= 0.0)
-            free_objects_exit(NULL, "Invalid cylinder height value", args, NULL);
-        object[index]->height = value;
-        i = -1;
+        if (!fill_value(args[3], NULL, &object[index]->diameter))
+            return (FALSE);
+        if (object[index]->diameter <= 0.0)
+            return (FALSE);
+        if (!fill_value(args[4], NULL, &object[index]->height))
+            return (FALSE);
+        if (object[index]->height <= 0.0)
+            return (FALSE);
         if  (!validate_values(args[5]))
             return (FALSE);
-        if (!fill_rgb(object[index]->material->color, args[5]))
+        if (!fill_rgb((int*)object[index]->material->color, args[5]))
             return (FALSE);
         return (TRUE);
 }
 
-t_bool    parse_cylinder(char **args, t_object **object, int index)
+t_bool    parse_cylinder(char **args, int index, t_object **object)
 {
         char    **values;
         int     i;
-        float   temp;
 
         object[index] = create_object(PLANE);
         object[index]->material = create_material();
@@ -48,9 +41,9 @@ t_bool    parse_cylinder(char **args, t_object **object, int index)
         i = -1;
         values = safe_split(args[1], ',');
         while (++i <= 2)
-            object[index]->coord[i] = fill_value(values[i], args, values, NULL);
+            object[index]->coord[i] = fill_value(values[i], values, NULL);
         if (values[i])
-            free_objects_exit(NULL, "Invalid cylinder format", values, args);
+            return (FALSE);
         i = -1;
         free_array(values);
         if (!validate_values(args[2]))
@@ -58,19 +51,18 @@ t_bool    parse_cylinder(char **args, t_object **object, int index)
         values = safe_split(args[2], ',');
         while (++i <= 2)
         {
-            temp = fill_value(values[i], values, args, NULL);
-            if (!(temp >= -1.0 && temp <= 1.0))
-                free_objects_exit(NULL, "Invalid cylinder normal vector value", args, values);
-            object[index]->normv[i] = temp;
+            if (!fill_value(values[i], values, &object[index]->normv[i]))
+                return (FALSE);
+            if (!(object[index]->normv[i] >= -1.0 && object[index]->normv[i] <= 1.0))
+                return (FALSE);
         }
         return (parse_cylinder2(args, NULL, index));
 }
 
-t_bool    parse_plane(char **args, t_object **object, int index)
+t_bool    parse_plane(char **args, int index, t_object **object)
 {
         char    **values;
         int     i;
-        float   temp;
 
         object[index] = create_object(PLANE);
         object[index]->material = create_material();
@@ -79,9 +71,10 @@ t_bool    parse_plane(char **args, t_object **object, int index)
         i = -1;
         values = safe_split(args[1], ',');
         while (++i <= 2)
-            object[index]->coord[i] = fill_value(values[i], args, values, NULL);
+            if (!fill_value(values[i], values, &object[index]->coord[i]))
+                return (FALSE);
         if (values[i])
-            free_objects_exit(NULL, "Invalid plane format", values, args);
+            return (FALSE);
         free_array(values);
         i = -1;
         if (!validate_values(args[2]))
@@ -89,15 +82,16 @@ t_bool    parse_plane(char **args, t_object **object, int index)
         values = safe_split(args[2], ',');
         while (++i < 2)
         {
-            temp = fill_value(values[i], values, args, NULL);
-            if (!(temp >= -1.0 && temp <= 1.0))
-                free_objects_exit(NULL, "Invalid plane normal vector value", args, values);
-            object[index]->normv[i] = temp;
+            if(!fill_value(values[i], values, &object[index]->normv[i]))
+                return (FALSE);
+            if (!(object[index]->normv[i] >= -1.0 && object[index]->normv[i] <= 1.0))
+                return (FALSE);
         }
         if (!validate_values(args[3]))
             return (FALSE);
-        if (fill_rgb(object[i]->material->color, args[3]))
+        if (fill_rgb((int*)object[i]->material->color, args[3]))
             return (FALSE);
+        return (TRUE);
 }
 
 
@@ -105,7 +99,6 @@ t_bool    parse_sphere(char **args, int index, t_object **object)
 {
         char    **values;
         int     i;
-        int     temp;
 
         object[index] = create_object(SPHERE);
         object[index]->material = create_material();
@@ -114,15 +107,22 @@ t_bool    parse_sphere(char **args, int index, t_object **object)
         i = -1;
         values = safe_split(args[1], ',');
         while (++i <= 2)
-            object[index]->coord[i] = fill_value(values[i], args, values, object);
+            if (!fill_value(values[i], values, &object[index]->coord[i]))
+                return (FALSE);
         object[index]->coord[i] = 1;
         if (values[i])
-            free_objects_exit(NULL, "Invalid sphere format", values, args);
-        free_array(values);
-        object[index]->diameter = fill_value(args[2], args, NULL, NULL);
-        validate_values(args[3]);
-        if (!fill_rgb(object[index]->material->color, args[3]))
+        {
+            free_array(values);
             return (FALSE);
+        }
+        free_array(values);
+        if (!fill_value(args[2], NULL, &object[index]->diameter))
+            return (FALSE);
+        if (!validate_values(args[3]))
+            return(FALSE);
+        if (!fill_rgb((int*)object[index]->material->color, args[3]))
+            return (FALSE);
+        return (TRUE);
 }
 
 

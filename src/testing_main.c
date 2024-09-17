@@ -1,7 +1,20 @@
 
 #include "../inc/minirt.h"
 
-int	main(void)
+
+int	main(int argc, char **argv)
+{
+	t_parse		parse;
+	t_object	**objects;
+	if (argc != 2)
+    {
+        ft_printf(2, "Error\nPlease input one and only one file\n");
+        exit (1);
+    }
+	objects = check_file(argv[1], &parse, FALSE);
+}
+
+/*int	main(void)
 {
 	t_object	*floor, *left_wall, *right_wall, *middle, *right, *left, *cylinder, *plane;
 	t_light		*light;
@@ -104,4 +117,4 @@ int	main(void)
 	camera->transform = view_transform(create_point(0, 1.5, -5), create_point(0, 1, 0), create_vector(0, 1, 0));
 	camera->transform = inverse_matrix(camera->transform);
 	render(camera, world);
-}
+}*/

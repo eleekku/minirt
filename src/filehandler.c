@@ -12,29 +12,31 @@
 
 #include "../inc/minirt.h"
 
-void    recon_object(char **args, t_parse *parse, t_object **object)
+static void    recon_object(char **args, t_object **object)
 {
     static int i;
 
     if (!ft_strncmp(args[0], "sp", ft_strlen(args[0])))
     {
-        if (!parse_sphere(args, i, object)
-            exit(1);
-        i++
+        if (!parse_sphere(args, i, object))
+            free_objects_exit(object, "In parsing objects", i);
+        i++;
     }
     else if (!ft_strncmp(args[0], "pl", ft_strlen(args[0])))
     {
-        parse_plane(args, parse, pla);
+        if (!parse_plane(args, i, object))
+            free_objects_exit(object, "In parsing objects", i);
         i++;
     }
     else if (!ft_strncmp(args[0], "cy", ft_strlen(args[0])))
     {
-        parse_cylinder(args, parse, cyl);
+        if (!parse_cylinder(args, i, object))
+            free_objects_exit(object, "In parsing objects", i);
         i++;
     }
 }
 
-t_object    **read_objects(int fd, t_parse *parse)
+static t_object    **read_objects(int fd, t_parse *parse)
 {
     char        *line;
     char        **args;
@@ -42,22 +44,22 @@ t_object    **read_objects(int fd, t_parse *parse)
     int         total;
 
     line = get_next_line(fd);
-    malloc_objects(parse);
     total = parse->spheres + parse->planes + parse->cylinders;
     object = malloc(total * sizeof(t_object *));
     if (!object)
-        exit_error("fatal", NULL, NULL);
+        exit_error("fatal", NULL);
     while (line)
     {
         args = safe_split(line, ' ');
         free (line);
-        recon_object(args, parse, object);
+        recon_object(args, object);
         free_array(args);
         line = get_next_line(fd);
     }
+    return (object);
 }
 
-void    count_objects(char **args, t_parse *parse)
+static void    count_objects(char **args, t_parse *parse)
 {
     if (!ft_strncmp(args[0], "sp", ft_strlen(args[0])))
         parse->spheres++;
@@ -67,7 +69,7 @@ void    count_objects(char **args, t_parse *parse)
         parse->cylinders++; 
 }
 
-void    read_file(int fd, t_parse *parse, t_bool flag)
+static void    read_file(int fd, t_parse *parse, t_bool flag)
 {
     char    *line;
     char    **args;
@@ -78,7 +80,7 @@ void    read_file(int fd, t_parse *parse, t_bool flag)
         args = ft_split(line, ' ');
         free(line);
             if (validate_line(args, parse) != TRUE)
-                exit_error("Parsing", args, NULL);
+                exit_error("Parsing", args);
         free_array(args);
         line = get_next_line(fd);
     }
@@ -101,19 +103,19 @@ t_object **check_file(char *file, t_parse *parse, t_bool flag)
 
     len = ft_strlen(file);
     if (ft_strncmp(file + (len - 3), ".rt", 3) != 0)
-        exit_error("File must be in format .rt", NULL, NULL);
+        exit_error("File must be in format .rt", NULL);
     fd = open(file, O_RDONLY);
     if (fd == -1)
-        exit_error("Failed to open the file please check name, path and permissions", NULL, NULL);
+        exit_error("Failed to open the file please check name, path and permissions", NULL);
     if (flag == FALSE)
     {
         read_file(fd, parse, FALSE);
-        check_file(file, parse, TRUE);
+        return (check_file(file, parse, TRUE));
     }
     else if (flag == TRUE)
     {
         read_file(fd, parse, TRUE);
-        check_file(file, parse, 2);
+        return (check_file(file, parse, 2));
     }
     else
     {
