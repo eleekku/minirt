@@ -24,7 +24,7 @@ t_bool    parse_cylinder2(char **args, t_object **object, int index)
             return (FALSE);
         if  (!validate_values(args[5]))
             return (FALSE);
-        if (!fill_rgb((int*)object[index]->material->color, args[5]))
+        if (!fill_rgb(&object[index]->material->color, args[5]))
             return (FALSE);
         return (TRUE);
 }
@@ -34,14 +34,14 @@ t_bool    parse_cylinder(char **args, int index, t_object **object)
         char    **values;
         int     i;
 
-        object[index] = create_object(PLANE);
-        object[index]->material = create_material();
+        object[index] = create_object(CYLINDER);
         if (!validate_values(args[1]))
             return (FALSE);
         i = -1;
         values = safe_split(args[1], ',');
         while (++i <= 2)
-            object[index]->coord[i] = fill_value(values[i], values, NULL);
+            if(!fill_value(values[i], values, &object[index]->coord[i]))
+                return (FALSE);
         if (values[i])
             return (FALSE);
         i = -1;
@@ -56,7 +56,8 @@ t_bool    parse_cylinder(char **args, int index, t_object **object)
             if (!(object[index]->normv[i] >= -1.0 && object[index]->normv[i] <= 1.0))
                 return (FALSE);
         }
-        return (parse_cylinder2(args, NULL, index));
+        free_array(values);
+        return (parse_cylinder2(args, object, index));
 }
 
 t_bool    parse_plane(char **args, int index, t_object **object)
@@ -65,7 +66,6 @@ t_bool    parse_plane(char **args, int index, t_object **object)
         int     i;
 
         object[index] = create_object(PLANE);
-        object[index]->material = create_material();
         if (!validate_values(args[1]))
             return (FALSE);
         i = -1;
@@ -87,9 +87,10 @@ t_bool    parse_plane(char **args, int index, t_object **object)
             if (!(object[index]->normv[i] >= -1.0 && object[index]->normv[i] <= 1.0))
                 return (FALSE);
         }
+        free_array(values);
         if (!validate_values(args[3]))
             return (FALSE);
-        if (fill_rgb((int*)object[i]->material->color, args[3]))
+        if (!fill_rgb(&object[index]->material->color, args[3]))
             return (FALSE);
         return (TRUE);
 }
@@ -101,7 +102,6 @@ t_bool    parse_sphere(char **args, int index, t_object **object)
         int     i;
 
         object[index] = create_object(SPHERE);
-        object[index]->material = create_material();
         if (!validate_values(args[1]))
             return (FALSE);
         i = -1;
@@ -120,7 +120,7 @@ t_bool    parse_sphere(char **args, int index, t_object **object)
             return (FALSE);
         if (!validate_values(args[3]))
             return(FALSE);
-        if (!fill_rgb((int*)object[index]->material->color, args[3]))
+        if (!fill_rgb(&object[index]->material->color, args[3]))
             return (FALSE);
         return (TRUE);
 }

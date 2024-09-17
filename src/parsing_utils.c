@@ -1,24 +1,25 @@
 #include "../inc/minirt.h"
 
-t_bool fill_rgb(int *color, char *str)
+t_bool fill_rgb(float **color, char *str)
 {
     int     i;
     char    **rgb;
-    int     value;
+    int     value[3];
     int     status;
 
     i = -1;
     rgb = safe_split(str, ',');
     while (++i <= 2)
         {
-            value = ft_atoi(rgb[i]);
-            if (!(value >= 0 && value <= 255))
+            value[i] = ft_atoi(rgb[i]);
+            if (!(value[i] >= 0 && value[i] <= 255))
             {
                 free_array(rgb);
                 return (FALSE);
             }
-            color[i] = value;
         }
+    free(*color);
+    *color = create_point(value[0], value[1], value[2]);
     status = TRUE;
     if (rgb[i])
         status = FALSE;
@@ -77,12 +78,8 @@ t_bool    fill_value(char *arg, char **coordinates, float *value)
         }
     }
     if (ft_strchr(arg, '.'))
-    {
         *value = ft_atof(arg);
-    }
     else
-    {
         *value = (float)ft_atoi(arg);
-    }
     return (TRUE);
 }

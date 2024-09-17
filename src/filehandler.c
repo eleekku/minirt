@@ -19,19 +19,22 @@ static void    recon_object(char **args, t_object **object)
     if (!ft_strncmp(args[0], "sp", ft_strlen(args[0])))
     {
         if (!parse_sphere(args, i, object))
-            free_objects_exit(object, "In parsing objects", i);
+            free_objects_exit(object, "In parsing spheres", i);
         i++;
     }
     else if (!ft_strncmp(args[0], "pl", ft_strlen(args[0])))
     {
         if (!parse_plane(args, i, object))
-            free_objects_exit(object, "In parsing objects", i);
+        {
+            printf("exiiit\n");
+            free_objects_exit(object, "In parsing planes", i);
+        }
         i++;
     }
     else if (!ft_strncmp(args[0], "cy", ft_strlen(args[0])))
     {
         if (!parse_cylinder(args, i, object))
-            free_objects_exit(object, "In parsing objects", i);
+            free_objects_exit(object, "In parsing cylinders", i);
         i++;
     }
 }
@@ -46,7 +49,7 @@ static t_object    **read_objects(int fd, t_parse *parse)
     line = get_next_line(fd);
     total = parse->spheres + parse->planes + parse->cylinders;
     object = malloc(total * sizeof(t_object *));
-    if (!object)
+    if (!object && total > 0)
         exit_error("fatal", NULL);
     while (line)
     {
@@ -117,9 +120,6 @@ t_object **check_file(char *file, t_parse *parse, t_bool flag)
         read_file(fd, parse, TRUE);
         return (check_file(file, parse, 2));
     }
-    else
-    {
-        object = read_objects(fd, parse);
-        return (object);
-    }
+    object = read_objects(fd, parse);
+    return (object);
 }

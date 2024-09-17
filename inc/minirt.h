@@ -140,12 +140,12 @@ typedef struct s_camera
 typedef struct s_parse
 {
     float       alightr;
-    int         amcolor[3];
+    float       *amcolor;
     float       camc[3];
     float       normv[3];
     int         fow;
     float       lcoord[3];
-    int         lcolor[3];
+    int         *lcolor;
     float       lbrightness;
     int         spheres;
     int         planes;
@@ -188,7 +188,7 @@ t_bool    parse_sphere(char **args, int index, t_object **object);
 t_bool    parse_plane(char **args, int index, t_object **object);
 t_bool    parse_cylinder(char **args, int index, t_object **object);
 t_bool  validate_line(char **args, t_parse *parse);
-t_bool fill_rgb(int *color, char *str);
+t_bool fill_rgb(float **color, char *str);
 void    free_objects_exit(t_object **object, char *message, int amount);
 
 

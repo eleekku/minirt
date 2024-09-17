@@ -21,7 +21,7 @@ t_bool    validate_light(char **args, t_parse *parse)
     {
         if (!validate_values(args[3]))
             return (FALSE);
-        if (!fill_rgb(parse->lcolor, args[3]))
+        if (!fill_rgb((float**)&parse->lcolor, args[3]))
             return (FALSE);
     }
     if (args[3] && args[4])
@@ -41,7 +41,7 @@ t_bool    validate_ambient(char **args, t_parse *parse)
         parse->alightr = lightratio;
         if (!validate_values(args[2]))
             return (FALSE);
-        if (!fill_rgb(parse->amcolor, args[2]))
+        if (!fill_rgb(&parse->amcolor, args[2]))
             return (FALSE);
         if (args[3])
             return (FALSE);
