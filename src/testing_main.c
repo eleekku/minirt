@@ -24,17 +24,76 @@
 	free(objects);
 }*/
 
-int	main(void)
+t_matrix *create_transform(t_matrix *transform, t_object *o)
 {
-	t_object	*floor, *left_wall, *right_wall, *middle, *right, *left, *cylinder, *plane;
+	t_matrix	*temp;
+	t_matrix    *scale;
+	t_matrix	*x;
+	t_matrix	*y;
+	float	theta_x;
+	float	theta_y;
+
+	temp = create_translate(o->coord[0], o->coord[1], o->coord[2]);
+	if (o->s == SPHERE)
+		scale = create_scaling(o->diameter / 2, o->diameter / 2, o->diameter / 2);
+	else if (o->s == PLANE)
+		scale = create_scaling(o->diameter / 2, o->height, o->diameter / 2);
+	else
+		scale = create_identity(4);
+	if (o->s != SPHERE)
+	{
+	theta_x = atan2(o->normv[2], o->normv[0]);
+	theta_y = acos(o->normv[1]);
+	x = create_x_rotation(theta_x);
+	y = create_y_rotation(theta_y);
+	}
+	else
+	{
+		x = create_identity(4);
+		y = create_identity(4);
+	}
+	temp = matrix_multiply(temp, x, 1);
+	temp = matrix_multiply(temp, y, 1);
+	transform = matrix_multiply(temp, scale, 1);
+	return (transform);
+}
+
+
+
+int	main(int argc, char **argv)
+{
+//	t_object	*floor, *left_wall, *right_wall, *middle, *right, *left, *cylinder, *plane;
 	t_light		*light;
 	t_world		*world;
 	t_camera	*camera;
 	t_matrix	*tmp;
 
-	(void)plane;
+	t_parse		*parse;
+	t_object	**object;
+	int			total;
+	int			i;
 
-	floor = create_object(PLANE);
+	parse = malloc(sizeof(t_parse));
+	parse->amcolor = create_point(0, 0, 0);
+	parse->lcolor = (int*)create_point(0, 0, 0);
+	if (argc != 2)
+    {
+        ft_printf(2, "Error\nPlease input one and only one file\n");
+        exit (1);
+    }
+	i = -1;
+	object = check_file(argv[1], parse, FALSE);
+	total = parse->planes + parse->cylinders + parse->spheres;
+	while (++i < total)
+	{
+		object[i]->transform = create_transform(object[i]->transform, object[i]);
+		print_matrix(object[i]->transform->m, 4);
+	}
+	
+
+//	(void)plane;
+
+/*	floor = create_object(PLANE);
 	clean_matrix(floor->transform, 4);
 	tmp = create_scaling(10, 0.01, 10);
 	floor->transform = inverse_matrix(tmp);
@@ -114,20 +173,21 @@ int	main(void)
 	cylinder->material->color = color(0, 0, 1);
 	cylinder->material->diffuse = 0.9;
 	cylinder->material->specular = 0.9;
-	cylinder->material->shininess = 100;
+	cylinder->material->shininess = 100;*/
 
 	light = malloc(sizeof(t_light));
-	light->coord = create_point(-10, 10, -10);
+	light->coord = create_point(parse->lcoord[0],parse->lcoord[1], parse->lcoord[2]);
 	light->color = color(1, 1, 1);
 
-	world = create_world(7, light);
-	world->objects[0] = floor;
+	world = create_world(total, light);
+/*	world->objects[0] = floor;
 	world->objects[1] = cylinder;
 	world->objects[2] = right_wall;
 	world->objects[3] = left_wall;
 	world->objects[4] = middle;
 	world->objects[5] = right;
-	world->objects[6] = left;
+	world->objects[6] = left;*/
+	world->objects = object;
 	camera = create_camera(1500, 1000, PI/3);
 	clean_matrix(camera->transform, 4);
 	tmp = view_transform(create_point(0, 1.5, -5), create_point(0, 1, 0), create_vector(0, 1, 0));

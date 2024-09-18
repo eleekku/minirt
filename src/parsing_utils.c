@@ -4,11 +4,12 @@ t_bool fill_rgb(float **color, char *str)
 {
     int     i;
     char    **rgb;
-    int     value[3];
+    float   *value;
     int     status;
 
     i = -1;
     rgb = safe_split(str, ',');
+    value = malloc(3 * sizeof(float));
     while (++i <= 2)
         {
             value[i] = ft_atoi(rgb[i]);
@@ -19,7 +20,7 @@ t_bool fill_rgb(float **color, char *str)
             }
         }
     free(*color);
-    *color = create_point(value[0], value[1], value[2]);
+    *color = conv_color_for(value);
     status = TRUE;
     if (rgb[i])
         status = FALSE;

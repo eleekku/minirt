@@ -82,6 +82,7 @@ int	render(t_camera *camera, t_world *world)
 		}
 		y++;
 	}
+	printf("render done\n");
 	clean_world(world);
 	mlx_loop(mlx);
     mlx_terminate(mlx);

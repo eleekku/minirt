@@ -285,8 +285,6 @@ int print_float_array(float *a);
 
 /*** Matrix utils ***/
 
-/*** Possible to remove maybe later who knows */
-float	*four_one_multiply(t_matrix *a, float *b);
 
 /*** Color ***/
 float	*conv_color_for(float *a);
@@ -308,7 +306,6 @@ void        clean_parse(t_parse *parse);
 
 float	*shade_hit(t_world	*w, t_comp *comp);
 float	*hadamard(float *a, float *b);
-float	*multiply_color(float *a, float b);
 float	*add_colors(float *a, float *b, float *c);
 float	*lighting(t_comp *comp, t_world *w, t_object *object, int shadow);
 t_intersections	*intersect_world(t_world *w, float **r);

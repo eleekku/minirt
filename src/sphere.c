@@ -16,8 +16,12 @@ static float	*get_values(t_object *sp, float **r)
 {
 	float	*vals;
 	float	*sp_to_ray;
+	float	*spcoord;
 
-	sp_to_ray = tuple_subs(r[ORIGIN], sp->coord);
+	(void)sp;
+	spcoord = create_point(0, 0, 0);
+	sp_to_ray = tuple_subs(r[ORIGIN], spcoord);
+	free(spcoord);
 	if (!sp_to_ray)
 		return (NULL);
 	vals = tuple(1, 1, 1, 1);

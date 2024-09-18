@@ -37,6 +37,7 @@ t_bool    parse_cylinder2(char **args, t_object **object, int index, char **valu
             return (FALSE);
         if (!fill_rgb(&object[index]->material->color, args[5]))
             return (FALSE);
+        object[index]->cylindermax = object[index]->height;
         return (TRUE);
 }
 
