@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 14:46:25 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/09 14:25:52 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/16 10:52:07 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ float	magnitude(float *a)
     return (n);
 }
 
-float   *normalize(float *a)
+float   *normalize(float *a, int delete)
 {
     float	*p;
     float   mag;
@@ -48,6 +48,8 @@ float   *normalize(float *a)
 		p[i] = a[i] / mag;
 		i++;
 	}
+	if (delete == 1)
+		free(a);
     return (p);
 }
 

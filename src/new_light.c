@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 11:36:08 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/15 23:31:23 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/16 16:07:46 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ float	*shade_hit(t_world	*w, t_comp *comp)
 	int	n;
 
 	n = is_shadowed(w, comp->over_point);
+	if (comp->object->material->pattern == TRUE)
+		comp->object->material->color = checker_at_obj(comp);
 	return (lighting(comp, w, comp->object, n));
 }
 
@@ -58,20 +60,43 @@ float	*color_at(t_world *w, float **ray)
 	return (result);
 }
 
-float	*lighting(t_comp *comp, t_world *w, t_object *object, int shadow)
+static float	*specular(float *lv, t_comp *comp, t_object *obj, t_world *w)
+{
+	float	*tmp;
+	float	*reflectv;
+	float	ref_dot_eye;
+	float	factor;
+
+	tmp = negate_vector(lv);
+	if (!tmp)
+		return (NULL);
+	reflectv = reflect(tmp, comp->normalv);
+	free(tmp);
+	if (!reflectv)
+		return (NULL);
+	ref_dot_eye = dot_product(reflectv, comp->eyev);
+	free(reflectv);
+	if (ref_dot_eye < 0)
+		return (color(0, 0, 0));
+	else
+	{
+		factor = pow(ref_dot_eye, obj->material->shininess);
+		tmp = multiply_color(w->light->color, obj->material->specular, 0);
+	}
+		return (multiply_color(tmp, factor, 1));
+}
+
+float	*lighting(t_comp *comp, t_world *w, t_object *obj, int shadow)
 {
 	float	*eff_color;
 	float	*lightv;
 	float	*ambient;
 	float	*tmp;
 	float	light_dot_normal;
-	float	*reflectv;
-	float	reflect_dot_eye;
 	float	*diffuse;
-	float	*specular;
-	float	factor;
+	float	*spec;
 
-	eff_color = hadamard(object->material->color, w->light->color);
+	eff_color = hadamard(obj->material->color, w->light->color);
 	if (!eff_color)
 		return (NULL);
 	tmp = tuple_subs(w->light->coord, comp->over_point);
@@ -80,41 +105,26 @@ float	*lighting(t_comp *comp, t_world *w, t_object *object, int shadow)
 		free(eff_color);
 		return (NULL);
 	}
-	lightv = normalize(tmp);
-	free(tmp);
+	lightv = normalize(tmp, 1);
 	if (!lightv)
 	{
 		free(eff_color);
 		return (NULL);
 	}
-	ambient = multiply_color(eff_color, object->material->ambient);
+	ambient = multiply_color(eff_color, obj->material->ambient, 0);
 	light_dot_normal = dot_product(lightv, comp->normalv);
 	if (light_dot_normal < 0 || shadow)
 	{
 		diffuse = color(0, 0, 0);
-		specular = color(0, 0, 0);
+		spec = color(0, 0, 0);
+		free(eff_color);
 	}
 	else
 	{
-		tmp = multiply_color(eff_color, object->material->diffuse);
-		diffuse = multiply_color(tmp, light_dot_normal);
-		free(tmp);
-		tmp = negate_vector(lightv);
-		reflectv = reflect(tmp, comp->normalv);
-		free(tmp);
-		reflect_dot_eye = dot_product(reflectv, comp->eyev);
-		free(reflectv);
-		if (reflect_dot_eye < 0)
-			specular = color(0, 0, 0);
-		else
-		{
-			factor = pow(reflect_dot_eye, object->material->shininess);
-			tmp = multiply_color(w->light->color, object->material->specular);
-			specular = multiply_color(tmp, factor);
-			free(tmp);
-		}
+		tmp = multiply_color(eff_color, obj->material->diffuse, 1);
+		diffuse = multiply_color(tmp, light_dot_normal, 1);
+		spec = specular(lightv, comp, obj, w);
 	}
-	free(eff_color);
 	free(lightv);
-	return (add_colors(ambient, diffuse, specular));
+	return (add_colors(ambient, diffuse, spec));
 }

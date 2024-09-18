@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 11:14:29 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/12 14:31:09 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/16 10:27:17 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	matrix_are_equal(t_matrix *a, t_matrix *b)
 	return (1);
 }
 
-float	*four_one_multiply(t_matrix *a, float *b)
+float	*four_one_multiply(t_matrix *a, float *b, int delete)
 {
 	float	*result;
 	int		i;
@@ -48,10 +48,15 @@ float	*four_one_multiply(t_matrix *a, float *b)
 		result[i] = dot_product(a->m[i], b);
 		i++;
 	}
+	if (delete == 1)
+	{
+		free(b);
+		b = NULL;
+	}
 	return (result);
 }
 
-t_matrix	*matrix_multiply(t_matrix *a, t_matrix *b)
+t_matrix	*matrix_multiply(t_matrix *a, t_matrix *b, int delete)
 {
 	t_matrix	*matrix;
 	int			i;
@@ -67,6 +72,11 @@ t_matrix	*matrix_multiply(t_matrix *a, t_matrix *b)
 		while (++j < 4)
 			matrix->m[i][j] = (a->m[i][0] * b->m[0][j]) + (a->m[i][1] * b->m[1][j]) 
 				+ (a->m[i][2] * b->m[2][j]) + (a->m[i][3] * b->m[3][j]);
+	}
+	if (delete == 1)
+	{
+		clean_matrix(a, 4);
+		clean_matrix(b, 4);
 	}
 	return (matrix);
 }

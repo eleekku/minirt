@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 15:46:54 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/15 14:47:39 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/16 10:53:24 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,11 @@ float	**transform_ray(float **ray, t_matrix *matrix)
 	float		**trans;
 	float		*p;
 	float		*v;
-	//t_matrix	*inv;
 	
-	//Should we build the inverse here????
-	//inv = inverse_matrix(matrix);
-	//if (!inv)
-	//	return (NULL);
-	p = four_one_multiply(matrix, ray[0]);
+	p = four_one_multiply(matrix, ray[0], 0);
 	if (!p)
 		return (NULL);
-	v = four_one_multiply(matrix, ray[1]);
+	v = four_one_multiply(matrix, ray[1], 0);
 	if (!v)
 	{
 		free(p);
@@ -39,7 +34,6 @@ float	**transform_ray(float **ray, t_matrix *matrix)
 		free(p);
 		return (NULL);
 	}
-	//clean_matrix(inv, 4);
 	return (trans);
 }
 
@@ -89,19 +83,14 @@ static	float	**ray_pixel_help(t_matrix *inv, float x, float y)
 	p2 = create_point(0, 0, 0);
 	if (p1 && p2)
 	{
-		pixel = four_one_multiply(inv, p1);
-		origin = four_one_multiply(inv, p2);
-		free(p1);
-		p1 = NULL;
-		free(p2);
-		p2 = NULL;
+		pixel = four_one_multiply(inv, p1, 1);
+		origin = four_one_multiply(inv, p2, 1);
 		if (pixel && origin)
 		{
 			p1 = tuple_subs(pixel, origin);
 			if (p1)
-				p2 = normalize(p1);
+				p2 = normalize(p1, 1);
 			free(pixel);
-			free(p1);
 			return (create_ray(origin, p2));
 		}
 	clean_points(p1, p2, pixel, origin);
@@ -114,16 +103,11 @@ float	**ray_for_pixel(t_camera *c, float px, float py)
 	float		x;
 	float		y;
 	float		**ray;
-	//t_matrix	*inv;
-
-	//inv = inverse_matrix(c->transform);
-	//if (!inv)
-	//	return (NULL);
+	
 	x = (px + 0.5) * c->pixel_size;
 	y = (py + 0.5) * c->pixel_size;
 	x = c->half_width - x;
 	y = c->half_height - y;
 	ray = ray_pixel_help(c->transform, x, y);
-	//clean_matrix(inv, 4);
 	return (ray);
 }

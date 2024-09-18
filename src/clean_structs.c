@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 12:06:26 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/15 14:58:23 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/16 10:42:07 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,6 @@ void	clean_comp(t_comp *comp)
 			free(comp->eyev);
 		if (comp->normalv)
 			free(comp->normalv);
-		//if (comp->object)
-		//	free(comp->object);
 		if (comp->over_point)
 			free(comp->over_point);
 		free(comp);

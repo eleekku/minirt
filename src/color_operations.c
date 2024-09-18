@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 12:19:29 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/11 14:55:41 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/16 11:15:15 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ float	*hadamard(float *a, float *b)
 	return (result);
 }
 
-float	*multiply_color(float *a, float b)
+float	*multiply_color(float *a, float b, int delete)
 {
 	float	*result;
 
@@ -48,6 +48,8 @@ float	*multiply_color(float *a, float b)
 	result[0] = a[0] * b;
 	result[1] = a[1] * b;
 	result[2] = a[2] * b;
+	if (delete == 1)
+		free(a);
 	return (result);
 }
 

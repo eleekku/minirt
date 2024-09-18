@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 14:40:31 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/13 12:08:53 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/16 16:30:26 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,22 @@ typedef struct s_matrix
 	t_transformation	type;
 }	t_matrix;
 
+typedef struct s_pattern
+{
+	float		*colora;
+	float		*colorb;
+	t_matrix	*transf;
+}	t_pattern;
+
 typedef struct s_material
 {
-	float	*color;
-	float	ambient;
-	float	diffuse;
-	float	specular;
-	float	shininess;
+	float		*color;
+	float		ambient;
+	float		diffuse;
+	float		specular;
+	float		shininess;
+	t_pattern	*patt;
+	t_bool		pattern;
 }	t_material;
 
 typedef struct s_light
@@ -227,21 +236,21 @@ float			*tuple_add(float *a, float *b);
 float			*scalar_multi_tuple(float *a, float n);
 float			*scalar_div_tuple(float *a, float n);
 float			magnitude(float *a);
-float			*normalize(float *a);
+float			*normalize(float *a, int delete);
 float			dot_product(float *a, float *b);
 float			*vector_cross_prod(float *a, float *b);
 float			*normal_at(t_object *object, float *world_p);
 
 /*** Matrix operations ***/
 int				matrix_are_equal(t_matrix *a, t_matrix *b);
-t_matrix		*matrix_multiply(t_matrix *a, t_matrix *b);
+t_matrix		*matrix_multiply(t_matrix *a, t_matrix *b, int delete);
 t_matrix		*submatrix(t_matrix *a, int i, int j);
 t_matrix		*transpose(t_matrix *a);
 float			minor(t_matrix *a, int i, int j);
 float			cofactor(t_matrix *a, int i, int j);
 float			determinant(t_matrix *a);
 t_matrix		*inverse_matrix(t_matrix *a);
-float			*four_one_multiply(t_matrix *a, float *b);
+float			*four_one_multiply(t_matrix *a, float *b, int delete);
 
 /*** Matrix transformations ***/
 t_matrix		*create_translate(float a, float b, float c);
@@ -322,18 +331,21 @@ t_comp			*prepare_computations(t_intersection *i, float **ray);
 
 /*** Color utils ***/
 float			*hadamard(float *a, float *b);
-float			*multiply_color(float *a, float b);
+float			*multiply_color(float *a, float b, int delete);
 float			*add_colors(float *a, float *b, float *c);
 float			*conv_color_for(float *a);
 int				*conv_color_back(float *a);
 
 /*** Color calculations ***/
-float			*lighting(t_comp *comp, t_world *w, t_object *object, int shadow);
+float			*lighting(t_comp *comp, t_world *w, t_object *obj, int shadow);
 float			*shade_hit(t_world	*w, t_comp *comp);
 float			*reflect(float *vector, float *normal);
 float			*color_at(t_world *w, float **ray);
 int				is_shadowed(t_world *w, float *p);
 int				render(t_camera *camera, t_world *world);
+t_pattern		*create_pattern(float *a, float *b, t_matrix *transf);
+float			*checker_at_obj(t_comp *comp);
+//float			*checker_at_obj(t_pattern *patt, t_object *obj, float *wp);
 
 /*** Cleaning structs ***/
 void			clean_material(t_material *mat);
