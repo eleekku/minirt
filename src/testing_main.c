@@ -1,7 +1,7 @@
 
 #include "../inc/minirt.h"
 
-int	main(int argc, char **argv)
+/*int	main(int argc, char **argv)
 {
 	t_parse		*parse;
 	t_object	**objects;
@@ -22,9 +22,9 @@ int	main(int argc, char **argv)
 	clean_object(objects[i]);
 	clean_parse(parse);
 	free(objects);
-}
+}*/
 
-/*int	main(void)
+int	main(void)
 {
 	t_object	*floor, *left_wall, *right_wall, *middle, *right, *left, *cylinder, *plane;
 	t_light		*light;
@@ -127,4 +127,4 @@ int	main(int argc, char **argv)
 	camera->transform = view_transform(create_point(0, 1.5, -5), create_point(0, 1, 0), create_vector(0, 1, 0));
 	camera->transform = inverse_matrix(camera->transform);
 	render(camera, world);
-}*/
+}
