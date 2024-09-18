@@ -12,6 +12,13 @@
 
 #include "../inc/minirt.h"
 
+void	clean_parse(t_parse *parse)
+{
+	free(parse->amcolor);
+	free(parse->lcolor);
+	free(parse);
+}
+
 void	clean_world(t_world	*w)
 {
 	int	n;

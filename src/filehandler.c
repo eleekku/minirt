@@ -12,29 +12,26 @@
 
 #include "../inc/minirt.h"
 
-static void    recon_object(char **args, t_object **object)
+static void    recon_object(char **args, t_object **object, t_parse *parse)
 {
     static int i;
 
     if (!ft_strncmp(args[0], "sp", ft_strlen(args[0])))
     {
         if (!parse_sphere(args, i, object))
-            free_objects_exit(object, "In parsing spheres", i);
+            free_objects_exit(object, args, i, parse);
         i++;
     }
     else if (!ft_strncmp(args[0], "pl", ft_strlen(args[0])))
     {
         if (!parse_plane(args, i, object))
-        {
-            printf("exiiit\n");
-            free_objects_exit(object, "In parsing planes", i);
-        }
+            free_objects_exit(object, args, i, parse);
         i++;
     }
     else if (!ft_strncmp(args[0], "cy", ft_strlen(args[0])))
     {
         if (!parse_cylinder(args, i, object))
-            free_objects_exit(object, "In parsing cylinders", i);
+            free_objects_exit(object, args, i, parse);
         i++;
     }
 }
@@ -50,12 +47,12 @@ static t_object    **read_objects(int fd, t_parse *parse)
     total = parse->spheres + parse->planes + parse->cylinders;
     object = malloc(total * sizeof(t_object *));
     if (!object && total > 0)
-        exit_error("fatal", NULL);
+        exit_error("fatal", NULL, parse);
     while (line)
     {
         args = safe_split(line, ' ');
         free (line);
-        recon_object(args, object);
+        recon_object(args, object, parse);
         free_array(args);
         line = get_next_line(fd);
     }
@@ -83,7 +80,7 @@ static void    read_file(int fd, t_parse *parse, t_bool flag)
         args = ft_split(line, ' ');
         free(line);
             if (validate_line(args, parse) != TRUE)
-                exit_error("Parsing", args);
+                exit_error("Parsing elements", args, parse);
         free_array(args);
         line = get_next_line(fd);
     }
@@ -106,10 +103,10 @@ t_object **check_file(char *file, t_parse *parse, t_bool flag)
 
     len = ft_strlen(file);
     if (ft_strncmp(file + (len - 3), ".rt", 3) != 0)
-        exit_error("File must be in format .rt", NULL);
+        exit_error("File must be in format .rt", NULL, parse);
     fd = open(file, O_RDONLY);
     if (fd == -1)
-        exit_error("Failed to open the file please check name, path and permissions", NULL);
+        exit_error("Failed to open the file please check name, path and permissions", NULL, parse);
     if (flag == FALSE)
     {
         read_file(fd, parse, FALSE);

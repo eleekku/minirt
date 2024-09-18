@@ -1,13 +1,6 @@
 
 #include "../inc/minirt.h"
 
-void	clean_parse(t_parse *parse)
-{
-	free(parse->amcolor);
-	free(parse->lcolor);
-	free(parse);
-}
-
 int	main(int argc, char **argv)
 {
 	t_parse		*parse;

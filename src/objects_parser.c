@@ -12,8 +12,19 @@
 
 #include "../inc/minirt.h"
 
-t_bool    parse_cylinder2(char **args, t_object **object, int index)
+t_bool    parse_cylinder2(char **args, t_object **object, int index, char **values)
 {
+        int i;
+
+        i = -1;
+        while (++i <= 2)
+        {
+            if (!fill_value(values[i], values, &object[index]->normv[i]))
+                return (FALSE);
+            if (!(object[index]->normv[i] >= -1.0 && object[index]->normv[i] <= 1.0))
+                return (FALSE);
+        }
+        free_array(values);
         if (!fill_value(args[3], NULL, &object[index]->diameter))
             return (FALSE);
         if (object[index]->diameter <= 0.0)
@@ -49,15 +60,27 @@ t_bool    parse_cylinder(char **args, int index, t_object **object)
         if (!validate_values(args[2]))
             return (FALSE);
         values = safe_split(args[2], ',');
-        while (++i <= 2)
+        return (parse_cylinder2(args, object, index, values));
+}
+
+t_bool  parse_plane2(char **args, t_object **object, int index, char **values)
+{
+        int i;
+
+        i = -1;
+        while (++i < 2)
         {
-            if (!fill_value(values[i], values, &object[index]->normv[i]))
+            if(!fill_value(values[i], values, &object[index]->normv[i]))
                 return (FALSE);
             if (!(object[index]->normv[i] >= -1.0 && object[index]->normv[i] <= 1.0))
                 return (FALSE);
         }
         free_array(values);
-        return (parse_cylinder2(args, object, index));
+        if (!validate_values(args[3]))
+            return (FALSE);
+        if (!fill_rgb(&object[index]->material->color, args[3]))
+            return (FALSE);
+        return (TRUE);
 }
 
 t_bool    parse_plane(char **args, int index, t_object **object)
@@ -80,19 +103,7 @@ t_bool    parse_plane(char **args, int index, t_object **object)
         if (!validate_values(args[2]))
             return (FALSE);
         values = safe_split(args[2], ',');
-        while (++i < 2)
-        {
-            if(!fill_value(values[i], values, &object[index]->normv[i]))
-                return (FALSE);
-            if (!(object[index]->normv[i] >= -1.0 && object[index]->normv[i] <= 1.0))
-                return (FALSE);
-        }
-        free_array(values);
-        if (!validate_values(args[3]))
-            return (FALSE);
-        if (!fill_rgb(&object[index]->material->color, args[3]))
-            return (FALSE);
-        return (TRUE);
+        return (parse_plane2(args, object, index, values)); 
 }
 
 

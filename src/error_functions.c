@@ -1,14 +1,27 @@
 #include "../inc/minirt.h"
 
-void    free_objects_exit(t_object **object, char *msg, int amount)
+void    free_objects_exit(t_object **object, char **args, int amount, t_parse *p)
 {
-    int i;
+    int     i;
+    char    *msg;
+    char    *shape;
 
+    msg = "In parsing object";
+    if (object[amount]->s == SPHERE)
+        shape = "sphere";
+    else if (object[amount]->s == PLANE)
+        shape = "plane";
+    else
+        shape = "cylinder";
     i = -1;
-    while (++i >= amount)
+    if (args)
+        free_array(args);
+    if (p)
+        clean_parse(p);
+    while (++i <= amount)
         clean_object(object[i]);
     free(object);
-    ft_printf(2, "Error\n%s\n", msg);
+    ft_printf(2, "Error\n%s %s\n", msg, shape);
     exit(1);   
 }
 
@@ -24,18 +37,10 @@ void    free_array(char **args)
     free(args);
 }
 
-/*void    free_objects(t_parse *parse)
+void    exit_error(char *msg, char **args, t_parse *parse)
 {
-    if (scene->sp)
-        free(scene->sp);
-    if (scene->pl)
-        free(scene->pl);
-    if (scene->cy)
-        free(scene->cy);
-}*/
-
-void    exit_error(char *msg, char **args)
-{
+    if (parse)
+        clean_parse(parse);
     if (args)
         free_array(args);
     ft_printf(2, "Error\n%s\n", msg);

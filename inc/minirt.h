@@ -179,7 +179,7 @@ typedef struct s_parse
 t_object  **check_file(char *file, t_parse *parse, t_bool flag);
 char    **safe_split(char *string, char separator);
 void    free_array(char **args);
-void    exit_error(char *msg, char **args);
+void    exit_error(char *msg, char **args, t_parse *parse);
 t_bool    validate_values(char *arg);
 t_bool    fill_value(char *arg, char **coordinates, float *value);
 void    free_objects(t_parse *parse);
@@ -189,7 +189,7 @@ t_bool    parse_plane(char **args, int index, t_object **object);
 t_bool    parse_cylinder(char **args, int index, t_object **object);
 t_bool  validate_line(char **args, t_parse *parse);
 t_bool fill_rgb(float **color, char *str);
-void    free_objects_exit(t_object **object, char *message, int amount);
+void    free_objects_exit(t_object **object, char **args, int amount, t_parse *parse);
 
 
 int				colors_to_int(int *colors, int intensity);
@@ -295,6 +295,7 @@ void	    clean_light(t_light	*light);
 void	    clean_ray(float **ray);
 void	    clean_world(t_world	*w);
 void	    clean_points(float *a, float *b, float *c, float *d);
+void        clean_parse(t_parse *parse);
 
 float	*shade_hit(t_world	*w, t_comp *comp);
 float	*hadamard(float *a, float *b);

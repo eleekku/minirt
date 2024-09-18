@@ -12,11 +12,11 @@ t_bool    validate_light(char **args, t_parse *parse)
             return (FALSE);
     free_array(coordinates);
     if (!ft_isdigit(args[2][0]))
-        exit_error("invalid light brightness format", args);
+        exit_error("invalid light brightness format", args, parse);
     if (!fill_value(args[2], NULL, &parse->lbrightness))
         return (FALSE);
     if (!(parse->lbrightness >= 0.0 && parse->lbrightness <= 1.0))
-        exit_error("Invalid light brightness value", args);
+        exit_error("Invalid light brightness value", args, parse);
     if (args[3])
     {
         if (!validate_values(args[3]))
@@ -34,7 +34,7 @@ t_bool    validate_ambient(char **args, t_parse *parse)
         float   lightratio;
 
         if (!ft_isdigit(args[1][0]))
-            exit_error("invalid format", args);
+            exit_error("invalid format", args, parse);
         lightratio = ft_atof(args[1]);
         if (lightratio < 0.0 || lightratio > 1.0 || (lightratio == 0.0 && args[1][0] != '0'))
             return (FALSE);
@@ -52,7 +52,6 @@ t_bool    validate_camera(char **args, t_parse *parse)
 {
         int     i;
         char    **coordinates;
-        int     fow;
 
         i = -1;
         if (!validate_values(args[1]))
@@ -70,12 +69,11 @@ t_bool    validate_camera(char **args, t_parse *parse)
             if (!fill_value(coordinates[i], coordinates, &parse->normv[i]))
                 return (FALSE);
         free_array(coordinates); 
-        fow = ft_atoi(args[3]);
+        parse->fow = ft_atoi(args[3]);
         if (!ft_isdigit(args[3][0]) && args[3][0] != '0')
-            exit_error("invalid fow format", args);
-        if (fow < 0 || fow > 180)
-            exit_error("invalid fow format", args);
-        parse->fow = fow;
+            exit_error("invalid fow format", args, parse);
+        if (parse->fow < 0 || parse->fow > 180)
+            exit_error("invalid fow format", args, parse);
         return (TRUE);
 }
 
