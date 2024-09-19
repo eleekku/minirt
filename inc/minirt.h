@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 14:40:31 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/19 14:10:35 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/19 16:02:33 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ typedef enum e_shape
 {
 	SPHERE,
 	PLANE,
-	CYLINDER
+	CYLINDER,
+	CONE
 }	t_shape;
 
 typedef enum e_transformation
@@ -146,28 +147,6 @@ typedef struct s_camera
 	t_matrix	*transform;
 }	t_camera;
 
-/*typedef struct s_scene
-{
-    float       alightr;
-    int         amcolor[3];
-    float         camc[4];
-    float         normv[4];
-    int         fow;
-    t_light     light;
-    t_material  material;
-    //t_lightdot  lightdot;
-   // float       lightc[4];
-    //float       brightness;
-    t_object    *objects;
-    int         spheres;
-    int         planes;
-    int         cylinders;
-    t_sphere    *sp;
-    t_plane     *pl;
-    t_cylinder  *cy;
-}   t_scene;
-*/
-
 /* Parsing
 void  check_file(char *file, t_scene *scene, t_bool flag);
 char    **safe_split(char *string, char separator);
@@ -188,9 +167,6 @@ int				colors_to_int(int *colors, int intensity);
 int				*combine_colors(int *a, int *b);
 int				*multiply_scale(int *color, float scale);
 
-//t_material  material(t_scene *scene, int i);
-//int    *lighting(t_scene *scene, float *point, float *eyev, float *normalv);
-
 /*** Definitions ***/
 float			*tuple(float a, float b, float c, float w);
 float			*create_point(float a, float b, float c);
@@ -206,9 +182,6 @@ t_intersections	*create_intersections(void);
 t_comp			*create_comp(t_intersection *i);
 t_camera		*create_camera(float hsize, float vsize, float field);
 t_world			*create_world(int n, t_light **light);
-
-/*** Shapes  ***/
-t_object *test_object(t_shape type);
 
 /*** Tuple Operations ***/
 int				equal_float(float a, float b);
@@ -278,7 +251,6 @@ int				is_shadowed(t_world *w, float *p, t_light *l);
 int				render(t_camera *camera, t_world *world);
 t_pattern		*create_pattern(float *a, float *b, t_matrix *transf);
 float			*checker_at_obj(t_comp *comp);
-//float			*checker_at_obj(t_pattern *patt, t_object *obj, float *wp);
 
 /*** Cleaning structs ***/
 void			clean_material(t_material *mat);
