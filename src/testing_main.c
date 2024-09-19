@@ -86,12 +86,16 @@ int	main(void)
 	cylinder->cylindermax = 2;
 	cylinder->cylindermin = 1;
 	cylinder->closed = TRUE;
-	tmp = create_translate(-0.5, 1, 0.5);
-	cylinder->transform = inverse_matrix(tmp);
+	//tmp = create_translate(-0.5, 0, 0.5);
+	//cylinder->transform = inverse_matrix(tmp);
 	cylinder->material->color = color(0, 0, 1);
 	cylinder->material->diffuse = 0.9;
 	cylinder->material->specular = 0.9;
 	cylinder->material->shininess = 100;
+	cylinder->material->pattern = TRUE;
+	tmp = create_scaling(0.1, 0.1, 0.1);
+	cylinder->material->patt = create_pattern(color(0, 0, 0), color(1, 1, 1), inverse_matrix(tmp));
+	clean_matrix(tmp, 4);
 
 	light = malloc(sizeof(t_light));
 	light->coord = create_point(-10, 10, -10);
