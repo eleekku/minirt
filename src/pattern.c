@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 14:12:35 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/18 18:22:38 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/19 12:00:47 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ static float *sphere_checkers(t_pattern *pattern, float *p)
 {
     float	u;
     float	v;
-    float	theta; 
+    float	theta;
 	float	phi;
-	
+
 	theta = atan2(p[2], p[0]);
 	phi = acos(p[1] / sqrt(p[0] * p[0] + p[1] * p[1] + p[2] * p[2]));
 	u = (theta + PI) / (2 * PI);
@@ -50,26 +50,16 @@ static float *sphere_checkers(t_pattern *pattern, float *p)
 
 static float *cylinder_checkers(t_pattern *pattern, float *p)
 {
-    float u, v;
-    float theta;
-    int check_u, check_v;
+    float	u;
+	float	v;
+    float	theta;
 
-    // Calculate theta (angle around the cylinder axis)
     theta = atan2(p[2], p[0]);
-
-    // Map coordinates
-    u = (theta + PI) / (2 * PI);  // u represents the angle around the cylinder
-    //v = fmod(p[1], 1.0);          // v represents the height along the cylinder axis
-	v = 0;
-    // Ensure v is positive
-    if (v < 0) v += 1.0;
-
-    // Scale UV coordinates to create checker pattern
-    check_u = floor(u * 8);  // Adjust for number of checks around the cylinder
-    check_v = floor(v * 8);  // Adjust for number of checks along the height
-
-    //if (fmod((floor(u * 8) + floor(v * 8)), 2) == 0)
-    if ((check_u + check_v) % 2 == 0)
+    u = (theta + PI) / (2 * PI);
+    v = fmod(p[1], 1.0);
+    if (v < 0)
+		v += 1.0;
+    if (fmod((floor(u * 64) + floor(v * 2)), 2) == 0)
         return (pattern->colora);
     return (pattern->colorb);
 }

@@ -6,23 +6,30 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 12:06:26 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/16 10:42:07 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/19 12:27:30 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minirt.h"
 
-void	clean_light(t_light	*light)
+void	clean_lights(t_light **lights)
 {
-	if (light)
+	int	i;
+
+	i = 0;
+	if (lights)
 	{
-		if (light->coord)
-			free(light->coord);
-		if (light->color)
-			free(light->color);
-		free(light);
+		while (lights[i])
+		{
+			if (lights[i]->coord)
+				free(lights[i]->coord);
+			if (lights[i]->color)
+				free(lights[i]->color);
+			i++;
+		}
+		free(lights);
 	}
-	light = NULL;
+	lights = NULL;
 }
 
 void	clean_intersections(t_intersections *inter)

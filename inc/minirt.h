@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 14:40:31 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/16 16:30:26 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/19 14:10:35 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ typedef struct s_world
 {
 	int			number_objects;
 	t_object	**objects;
-	t_light		*light;
+	t_light		**lights;
 }	t_world;
 
 typedef struct s_comp
@@ -205,7 +205,7 @@ t_comp			*create_comp(t_intersection *i);
 t_intersections	*create_intersections(void);
 t_comp			*create_comp(t_intersection *i);
 t_camera		*create_camera(float hsize, float vsize, float field);
-t_world			*create_world(int n, t_light *light);
+t_world			*create_world(int n, t_light **light);
 
 /*** Shapes  ***/
 t_object *test_object(t_shape type);
@@ -265,15 +265,16 @@ t_comp			*prepare_computations(t_intersection *i, float **ray);
 float			*hadamard(float *a, float *b);
 float			*multiply_color(float *a, float b, int delete);
 float			*add_colors(float *a, float *b, float *c);
+float			*add_two_colors(float *a, float *b);
 float			*conv_color_for(float *a);
 int				*conv_color_back(float *a);
 
 /*** Color calculations ***/
-float			*lighting(t_comp *comp, t_world *w, t_object *obj, int shadow);
+float			*lighting(t_comp *comp, t_light *l, t_object *obj, int shadow);
 float			*shade_hit(t_world	*w, t_comp *comp);
 float			*reflect(float *vector, float *normal);
 float			*color_at(t_world *w, float **ray);
-int				is_shadowed(t_world *w, float *p);
+int				is_shadowed(t_world *w, float *p, t_light *l);
 int				render(t_camera *camera, t_world *world);
 t_pattern		*create_pattern(float *a, float *b, t_matrix *transf);
 float			*checker_at_obj(t_comp *comp);
@@ -285,7 +286,7 @@ void			clean_object(t_object *obj);
 void			clean_matrix(t_matrix *matrix, int n);
 void			clean_comp(t_comp *comp);
 void			clean_intersections(t_intersections *inter);
-void			clean_light(t_light	*light);
+void			clean_lights(t_light **lights);
 void			clean_ray(float **ray);
 void			clean_world(t_world	*w);
 void			clean_points(float *a, float *b, float *c, float *d);

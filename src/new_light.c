@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 11:36:08 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/16 16:07:46 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/19 14:09:33 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,28 @@ t_light	*point_light(float *p, float *c)
 
 float	*shade_hit(t_world	*w, t_comp *comp)
 {
-	int	n;
+	int		n;
+	int		i;
+	float	*col;
+	float	*result;
 
-	n = is_shadowed(w, comp->over_point);
-	if (comp->object->material->pattern == TRUE)
-		comp->object->material->color = checker_at_obj(comp);
-	return (lighting(comp, w, comp->object, n));
+	i = 0;
+	result = color(0, 0, 0);
+	while (result && w->lights[i])
+	{
+		n = is_shadowed(w, comp->over_point, w->lights[i]);
+		if (comp->object->material->pattern == TRUE)
+			comp->object->material->color = checker_at_obj(comp);
+		col = lighting(comp, w->lights[i], comp->object, n);
+		if (!col)
+		{
+			free(result);
+			return (NULL);
+		}
+		result = add_two_colors(result, col);
+		i++;
+	}
+	return (result);
 }
 
 float	*color_at(t_world *w, float **ray)
@@ -60,7 +76,7 @@ float	*color_at(t_world *w, float **ray)
 	return (result);
 }
 
-static float	*specular(float *lv, t_comp *comp, t_object *obj, t_world *w)
+static float	*specular(float *lv, t_comp *comp, t_object *obj, t_light *l)
 {
 	float	*tmp;
 	float	*reflectv;
@@ -81,12 +97,12 @@ static float	*specular(float *lv, t_comp *comp, t_object *obj, t_world *w)
 	else
 	{
 		factor = pow(ref_dot_eye, obj->material->shininess);
-		tmp = multiply_color(w->light->color, obj->material->specular, 0);
+		tmp = multiply_color(l->color, obj->material->specular, 0);
 	}
 		return (multiply_color(tmp, factor, 1));
 }
 
-float	*lighting(t_comp *comp, t_world *w, t_object *obj, int shadow)
+float	*lighting(t_comp *comp, t_light *l, t_object *obj, int shadow)
 {
 	float	*eff_color;
 	float	*lightv;
@@ -96,10 +112,10 @@ float	*lighting(t_comp *comp, t_world *w, t_object *obj, int shadow)
 	float	*diffuse;
 	float	*spec;
 
-	eff_color = hadamard(obj->material->color, w->light->color);
+	eff_color = hadamard(obj->material->color, l->color);
 	if (!eff_color)
 		return (NULL);
-	tmp = tuple_subs(w->light->coord, comp->over_point);
+	tmp = tuple_subs(l->coord, comp->over_point);
 	if (!tmp)
 	{
 		free(eff_color);
@@ -123,7 +139,7 @@ float	*lighting(t_comp *comp, t_world *w, t_object *obj, int shadow)
 	{
 		tmp = multiply_color(eff_color, obj->material->diffuse, 1);
 		diffuse = multiply_color(tmp, light_dot_normal, 1);
-		spec = specular(lightv, comp, obj, w);
+		spec = specular(lightv, comp, obj, l);
 	}
 	free(lightv);
 	return (add_colors(ambient, diffuse, spec));
