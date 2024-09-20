@@ -160,25 +160,44 @@ typedef struct s_lightdot
 	t_comp		*comp;
 }	t_lightdot;
 
-/* Parsing
-void  check_file(char *file, t_scene *scene, t_bool flag);
+typedef struct s_parse
+{
+    float       alightr;
+    float       *amcolor;
+    float       camc[3];
+    float       normv[3];
+    int         fow;
+    float       lcoord[3];
+    int         *lcolor;
+    float       lbrightness;
+    int         spheres;
+    int         planes;
+    int         cylinders;
+}   t_parse;
+
+/* Parsing */
+t_object  **check_file(char *file, t_parse *parse, t_bool flag);
 char    **safe_split(char *string, char separator);
 void    free_array(char **args);
-void    exit_error(char *msg, char **args, t_scene *scene);
-t_bool    validate_values(char *arg, char **args, t_scene *scene);
-float    fill_value(char *arg, char **args, char **coordinates, t_scene *scene);
-void    free_objects(t_scene *scene);
-void    malloc_objects(t_scene *scene);
-void    parse_sphere(char **args, t_scene *scene, int index);
-void    parse_plane(char **args, t_scene *scene, int index);
-void    parse_cylinder(char **args, t_scene *scene, int index);
-t_bool  validate_line(char **args, t_scene *scene);
-void    free_objects_exit(t_scene *scene, char *message, char **array, char **args);
-*/
+void    exit_error(char *msg, char **args, t_parse *parse);
+t_bool    validate_values(char *arg);
+t_bool    fill_value(char *arg, char **coordinates, float *value);
+void    free_objects(t_parse *parse);
+void    malloc_objects(t_parse *parse);
+t_bool    parse_sphere(char **args, int index, t_object **object);
+t_bool    parse_plane(char **args, int index, t_object **object);
+t_bool    parse_cylinder(char **args, int index, t_object **object);
+t_bool  validate_line(char **args, t_parse *parse);
+t_bool fill_rgb(float **color, char *str);
+void    free_objects_exit(t_object **object, char **args, int amount, t_parse *parse);
+
 
 int				colors_to_int(int *colors, int intensity);
 int				*combine_colors(int *a, int *b);
 int				*multiply_scale(int *color, float scale);
+
+//t_material  material(t_parse *parse, int i);
+//int    *lighting(t_parse *parse, float *point, float *eyev, float *normalv);
 
 /*** Definitions ***/
 float			*tuple(float a, float b, float c, float w);
@@ -236,7 +255,52 @@ float			*ray_position(float **r, float t);
 float			**transform_ray(float **ray, t_matrix *matrix);
 float			**ray_for_pixel(t_camera *c, float px, float py);
 
-/*** Intersections ***/
+/*** Spheres
+t_intersections	intersects(t_sphere *sp, float **r);
+t_intersection	intersection(float t, t_object object);
+t_intersections	intersections(int n, t_intersection i, ...);
+t_intersection	hit(t_intersections xs);
+t_intersections	sphere_intersect(t_object sp, float **r);
+ ***/
+
+float	*reflect(float *vector, float *normal);
+
+/*** Matrix utils ***/
+
+/*** Possible to remove maybe later who knows */
+float	*four_one_multiply(t_matrix *a, float *b);
+
+/*** Color ***/
+float	*conv_color_for(float *a);
+int	    *conv_color_back(float *a);
+
+//t_intersections	*sort_intersect(int n, t_intersections *xs);
+
+/*** Cleaning structs ***/
+void	    clean_material(t_material *mat);
+void	    clean_object(t_object *obj);
+void        clean_matrix(t_matrix *matrix, int n);
+void	    clean_comp(t_comp *comp);
+void	    clean_intersections(t_intersections *inter);
+void	    clean_light(t_light	*light);
+void	    clean_ray(float **ray);
+void	    clean_world(t_world	*w);
+void	    clean_points(float *a, float *b, float *c, float *d);
+void        clean_parse(t_parse *parse);
+
+float	*shade_hit(t_world	*w, t_comp *comp);
+float	*hadamard(float *a, float *b);
+float	*multiply_color(float *a, float b);
+float	*add_colors(float *a, float *b, float *c);
+float	*lighting(t_comp *comp, t_world *w, t_object *object, int shadow);
+t_intersections	*intersect_world(t_world *w, float **r);
+t_comp			*prepare_computations(t_intersection *i, float **ray);
+t_matrix	*view_transform(float *from, float *to, float *up);
+
+//t_intersections	*intersects(t_sphere *sp, float **r);
+t_intersection	*intersection(float t, t_object *object);
+//t_intersections	intersections(int n, t_intersection i, ...);
+t_intersection	*hit(t_intersections *xs);
 t_intersections	*sphere_intersect(t_object *sp, float **r);
 t_intersections	*sort_intersect(t_intersections *xs);
 t_intersections	*intersect_world(t_world *w, float **r);

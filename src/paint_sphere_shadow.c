@@ -12,7 +12,7 @@
 
 #include "../inc/minirt.h"
 
-void	add_ambient(mlx_image_t *img, t_scene *scene)
+void	add_ambient(mlx_image_t *img, t_parse *parse)
 {
 	int x;
 	int y;
@@ -36,7 +36,7 @@ void	add_ambient(mlx_image_t *img, t_scene *scene)
 	}
 }
 
-int	paint_sphere_shadow(mlx_image_t *img, t_sphere *sphere, t_scene *scene)
+int	paint_sphere_shadow(mlx_image_t *img, t_sphere *sphere, t_parse *parse)
 {
 	//t_matrix motrix, mutrix;
 	//t_sphere sphere;

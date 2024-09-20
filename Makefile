@@ -16,6 +16,11 @@ LIBS	:= $(LIBMLX)/build/libmlx42.a -Iinclude -ldl -lglfw -pthread -lm
 SRCS	:= $(SRCDIR)/definitions.c \
 			$(SRCDIR)/color_utils.c \
 			$(SRCDIR)/cylinder.c \
+			$(SRCDIR)/filehandler.c \
+			$(SRCDIR)/parsing.c \
+			$(SRCDIR)/parsing_utils.c \
+			$(SRCDIR)/objects_parser.c \
+			$(SRCDIR)/error_functions.c \
 			$(SRCDIR)/tuple_operations_one.c \
 			$(SRCDIR)/tuple_operations_two.c \
 			$(SRCDIR)/rays.c $(SRCDIR)/sphere.c \

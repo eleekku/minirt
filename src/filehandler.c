@@ -1,57 +1,75 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   filehandler.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: esalmela <esalmela@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/16 16:04:31 by esalmela          #+#    #+#             */
+/*   Updated: 2024/09/16 16:04:32 by esalmela         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../inc/minirt.h"
 
-void    recon_object(char **args, t_scene *scene)
+static void    recon_object(char **args, t_object **object, t_parse *parse)
 {
-    static int     sph;
-    static int     pla;
-    static int     cyl;
-    
+    static int i;
+
     if (!ft_strncmp(args[0], "sp", ft_strlen(args[0])))
     {
-        parse_sphere(args, scene, sph);
-        sph++;
+        if (!parse_sphere(args, i, object))
+            free_objects_exit(object, args, i, parse);
+        i++;
     }
     else if (!ft_strncmp(args[0], "pl", ft_strlen(args[0])))
     {
-        parse_plane(args, scene, pla);
-        pla++;
+        if (!parse_plane(args, i, object))
+            free_objects_exit(object, args, i, parse);
+        i++;
     }
     else if (!ft_strncmp(args[0], "cy", ft_strlen(args[0])))
     {
-        parse_cylinder(args, scene, cyl);
-        cyl++;
+        if (!parse_cylinder(args, i, object))
+            free_objects_exit(object, args, i, parse);
+        i++;
     }
 }
 
-void    read_objects(int fd, t_scene *scene)
+static t_object    **read_objects(int fd, t_parse *parse)
 {
-    char    *line;
-    char    **args;
+    char        *line;
+    char        **args;
+    t_object    **object;
+    int         total;
 
     line = get_next_line(fd);
-    malloc_objects(scene);
+    total = parse->spheres + parse->planes + parse->cylinders;
+    object = malloc(total * sizeof(t_object *));
+    if (!object && total > 0)
+        exit_error("fatal", NULL, parse);
     while (line)
     {
         args = safe_split(line, ' ');
         free (line);
-        recon_object(args, scene);
+        recon_object(args, object, parse);
         free_array(args);
         line = get_next_line(fd);
     }
+    return (object);
 }
 
-void    count_objects(char **args, t_scene *scene)
+static void    count_objects(char **args, t_parse *parse)
 {
     if (!ft_strncmp(args[0], "sp", ft_strlen(args[0])))
-        scene->spheres++;
+        parse->spheres++;
     if (!ft_strncmp(args[0], "pl", ft_strlen(args[0])))
-        scene->planes++;
+        parse->planes++;
     if (!ft_strncmp(args[0], "cy", ft_strlen(args[0])))
-        scene->cylinders++; 
-//    printf("spheres is %d planes is %d and cylinders is %d\n", scene->spheres, scene->planes, scene->cylinders);
+        parse->cylinders++; 
 }
 
-void    read_file(int fd, t_scene *scene, t_bool flag)
+static void    read_file(int fd, t_parse *parse, t_bool flag)
 {
     char    *line;
     char    **args;
@@ -61,8 +79,8 @@ void    read_file(int fd, t_scene *scene, t_bool flag)
     {
         args = ft_split(line, ' ');
         free(line);
-            if (validate_line(args, scene) != TRUE)
-                exit_error("Invalid file format", args, NULL);
+            if (validate_line(args, parse) != TRUE)
+                exit_error("Parsing elements", args, parse);
         free_array(args);
         line = get_next_line(fd);
     }
@@ -70,36 +88,35 @@ void    read_file(int fd, t_scene *scene, t_bool flag)
     {
         args = ft_split(line, ' ');
         free(line);
-        count_objects(args, scene);
+        count_objects(args, parse);
         free_array(args);
         line = get_next_line(fd);
     }
     close (fd);
 }
 
-void  check_file(char *file, t_scene *scene, t_bool flag)
+t_object **check_file(char *file, t_parse *parse, t_bool flag)
 {
-    int len;
-    int fd;
+    int         len;
+    int         fd;
+    t_object    **object;
 
-
- //   printf("spheres is %d planes is %d and cylinders is %d\n", scene->spheres, scene->planes, scene->cylinders);
     len = ft_strlen(file);
     if (ft_strncmp(file + (len - 3), ".rt", 3) != 0)
-        exit_error("File must be in format .rt", NULL, NULL);
+        exit_error("File must be in format .rt", NULL, parse);
     fd = open(file, O_RDONLY);
     if (fd == -1)
-        exit_error("Failed to open the file please check name, path and permissions", NULL, NULL);
+        exit_error("Failed to open the file please check name, path and permissions", NULL, parse);
     if (flag == FALSE)
     {
-        read_file(fd, scene, FALSE);
-        check_file(file, scene, TRUE);
+        read_file(fd, parse, FALSE);
+        return (check_file(file, parse, TRUE));
     }
     else if (flag == TRUE)
     {
-        read_file(fd, scene, TRUE);
-        check_file(file, scene, 2);
+        read_file(fd, parse, TRUE);
+        return (check_file(file, parse, 2));
     }
-    else
-        read_objects(fd, scene);
+    object = read_objects(fd, parse);
+    return (object);
 }
