@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 13:20:16 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/11 14:15:02 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/20 12:20:15 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,16 @@ float	*create_point(float a, float b, float c)
 float	*create_vector(float a, float b, float c)
 {
 	return (tuple(a, b, c, 0));
+}
+
+t_light	*point_light(float *p, float *c)
+{
+	t_light	*light;
+
+	light = malloc(sizeof(t_light));
+	if (!light)
+		return (NULL);
+	light->coord = p;
+	light->color = c;
+	return (light);
 }

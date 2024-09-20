@@ -39,7 +39,7 @@ SRCS	:= $(SRCDIR)/definitions.c \
 			$(SRCDIR)/create_structs.c \
 			$(SRCDIR)/clean_structs.c \
 			$(SRCDIR)/clean_structs_two.c \
-			$(SRCDIR)/new_light.c \
+			$(SRCDIR)/light.c \
 			$(SRCDIR)/view_transform.c \
 			$(SRCDIR)/camera.c \
 			$(SRCDIR)/shadows.c \

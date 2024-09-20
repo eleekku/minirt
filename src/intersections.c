@@ -84,10 +84,12 @@ t_intersections *pre_intersect(t_object *object, float **ray)
 	local_ray = transform_ray(ray, object->transform);
 	if (object->s == SPHERE)
 		result = sphere_intersect(object, local_ray);
-	if (object->s == PLANE)
+	else if (object->s == PLANE)
 		result = plane_intersect(object, local_ray);
-	if (object->s == CYLINDER)
+	else if (object->s == CYLINDER)
 		result = cylinder_intersect(object, local_ray);
+	else
+		result = NULL;
 	clean_ray(local_ray);
 	return (result);
 }

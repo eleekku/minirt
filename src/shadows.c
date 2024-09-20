@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 14:49:14 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/16 10:53:39 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/19 13:58:25 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	is_shadowed_help(t_intersections *xs, float d)
 	return (0);
 }
 
-int	is_shadowed(t_world *w, float *p)
+int	is_shadowed(t_world *w, float *p, t_light *l)
 {
 	float			*v;
 	float			*direction;
@@ -37,7 +37,7 @@ int	is_shadowed(t_world *w, float *p)
 	float			distance;
 	t_intersections	*xs;
 
-	v = tuple_subs(w->light->coord, p);
+	v = tuple_subs(l->coord, p);
 	distance = magnitude(v);
 	direction = normalize(v, 1);
 	ray = create_ray(p, direction);
