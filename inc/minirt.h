@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 14:40:31 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/19 16:02:33 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/20 13:02:00 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ typedef struct s_cylindervalues
     float y1;
 }   t_cylindervalues;
 
-
 typedef struct s_object
 {
     t_shape s;
@@ -146,6 +145,20 @@ typedef struct s_camera
 	float		half_width;
 	t_matrix	*transform;
 }	t_camera;
+
+typedef struct s_lightdot
+{
+	float		*eff_color;
+	float		*lightv;
+	float		*ambient;
+	float		*tmp;
+	float		light_dot_nor;
+	float		*diffuse;
+	float		*spec;
+	t_object	*obj;
+	t_light		*l;
+	t_comp		*comp;
+}	t_lightdot;
 
 /* Parsing
 void  check_file(char *file, t_scene *scene, t_bool flag);
