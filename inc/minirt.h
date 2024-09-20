@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 14:40:31 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/20 13:02:00 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/20 14:03:27 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,9 +196,6 @@ int				colors_to_int(int *colors, int intensity);
 int				*combine_colors(int *a, int *b);
 int				*multiply_scale(int *color, float scale);
 
-//t_material  material(t_parse *parse, int i);
-//int    *lighting(t_parse *parse, float *point, float *eyev, float *normalv);
-
 /*** Definitions ***/
 float			*tuple(float a, float b, float c, float w);
 float			*create_point(float a, float b, float c);
@@ -255,51 +252,20 @@ float			*ray_position(float **r, float t);
 float			**transform_ray(float **ray, t_matrix *matrix);
 float			**ray_for_pixel(t_camera *c, float px, float py);
 
-/*** Spheres
-t_intersections	intersects(t_sphere *sp, float **r);
-t_intersection	intersection(float t, t_object object);
-t_intersections	intersections(int n, t_intersection i, ...);
-t_intersection	hit(t_intersections xs);
-t_intersections	sphere_intersect(t_object sp, float **r);
- ***/
-
-float	*reflect(float *vector, float *normal);
-
-/*** Matrix utils ***/
-
-/*** Possible to remove maybe later who knows */
-float	*four_one_multiply(t_matrix *a, float *b);
-
-/*** Color ***/
-float	*conv_color_for(float *a);
-int	    *conv_color_back(float *a);
-
-//t_intersections	*sort_intersect(int n, t_intersections *xs);
-
 /*** Cleaning structs ***/
-void	    clean_material(t_material *mat);
-void	    clean_object(t_object *obj);
-void        clean_matrix(t_matrix *matrix, int n);
-void	    clean_comp(t_comp *comp);
-void	    clean_intersections(t_intersections *inter);
-void	    clean_light(t_light	*light);
-void	    clean_ray(float **ray);
-void	    clean_world(t_world	*w);
-void	    clean_points(float *a, float *b, float *c, float *d);
-void        clean_parse(t_parse *parse);
+void			clean_material(t_material *mat);
+void			clean_object(t_object *obj);
+void			clean_matrix(t_matrix *matrix, int n);
+void			clean_comp(t_comp *comp);
+void			clean_intersections(t_intersections *inter);
+void			clean_lights(t_light	**lights);
+void			clean_ray(float **ray);
+void			clean_world(t_world	*w);
+void			clean_points(float *a, float *b, float *c, float *d);
+void			clean_parse(t_parse *parse);
 
-float	*shade_hit(t_world	*w, t_comp *comp);
-float	*hadamard(float *a, float *b);
-float	*multiply_color(float *a, float b);
-float	*add_colors(float *a, float *b, float *c);
-float	*lighting(t_comp *comp, t_world *w, t_object *object, int shadow);
-t_intersections	*intersect_world(t_world *w, float **r);
-t_comp			*prepare_computations(t_intersection *i, float **ray);
-t_matrix	*view_transform(float *from, float *to, float *up);
-
-//t_intersections	*intersects(t_sphere *sp, float **r);
+/*** Intersections ***/
 t_intersection	*intersection(float t, t_object *object);
-//t_intersections	intersections(int n, t_intersection i, ...);
 t_intersection	*hit(t_intersections *xs);
 t_intersections	*sphere_intersect(t_object *sp, float **r);
 t_intersections	*sort_intersect(t_intersections *xs);
