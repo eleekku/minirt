@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:47:20 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/11 17:54:19 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/19 13:49:17 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ void	clean_world(t_world	*w)
 	n = 0;
 	if (w)
 	{
-		if (w->light)
-			clean_light(w->light);
+		if (w->lights)
+			clean_lights(w->lights);
 		while (n < w->number_objects)
 		{
 			if (w->objects[n])

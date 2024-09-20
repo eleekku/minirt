@@ -30,6 +30,7 @@ int	main(void)
 	t_light		*light;
 	t_world		*world;
 	t_camera	*camera;
+	t_light	**lights;
 	t_matrix	*tmp;
 
 	(void)plane;
@@ -50,6 +51,10 @@ int	main(void)
 	free(left_wall->material->color);
 	left_wall->material->color = color(1, 0.9, 0.9);
 	left_wall->material->specular = 0;
+	left_wall->material->pattern = TRUE;
+	tmp = create_scaling(0.1, 0.1, 0.1);
+	left_wall->material->patt = create_pattern(color(0, 0, 0), color(1, 1, 1), inverse_matrix(tmp));
+	clean_matrix(tmp, 4);
 
 	right_wall = create_object(PLANE);
 	clean_matrix(right_wall->transform, 4);
@@ -109,18 +114,25 @@ int	main(void)
 	cylinder->cylindermax = 2;
 	cylinder->cylindermin = 1;
 	cylinder->closed = TRUE;
-	tmp = create_translate(-0.5, 1, 0.5);
-	cylinder->transform = inverse_matrix(tmp);
+	//tmp = create_translate(-0.5, 0, 0.5);
+	//cylinder->transform = inverse_matrix(tmp);
 	cylinder->material->color = color(0, 0, 1);
 	cylinder->material->diffuse = 0.9;
 	cylinder->material->specular = 0.9;
 	cylinder->material->shininess = 100;
+	cylinder->material->pattern = TRUE;
+	tmp = create_scaling(0.1, 0.1, 0.1);
+	cylinder->material->patt = create_pattern(color(0, 0, 0), color(1, 1, 1), inverse_matrix(tmp));
+	clean_matrix(tmp, 4);
 
+	lights = malloc(sizeof(t_light) * 10);
 	light = malloc(sizeof(t_light));
 	light->coord = create_point(-10, 10, -10);
 	light->color = color(1, 1, 1);
+	lights[0] = light;
+	lights[1] = NULL;
 
-	world = create_world(7, light);
+	world = create_world(7, lights);
 	world->objects[0] = floor;
 	world->objects[1] = cylinder;
 	world->objects[2] = right_wall;

@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 11:34:33 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/16 14:25:18 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/19 12:25:06 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,11 +98,11 @@ t_object	*create_object(t_shape shape)
 	return (obj);
 }
 
-t_world	*create_world(int n, t_light *light)
+t_world	*create_world(int n, t_light **lights)
 {
 	t_world	*world;
 
-	if (!light)
+	if (!lights)
 		return (NULL);
 	world = malloc(sizeof(t_world));
 	if (!world)
@@ -114,6 +114,6 @@ t_world	*create_world(int n, t_light *light)
 		free(world);
 		return (NULL);
 	}
-	world->light = light;
+	world->lights = lights;
 	return (world);
 }

@@ -1,99 +1,138 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   light.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/07 11:36:08 by xriera-c          #+#    #+#             */
+/*   Updated: 2024/09/20 13:04:06 by xriera-c         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../inc/minirt.h"
 
-t_material  material(t_scene *scene, int i)
+static t_lightdot	*light_pre(t_lightdot *ldot)
 {
-    t_material material;
-
-    material.color[0] = &scene->sp[i].color[0];
-    material.color[1] = &scene->sp[i].color[1];
-    material.color[2] = &scene->sp[i].color[2];
-    material.ambient = scene->alightr;
-    material.diffuse = 0.9;
-    material.specular = 0.9;
-    material.shininess = 200.0;
-    return (material);
-}
-
-void    free_lightutils(t_lightdot *light)
-{
-    free(light->ambient);
-    free(light->diffuse);
-    free(light->specular);
-    free(light->effective_color);
-    free(light->lightv);
-    free(light->temp);
-    free(light->reflectv);
-}
-
-int *fill_color(int rgbvalue)
-{
-    int *result;
-    result = malloc(3 * sizeof(int));
-    if (!result)
-    {
-        printf("fatal error in fill color function\n");
-        exit(1);
-    }
-    result[0] = rgbvalue;
-    result[1] = rgbvalue;
-    result[2] = rgbvalue;
-    return (result);
-}
-
-int    *lighting(t_scene *scene, float *point, float *eyev, float *normalv)
-{
-    scene->lightdot.effective_color = combine_colors(scene->sp[0].color, scene->light.color);
-    if (!scene->lightdot.effective_color)
-        exit (1);
-//printf("ligh values: %f %f %f %f\n", scene->light.position[0], scene->light.position[1], scene->light.position[2], scene->light.position[3]);	
-    scene->lightdot.lightv = normalize(tuple_subs(scene->light.position, point));
-    scene->lightdot.ambient = multiply_scale(scene->lightdot.effective_color, scene->material.ambient);
-    scene->lightdot.light_dot_normal = dot_product(normalv, scene->lightdot.lightv);
-    if (scene->lightdot.light_dot_normal < 0)
-    {
-        scene->lightdot.diffuse = fill_color(0);
-        scene->lightdot.specular = fill_color(0);
-    }
-    else
-    {
-    scene->lightdot.temp = multiply_scale(scene->lightdot.effective_color, scene->material.diffuse);
-    scene->lightdot.diffuse = multiply_scale(scene->lightdot.temp, scene->lightdot.light_dot_normal);
-    free (scene->lightdot.temp);
-    }
-//    printf("halfway there the lightv is %f %f %f %f\n", scene->lightdot.lightv[0], scene->lightdot.lightv[1], scene->lightdot.lightv[2], scene->lightdot.lightv[3]);
-    scene->lightdot.reflectv = reflect(negate_vector(scene->lightdot.lightv), normalv);
-    scene->lightdot.reflect_dot_eye = dot_product(scene->lightdot.reflectv, eyev);
-    if (scene->lightdot.reflect_dot_eye <= 0)
-        scene->lightdot.specular = fill_color(0);
-    else 
-    {
-    scene->lightdot.factor = pow(scene->lightdot.reflect_dot_eye, scene->material.shininess);
-    scene->lightdot.temp = multiply_scale(scene->light.color, scene->material.specular);
-    scene->lightdot.specular = multiply_scale(scene->lightdot.temp, scene->lightdot.factor);
-    }
-    scene->lightdot.result[0] = scene->lightdot.ambient[0] + scene->lightdot.diffuse[0] + scene->lightdot.specular[0];
-    scene->lightdot.result[1] = scene->lightdot.ambient[1] + scene->lightdot.diffuse[1] + scene->lightdot.specular[1];
-    scene->lightdot.result[2] = scene->lightdot.ambient[2] + scene->lightdot.diffuse[2] + scene->lightdot.specular[2];
-    free_lightutils(&scene->lightdot);
-    return(scene->lightdot.result);
-}
-/*
-t_light	*point_light(float *pos, float *intensity)
-{
-	t_light	*light;
-
-	light = malloc(sizeof(t_light));
-	if (!light)
+	ldot->eff_color = hadamard(ldot->obj->material->color, ldot->l->color);
+	if (!ldot->eff_color)
 		return (NULL);
-	light->position = pos;
-	light->color = conv_color_for(intensity);
-	return (light);
+	ldot->tmp = tuple_subs(ldot->l->coord, ldot->comp->over_point);
+	if (!ldot->tmp)
+	{
+		free(ldot->eff_color);
+		return (NULL);
+	}
+	ldot->lightv = normalize(ldot->tmp, 1);
+	if (!ldot->lightv)
+	{
+		free(ldot->eff_color);
+		return (NULL);
+	}
+	return (ldot);
 }
 
-float	*lighting(t_material	*m, t_light *l, float *point, t_vectors v)
+float	*shade_hit(t_world	*w, t_comp *comp)
 {
-	t_lighting	lighting;
-	
-	lighting.eff_color = 
+	int		n;
+	int		i;
+	float	*col;
+	float	*result;
+
+	i = 0;
+	result = color(0, 0, 0);
+	while (result && w->lights[i])
+	{
+		n = is_shadowed(w, comp->over_point, w->lights[i]);
+		if (comp->object->material->pattern == TRUE)
+			comp->object->material->color = checker_at_obj(comp);
+		col = lighting(comp, w->lights[i], comp->object, n);
+		if (!col)
+		{
+			free(result);
+			return (NULL);
+		}
+		result = add_two_colors(result, col);
+		i++;
+	}
+	return (result);
 }
-*/
+
+float	*color_at(t_world *w, float **ray)
+{
+	t_intersections	*xs;
+	t_intersection	*i;
+	t_comp			*comp;
+	float			*result;
+
+	xs = intersect_world(w, ray);
+	if (!xs)
+		return (NULL);
+	i = hit(xs);
+	clean_intersections(xs);
+	if (!i)
+		return (NULL);
+	if (i->t == -1)
+	{
+		free(i);
+		return (color(0, 0, 0));
+	}
+	comp = prepare_computations(i, ray);
+	result = shade_hit(w, comp);
+	free(i);
+	clean_comp(comp);
+	return (result);
+}
+
+static float	*specular(float *lv, t_comp *comp, t_object *obj, t_light *l)
+{
+	float	*tmp;
+	float	*reflectv;
+	float	ref_dot_eye;
+	float	factor;
+
+	tmp = negate_vector(lv);
+	if (!tmp)
+		return (NULL);
+	reflectv = reflect(tmp, comp->normalv);
+	free(tmp);
+	if (!reflectv)
+		return (NULL);
+	ref_dot_eye = dot_product(reflectv, comp->eyev);
+	free(reflectv);
+	if (ref_dot_eye < 0)
+		return (color(0, 0, 0));
+	else
+	{
+		factor = pow(ref_dot_eye, obj->material->shininess);
+		tmp = multiply_color(l->color, obj->material->specular, 0);
+	}
+		return (multiply_color(tmp, factor, 1));
+}
+
+float	*lighting(t_comp *comp, t_light *l, t_object *obj, int shadow)
+{
+	t_lightdot	ldot;
+
+	ldot.comp = comp;
+	ldot.l = l;
+	ldot.obj = obj;
+	if (!light_pre(&ldot))
+		return (NULL);
+	ldot.ambient = multiply_color(ldot.eff_color, obj->material->ambient, 0);
+	ldot.light_dot_nor = dot_product(ldot.lightv, comp->normalv);
+	if (ldot.light_dot_nor < 0 || shadow)
+	{
+		ldot.diffuse = color(0, 0, 0);
+		ldot.spec = color(0, 0, 0);
+		free(ldot.eff_color);
+	}
+	else
+	{
+		ldot.tmp = multiply_color(ldot.eff_color, obj->material->diffuse, 1);
+		ldot.diffuse = multiply_color(ldot.tmp, ldot.light_dot_nor, 1);
+		ldot.spec = specular(ldot.lightv, comp, obj, l);
+	}
+	free(ldot.lightv);
+	return (add_colors(ldot.ambient, ldot.diffuse, ldot.spec));
+}
