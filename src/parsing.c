@@ -46,7 +46,6 @@ t_bool    validate_ambient(char **args, t_parse *parse)
         if (!ft_isdigit(args[1][0]))
             exit_error("invalid format", args, parse);
         lightratio = ft_atof(args[1]);
-        printf("lighratio is %f\n", lightratio);
         if (lightratio < 0.0 || lightratio > 1.0 || (lightratio == 0.0 && args[1][0] != '0'))
             return (FALSE);
         parse->alightr = lightratio;
@@ -76,7 +75,7 @@ t_bool    validate_camera(char **args, t_parse *parse)
         if (!validate_values(args[2]))
             return (FALSE);
         coordinates = safe_split(args[2], ',');
-        while (++i < 2)
+        while (++i <= 2)
             if (!fill_value(coordinates[i], coordinates, &parse->normv[i]))
                 return (FALSE);
         free_array(coordinates); 

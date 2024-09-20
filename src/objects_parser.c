@@ -38,6 +38,7 @@ t_bool    parse_cylinder2(char **args, t_object **object, int index, char **valu
         if (!fill_rgb(&object[index]->material->color, args[5]))
             return (FALSE);
         object[index]->cylindermax = object[index]->height;
+ //       object[index]->cylindermin = -(2 / object[index]->height);
         return (TRUE);
 }
 
@@ -69,7 +70,7 @@ t_bool  parse_plane2(char **args, t_object **object, int index, char **values)
         int i;
 
         i = -1;
-        while (++i < 2)
+        while (++i <= 2)
         {
             if(!fill_value(values[i], values, &object[index]->normv[i]))
                 return (FALSE);

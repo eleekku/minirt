@@ -39,7 +39,7 @@ t_matrix *create_transform(t_matrix *transform, t_object *o)
 	temp = create_translate(o->coord[0], o->coord[1], o->coord[2]);
 	if (o->s == SPHERE)
 		scale = create_scaling(o->diameter / 2, o->diameter / 2, o->diameter / 2);
-	else if (o->s == PLANE)
+	else if (o->s == CYLINDER)
 		scale = create_scaling(o->diameter / 2, o->height, o->diameter / 2);
 	else
 		scale = create_identity(4);
@@ -62,15 +62,38 @@ t_matrix *create_transform(t_matrix *transform, t_object *o)
 	return (transform);
 }
 
+float *compute_up(float *dir)
+{
+	/*If camd is not aligned too closely with (0, 1, 0), we use (0, 1, 0)
+    Otherwise, we use (1, 0, 0) as the reference to avoid collinearity*/
+	float *temp_up;
+	float *right;
+	float *cameradir;
+	float *up;
+
+	cameradir = create_vector(dir[0], dir[1], dir[2]);
+	if (fabs(dir[1]) < 0.9)
+		temp_up = create_vector(0, 1, 0);
+    else
+		temp_up = create_vector(1, 0, 0);
+	right = vector_cross_prod(cameradir, temp_up);
+	right = normalize(right, 1);
+	up = vector_cross_prod(right, cameradir);
+	free(temp_up);
+	free(right);
+	free(cameradir);
+	return (up);
+}
+
 
 
 int	main(int argc, char **argv)
 {
-//	t_object	*floor, *left_wall, *right_wall, *middle, *right, *left, *cylinder, *plane;
 	t_light		*light;
 	t_world		*world;
 	t_camera	*camera;
 	t_matrix	*tmp;
+	float		*cameraup;
 
 	t_parse		*parse;
 	t_object	**object;
@@ -88,29 +111,24 @@ int	main(int argc, char **argv)
 	while (++i < parse->total)
 	{
 		object[i]->transform = create_transform(object[i]->transform, object[i]);
-		print_matrix(object[i]->transform->m, 4);
+	//	print_matrix(object[i]->transform->m, 4);
 	}
 	
 
-	light = malloc(sizeof(t_light));
-	light->coord = create_point(parse->light[0]->coord[0], parse->light[0]->coord[1], parse->light[0]->coord[2]);
-	light->color = color(1, 1, 1);
+//	printf("camdir is %f %f %f\n", parse->normv[0], parse->normv[1], parse->normv[2]);
+	light = parse->light[0];
+//	light->coord = create_point(parse->light[0]->coord[0], parse->light[0]->coord[1], parse->light[0]->coord[2]);
+//	light->color = color(1, 1, 1);
 
 	world = create_world(parse->total, light);
-//	world->objects[0] = floor;
-//	world->objects[1] = cylinder;
-//	world->objects[2] = right_wall;
-//	world->objects[3] = left_wall;
-//	world->objects[4] = middle;
-//	world->objects[5] = right;
-//	world->objects[6] = left;
 	world->objects = object;
 	i = -1;
 //	while (++i < total)
 //		printf("obj colors are %f, %f, %f\n", world->objects[i]->material->color[0], world->objects[i]->material->color[1], world->objects[i]->material->color[2]);
-	camera = create_camera(1500, 1000, PI/3);
+	camera = create_camera(1500, 1000, parse->fow * 0.01745329);
 	clean_matrix(camera->transform, 4);
-	tmp = view_transform(create_point(0, 10, -20), create_point(0, 1, 0), create_vector(0, 1, 0));
+	cameraup = compute_up(parse->normv);
+	tmp = view_transform(create_point(parse->camc[0], parse->camc[1], parse->camc[2]), create_point(parse->normv[0], parse->normv[1], parse->normv[2]), cameraup);
 	camera->transform = inverse_matrix(tmp);
 	clean_matrix(tmp, 4);
 	render(camera, world);

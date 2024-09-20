@@ -20,8 +20,8 @@ t_light	*create_light()
 	if (!light)
 		return (NULL);
 	light->coord = create_point(0, 0, 0);
-	light->color = color(0, 0, 0);
-	light->brightness = 0;
+	light->color = color(1, 1, 1);
+	light->brightness = 0.5;
 	return (light);
 }
 
