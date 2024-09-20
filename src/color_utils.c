@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 15:03:01 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/11 18:36:29 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/19 10:39:53 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,7 +177,7 @@ float	*conv_color_for(float *a)
 {
 	float	*r;
 
-	r = create_vector(0, 0, 0);
+	r = color(0, 0, 0);
 	if (!r)
 		return (NULL);
 	r[0] = a[0] / 256;
