@@ -29,7 +29,7 @@ float	ft_atof(const char *str)
 		sign = -1.0;
 	while (--i >= 0 && str[i] >= '0' && str[i] <= '9')
 		result = result / 10.0 + (str[i] - '0');
-	if (str[i] != '.' || i < 1)
+	if (i >= 0 && (str[i] != '.' || i < 1))
 		return (0.0);
 	while (--i >= 0 && str[i] >= '0' && str[i] <= '9')
 	{
@@ -37,7 +37,7 @@ float	ft_atof(const char *str)
 		count++;
 	}
 	if (count == 0)
-		return (0.0);
+		return (result);
 	while (--count > 0)
 		result = result * 10;
 	return (result * sign);

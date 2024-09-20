@@ -1,14 +1,33 @@
 #include "../inc/minirt.h"
 
-t_bool    validate_light(char **args, t_parse *parse)
+t_bool  validate_light2(char **args, t_parse *parse, int index, t_light *light)
+{
+    if (args[3])
+    {
+        if (!validate_values(args[3]))
+            return (FALSE);
+        if (!fill_rgb(&light->color, args[3]))
+            return (FALSE);
+    }
+    if (args[3] && args[4])
+        return (FALSE);
+    parse->light[index] = light;
+    return (TRUE);
+}
+
+t_bool    validate_light(char **args, t_parse *parse, int index)
 {
     char    **coordinates;
     int     i;
+    t_light *light;
 
+    light = create_light();
+    if (!light)
+        return (FALSE);
     i = -1;
     coordinates = safe_split(args[1], ',');
     while (++i <= 2)
-        if (!fill_value(coordinates[i], coordinates, &parse->lcoord[i]))
+        if (!fill_value(coordinates[i], coordinates, &light->coord[i]))
             return (FALSE);
     free_array(coordinates);
     if (!ft_isdigit(args[2][0]))
@@ -17,16 +36,7 @@ t_bool    validate_light(char **args, t_parse *parse)
         return (FALSE);
     if (!(parse->lbrightness >= 0.0 && parse->lbrightness <= 1.0))
         exit_error("Invalid light brightness value", args, parse);
-    if (args[3])
-    {
-        if (!validate_values(args[3]))
-            return (FALSE);
-        if (!fill_rgb((float**)&parse->lcolor, args[3]))
-            return (FALSE);
-    }
-    if (args[3] && args[4])
-        return (FALSE);
-    return (TRUE);
+    return (validate_light2(args, parse, index, light));
 }
 
 t_bool    validate_ambient(char **args, t_parse *parse)
@@ -36,6 +46,7 @@ t_bool    validate_ambient(char **args, t_parse *parse)
         if (!ft_isdigit(args[1][0]))
             exit_error("invalid format", args, parse);
         lightratio = ft_atof(args[1]);
+        printf("lighratio is %f\n", lightratio);
         if (lightratio < 0.0 || lightratio > 1.0 || (lightratio == 0.0 && args[1][0] != '0'))
             return (FALSE);
         parse->alightr = lightratio;
@@ -79,12 +90,17 @@ t_bool    validate_camera(char **args, t_parse *parse)
 
 t_bool  validate_line(char **args, t_parse *parse)
 {
+    static int  index;
+
     if (!ft_strncmp(args[0], "A", ft_strlen(args[0])))
         return (validate_ambient(args, parse));
     else if (!ft_strncmp(args[0], "C", ft_strlen(args[0])))
         return (validate_camera(args, parse));
     else if (!ft_strncmp(args[0], "L", ft_strlen(args[0])))
-        return (validate_light(args, parse));
+    {
+        index++;
+        return (validate_light(args, parse, index - 1));
+    }
     else if (!ft_strncmp(args[0], "sp", ft_strlen(args[0])) || 
     !ft_strncmp(args[0], "pl", ft_strlen(args[0])) ||
     !ft_strncmp(args[0], "cy", ft_strlen(args[0])) ||

@@ -41,12 +41,10 @@ static t_object    **read_objects(int fd, t_parse *parse)
     char        *line;
     char        **args;
     t_object    **object;
-    int         total;
 
     line = get_next_line(fd);
-    total = parse->spheres + parse->planes + parse->cylinders;
-    object = malloc(total * sizeof(t_object *));
-    if (!object && total > 0)
+    object = malloc(parse->total * sizeof(t_object *));
+    if (!object && parse->total > 0)
         exit_error("fatal", NULL, parse);
     while (line)
     {
@@ -62,11 +60,13 @@ static t_object    **read_objects(int fd, t_parse *parse)
 static void    count_objects(char **args, t_parse *parse)
 {
     if (!ft_strncmp(args[0], "sp", ft_strlen(args[0])))
-        parse->spheres++;
+        parse->total++;
     if (!ft_strncmp(args[0], "pl", ft_strlen(args[0])))
-        parse->planes++;
+        parse->total++;
     if (!ft_strncmp(args[0], "cy", ft_strlen(args[0])))
-        parse->cylinders++; 
+        parse->total++;
+    if (!ft_strncmp(args[0], "L", ft_strlen(args[0])))
+        parse->lightnumb++;
 }
 
 static void    read_file(int fd, t_parse *parse, t_bool flag)
@@ -79,8 +79,7 @@ static void    read_file(int fd, t_parse *parse, t_bool flag)
     {
         args = ft_split(line, ' ');
         free(line);
-            if (validate_line(args, parse) != TRUE)
-                exit_error("Parsing elements", args, parse);
+        count_objects(args, parse);
         free_array(args);
         line = get_next_line(fd);
     }
@@ -88,14 +87,15 @@ static void    read_file(int fd, t_parse *parse, t_bool flag)
     {
         args = ft_split(line, ' ');
         free(line);
-        count_objects(args, parse);
+        if (validate_line(args, parse) != TRUE)
+            exit_error("Parsing elements", args, parse);
         free_array(args);
         line = get_next_line(fd);
     }
     close (fd);
 }
 
-t_object **check_file(char *file, t_parse *parse, t_bool flag)
+t_object **check_file(char *file, t_parse *parse, int flag)
 {
     int         len;
     int         fd;
@@ -109,11 +109,14 @@ t_object **check_file(char *file, t_parse *parse, t_bool flag)
         exit_error("Failed to open the file please check name, path and permissions", NULL, parse);
     if (flag == FALSE)
     {
+        parse->lightnumb = 0;
         read_file(fd, parse, FALSE);
         return (check_file(file, parse, TRUE));
     }
     else if (flag == TRUE)
     {
+        if (!allocate_light(parse))
+            exit_error("Malloc", NULL, parse);
         read_file(fd, parse, TRUE);
         return (check_file(file, parse, 2));
     }

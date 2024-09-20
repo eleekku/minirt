@@ -73,6 +73,7 @@ typedef struct s_material
 typedef struct s_light
 {
 	float	*color;
+    float   brightness;
 	float	*coord;
 }	t_light;
 
@@ -153,12 +154,10 @@ typedef struct s_parse
     float       camc[3];
     float       normv[3];
     int         fow;
-    float       lcoord[3];
-    int         *lcolor;
+    t_light     **light;
+    int         lightnumb;
     float       lbrightness;
-    int         spheres;
-    int         planes;
-    int         cylinders;
+    int         total;
 }   t_parse;
 
 
@@ -185,7 +184,7 @@ typedef struct s_parse
 */
 
 /* Parsing */
-t_object  **check_file(char *file, t_parse *parse, t_bool flag);
+t_object  **check_file(char *file, t_parse *parse, int flag);
 char    **safe_split(char *string, char separator);
 void    free_array(char **args);
 void    exit_error(char *msg, char **args, t_parse *parse);
@@ -193,6 +192,7 @@ t_bool    validate_values(char *arg);
 t_bool    fill_value(char *arg, char **coordinates, float *value);
 void    free_objects(t_parse *parse);
 void    malloc_objects(t_parse *parse);
+t_bool  allocate_light(t_parse *parse);
 t_bool    parse_sphere(char **args, int index, t_object **object);
 t_bool    parse_plane(char **args, int index, t_object **object);
 t_bool    parse_cylinder(char **args, int index, t_object **object);
@@ -223,6 +223,7 @@ t_intersections	*create_intersections(void);
 t_comp			*create_comp(t_intersection *i);
 t_camera		*create_camera(float hsize, float vsize, float field);
 t_world			*create_world(int n, t_light *light);
+t_light         *create_light();
 
 /*** Shapes  ***/
 t_object *test_object(t_shape type);

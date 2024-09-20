@@ -1,5 +1,15 @@
 #include "../inc/minirt.h"
 
+
+t_bool allocate_light(t_parse *parse)
+{
+    parse->light = malloc(parse->lightnumb + 1 * (sizeof(t_light)));
+    if (!parse->light && parse->lightnumb > 0)
+        return(FALSE);
+    parse->light[parse->lightnumb] = NULL;
+    return (TRUE);
+}
+
 t_bool fill_rgb(float **color, char *str)
 {
     int     i;
@@ -16,11 +26,13 @@ t_bool fill_rgb(float **color, char *str)
             if (!(value[i] >= 0 && value[i] <= 255))
             {
                 free_array(rgb);
+                free(value);
                 return (FALSE);
             }
         }
     free(*color);
     *color = conv_color_for(value);
+    free(value);
     status = TRUE;
     if (rgb[i])
         status = FALSE;

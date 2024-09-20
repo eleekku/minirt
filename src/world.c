@@ -58,7 +58,7 @@ static void	get_over_point(t_comp *comp)
 {
 	float	*tmp;
 
-	tmp = scalar_multi_tuple(comp->normalv, EPS);
+	tmp = scalar_multi_tuple(comp->normalv, 0.01);
 	comp->over_point = tuple_add(comp->point, tmp);
 	free(tmp);
 }

@@ -12,15 +12,16 @@
 
 #include "../inc/minirt.h"
 
-t_light	*point_light(float *p, float *c)
+t_light	*create_light()
 {
 	t_light	*light;
 
 	light = malloc(sizeof(t_light));
 	if (!light)
 		return (NULL);
-	light->coord = p;
-	light->color = c;
+	light->coord = create_point(0, 0, 0);
+	light->color = color(0, 0, 0);
+	light->brightness = 0;
 	return (light);
 }
 

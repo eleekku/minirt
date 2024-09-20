@@ -79,7 +79,7 @@ char	*ft_save(char *save)
 {
 	int		i;
 	int		j;
-	char	*str;
+	static char	*str;
 
 	i = 0;
 	while (save[i] && save[i] != '\n')
@@ -89,7 +89,7 @@ char	*ft_save(char *save)
 		free(save);
 		return (NULL);
 	}
-	str = malloc((ft_strlen(save) - i + 1) * sizeof(char));
+//	str = malloc((ft_strlen(save) - i + 1) * sizeof(char));
 	if (!str)
 	{
 		free(save);
