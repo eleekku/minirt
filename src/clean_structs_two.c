@@ -14,14 +14,10 @@
 
 void	clean_parse(t_parse *parse)
 {
-	int i;
-
-	i = -1;
 	free(parse->amcolor);
 	if (parse->lightnumb > 0)
 	{
-	while (parse->light[++i])
-		clean_light(parse->light[i]);
+		clean_lights(parse->light);
 	free(parse->light);
 	}
 	free(parse);

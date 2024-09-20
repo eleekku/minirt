@@ -12,6 +12,19 @@
 
 #include "../inc/minirt.h"
 
+t_light	*create_light(void)
+{
+	t_light	*light;
+
+	light = malloc(sizeof(t_light));
+	if (!light)
+		return (NULL);
+	light->coord = create_point(0, 0, 0);
+	light->color = color(1, 1, 1);
+	light->brightness = 0.5;
+	return (light);
+}
+
 t_intersections	*create_intersections(void)
 {
 	t_intersections	*inter;

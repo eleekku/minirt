@@ -211,6 +211,7 @@ t_intersections	*create_intersections(void);
 t_comp			*create_comp(t_intersection *i);
 t_camera		*create_camera(float hsize, float vsize, float field);
 t_world			*create_world(int n, t_light **light);
+t_light	        *create_light();
 
 /*** Tuple Operations ***/
 int				equal_float(float a, float b);
