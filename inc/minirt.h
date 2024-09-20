@@ -210,15 +210,7 @@ t_comp			*create_comp(t_intersection *i);
 t_intersections	*create_intersections(void);
 t_comp			*create_comp(t_intersection *i);
 t_camera		*create_camera(float hsize, float vsize, float field);
-<<<<<<< HEAD
-t_world			*create_world(int n, t_light *light);
-t_light         *create_light();
-
-/*** Shapes  ***/
-t_object *test_object(t_shape type);
-=======
 t_world			*create_world(int n, t_light **light);
->>>>>>> master
 
 /*** Tuple Operations ***/
 int				equal_float(float a, float b);
@@ -260,34 +252,6 @@ float			*ray_position(float **r, float t);
 float			**transform_ray(float **ray, t_matrix *matrix);
 float			**ray_for_pixel(t_camera *c, float px, float py);
 
-<<<<<<< HEAD
-/*** Spheres
-t_intersections	intersects(t_sphere *sp, float **r);
-t_intersection	intersection(float t, t_object object);
-t_intersections	intersections(int n, t_intersection i, ...);
-t_intersection	hit(t_intersections xs);
-t_intersections	sphere_intersect(t_object sp, float **r);
- ***/
-//int paint_sphere_shadow(mlx_image_t *img, t_sphere *sphere, t_parse *parse);
-//float	        *normal_at(t_object *object, float *world_p);
-float	*reflect(float *vector, float *normal);
-
-/*** Printing ***/
-//int	paint_sphere_shadow(mlx_image_t *img);
-int print_matrix(float **m, int size);
-int print_float_array(float *a);
-
-/*** Matrix utils ***/
-
-
-/*** Color ***/
-float	*conv_color_for(float *a);
-int	    *conv_color_back(float *a);
-
-//t_intersections	*sort_intersect(int n, t_intersections *xs);
-
-=======
->>>>>>> master
 /*** Cleaning structs ***/
 void			clean_material(t_material *mat);
 void			clean_object(t_object *obj);
@@ -300,19 +264,7 @@ void			clean_world(t_world	*w);
 void			clean_points(float *a, float *b, float *c, float *d);
 void			clean_parse(t_parse *parse);
 
-<<<<<<< HEAD
-float	*shade_hit(t_world	*w, t_comp *comp);
-float	*hadamard(float *a, float *b);
-float	*add_colors(float *a, float *b, float *c);
-float	*lighting(t_comp *comp, t_world *w, t_object *object, int shadow);
-t_intersections	*intersect_world(t_world *w, float **r);
-t_comp			*prepare_computations(t_intersection *i, float **ray);
-t_matrix	*view_transform(float *from, float *to, float *up);
-
-//t_intersections	*intersects(t_sphere *sp, float **r);
-=======
 /*** Intersections ***/
->>>>>>> master
 t_intersection	*intersection(float t, t_object *object);
 t_intersection	*hit(t_intersections *xs);
 t_intersections	*sphere_intersect(t_object *sp, float **r);
