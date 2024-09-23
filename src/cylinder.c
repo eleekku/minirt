@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 11:17:52 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/23 12:21:22 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/23 15:05:42 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static void	check_height(t_object *cyl, t_cylvals *v, float **ray, t_inters *xs)
 	}
 }
 
-static void	ft_swap(float *a, float *b)
+void	ft_swap(float *a, float *b)
 {
 	float	temp;
 

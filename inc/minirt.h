@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 12:33:34 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/23 12:36:38 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/23 15:34:06 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -276,6 +276,8 @@ t_inters	*pre_intersect(t_object *object, float **ray);
 t_inters	*plane_intersect(t_object *plane, float **ray);
 t_inters	*cylinder_intersect(t_object *cylinder, float **ray);
 t_comp		*prepare_computations(t_inter *i, float **ray);
+t_inters	*cone_intersect(t_object *cone, float **ray);
+void		ft_swap(float *a, float *b);
 
 /*** Color utils ***/
 float		*hadamard(float *a, float *b);
