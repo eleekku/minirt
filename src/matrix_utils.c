@@ -5,17 +5,17 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/21 12:17:23 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/13 12:32:38 by xriera-c         ###   ########.fr       */
+/*   Created: 2024/09/23 11:15:36 by xriera-c          #+#    #+#             */
+/*   Updated: 2024/09/23 11:15:37 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minirt.h"
 
-t_matrix    *create_populated_matrix(float *a, float *b, float *c, float *d)
+t_matrix	*create_populated_matrix(float *a, float *b, float *c, float *d)
 {
-    t_matrix	*matrix;
-    int			n;
+	t_matrix	*matrix;
+	int			n;
 
 	if (a && b && c && d)
 	{
@@ -31,69 +31,69 @@ t_matrix    *create_populated_matrix(float *a, float *b, float *c, float *d)
 		matrix->m[3] = d;
 		return (matrix);
 	}
-    free(a);
-    free(b);
-    free(c);
-    free(d);
+	free(a);
+	free(b);
+	free(c);
+	free(d);
 	return (NULL);
 }
 
 t_matrix	*create_matrix(int n)
 {
-	t_matrix    *matrix;
-    int         i;
+	t_matrix	*matrix;
+	int			i;
 
-    matrix = malloc(sizeof(t_matrix));
-    if (!matrix)
-        return (NULL);
-    matrix->size = n;
-    matrix->m = malloc(n * sizeof(float *));
-    if (!matrix->m)
-    {
-        free(matrix);
-        return (NULL);
-    }
-    i = -1;
-    while (++i < 4)
+	matrix = malloc(sizeof(t_matrix));
+	if (!matrix)
+		return (NULL);
+	matrix->size = n;
+	matrix->m = malloc(n * sizeof(float *));
+	if (!matrix->m)
 	{
-        matrix->m[i] = tuple(0, 0, 0, 0);
-        if (matrix->m[i] == NULL)
-        {
-            clean_matrix(matrix, i);
-            return (NULL);
-        }
-    }
-    return (matrix);
+		free(matrix);
+		return (NULL);
+	}
+	i = -1;
+	while (++i < 4)
+	{
+		matrix->m[i] = tuple(0, 0, 0, 0);
+		if (matrix->m[i] == NULL)
+		{
+			clean_matrix(matrix, i);
+			return (NULL);
+		}
+	}
+	return (matrix);
 }
 
-void    clean_matrix(t_matrix *matrix, int n)
+void	clean_matrix(t_matrix *matrix, int n)
 {
-    int j;
+	int	j;
 
-    j = 0;
-    if (matrix)
-    {
-        while (j < n)
-        {
-            free(matrix->m[j]);
-            j++;
-        }
-        free(matrix->m);
-        free(matrix);
-    }
-    matrix = NULL;
+	j = 0;
+	if (matrix)
+	{
+		while (j < n)
+		{
+			free(matrix->m[j]);
+			j++;
+		}
+		free(matrix->m);
+		free(matrix);
+	}
+	matrix = NULL;
 }
 
-t_matrix    *create_identity(int n)
+t_matrix	*create_identity(int n)
 {
-    t_matrix    *matrix;
-    int         i;
+	t_matrix	*matrix;
+	int			i;
 
-    matrix = create_matrix(n);
-    if (!matrix)
-        return (NULL);
-    i = -1;
-    while (++i < 4)
-        matrix->m[i][i] = 1;
-    return (matrix);
+	matrix = create_matrix(n);
+	if (!matrix)
+		return (NULL);
+	i = -1;
+	while (++i < 4)
+		matrix->m[i][i] = 1;
+	return (matrix);
 }

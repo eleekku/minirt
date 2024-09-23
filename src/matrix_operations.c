@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 11:14:29 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/16 10:27:17 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/23 11:21:25 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ t_matrix	*matrix_multiply(t_matrix *a, t_matrix *b, int delete)
 	{
 		j = -1;
 		while (++j < 4)
-			matrix->m[i][j] = (a->m[i][0] * b->m[0][j]) + (a->m[i][1] * b->m[1][j]) 
+			matrix->m[i][j] = (a->m[i][0] * b->m[0][j])
+				+ (a->m[i][1] * b->m[1][j])
 				+ (a->m[i][2] * b->m[2][j]) + (a->m[i][3] * b->m[3][j]);
 	}
 	if (delete == 1)

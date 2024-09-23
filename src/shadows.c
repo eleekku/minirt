@@ -6,15 +6,15 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 14:49:14 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/19 13:58:25 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/23 12:26:49 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minirt.h"
 
-static int	is_shadowed_help(t_intersections *xs, float d)
+static int	is_shadowed_help(t_inters *xs, float d)
 {
-	t_intersection	*i;
+	t_inter	*i;
 
 	i = hit(xs);
 	clean_intersections(xs);
@@ -35,7 +35,7 @@ int	is_shadowed(t_world *w, float *p, t_light *l)
 	float			*direction;
 	float			**ray;
 	float			distance;
-	t_intersections	*xs;
+	t_inters	*xs;
 
 	v = tuple_subs(l->coord, p);
 	distance = magnitude(v);

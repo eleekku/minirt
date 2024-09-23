@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/16 14:12:35 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/20 13:27:30 by xriera-c         ###   ########.fr       */
+/*   Created: 2024/09/23 11:15:54 by xriera-c          #+#    #+#             */
+/*   Updated: 2024/09/23 11:16:11 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,11 @@ static float	*checkers(t_pattern *pattern, float *p)
 	return (pattern->colorb);
 }
 
-static float *sphere_checkers(t_pattern *pattern, float *p)
+static float	*sphere_checkers(t_pattern *pattern, float *p)
 {
-    float	u;
-    float	v;
-    float	theta;
+	float	u;
+	float	v;
+	float	theta;
 	float	phi;
 
 	theta = atan2(p[2], p[0]);
@@ -49,25 +49,25 @@ static float *sphere_checkers(t_pattern *pattern, float *p)
 	v = phi / PI;
 	free(p);
 	if (fmod((floor(u * 100) + floor(v * 50)), 2) == 0)
-    	return (pattern->colora);
-    return (pattern->colorb);
+		return (pattern->colora);
+	return (pattern->colorb);
 }
 
-static float *cylinder_checkers(t_pattern *pattern, float *p)
+static float	*cylinder_checkers(t_pattern *pattern, float *p)
 {
-    float	u;
+	float	u;
 	float	v;
-    float	theta;
+	float	theta;
 
-    theta = atan2(p[2], p[0]);
-    u = (theta + PI) / (2 * PI);
-    v = fmod(p[1], 1.0);
-    if (v < 0)
+	theta = atan2(p[2], p[0]);
+	u = (theta + PI) / (2 * PI);
+	v = fmod(p[1], 1.0);
+	if (v < 0)
 		v += 1.0;
 	free(p);
-    if (fmod((floor(u * 64) + floor(v * 2)), 2) == 0)
-        return (pattern->colora);
-    return (pattern->colorb);
+	if (fmod((floor(u * 64) + floor(v * 2)), 2) == 0)
+		return (pattern->colora);
+	return (pattern->colorb);
 }
 
 float	*checker_at_obj(t_comp *comp)
@@ -81,9 +81,9 @@ float	*checker_at_obj(t_comp *comp)
 	pattp = four_one_multiply(comp->object->material->patt->transf, objp, 1);
 	if (!pattp)
 		return (NULL);
-    if (comp->object->s == SPHERE)
-        return (sphere_checkers(comp->object->material->patt, pattp));
-    if (comp->object->s == CYLINDER)
-	    return (cylinder_checkers(comp->object->material->patt, pattp));
-    return (checkers(comp->object->material->patt, pattp));
+	if (comp->object->s == SPHERE)
+		return (sphere_checkers(comp->object->material->patt, pattp));
+	if (comp->object->s == CYLINDER)
+		return (cylinder_checkers(comp->object->material->patt, pattp));
+	return (checkers(comp->object->material->patt, pattp));
 }
