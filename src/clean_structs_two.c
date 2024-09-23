@@ -16,10 +16,7 @@ void	clean_parse(t_parse *parse)
 {
 	free(parse->amcolor);
 	if (parse->lightnumb > 0)
-	{
 		clean_lights(parse->light);
-	free(parse->light);
-	}
 	free(parse);
 }
 

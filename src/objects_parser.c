@@ -25,6 +25,8 @@ t_bool    parse_cylinder2(char **args, t_object **object, int index, char **valu
                 return (FALSE);
         }
         free_array(values);
+        if (equal_float(magnitude(object[index]->normv), 1) == 0)
+            return (FALSE);
         if (!fill_value(args[3], NULL, &object[index]->diameter))
             return (FALSE);
         if (object[index]->diameter <= 0.0)
@@ -37,8 +39,8 @@ t_bool    parse_cylinder2(char **args, t_object **object, int index, char **valu
             return (FALSE);
         if (!fill_rgb(&object[index]->material->color, args[5]))
             return (FALSE);
-        object[index]->cylindermax = object[index]->height;
- //       object[index]->cylindermin = -(2 / object[index]->height);
+        object[index]->cylindermax = (object[index]->height / 2);
+        object[index]->cylindermin = -(object[index]->height / 2);
         return (TRUE);
 }
 
@@ -54,9 +56,15 @@ t_bool    parse_cylinder(char **args, int index, t_object **object)
         values = safe_split(args[1], ',');
         while (++i <= 2)
             if(!fill_value(values[i], values, &object[index]->coord[i]))
+            {
+                free_array(values);
                 return (FALSE);
+            }
         if (values[i])
+        {
+            free_array(values);
             return (FALSE);
+        }
         i = -1;
         free_array(values);
         if (!validate_values(args[2]))
@@ -77,6 +85,8 @@ t_bool  parse_plane2(char **args, t_object **object, int index, char **values)
             if (!(object[index]->normv[i] >= -1.0 && object[index]->normv[i] <= 1.0))
                 return (FALSE);
         }
+        if (equal_float(magnitude(object[index]->normv), 1) == 0)
+            return (FALSE);
         free_array(values);
         if (!validate_values(args[3]))
             return (FALSE);

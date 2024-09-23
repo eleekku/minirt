@@ -183,7 +183,6 @@ float	*conv_color_for(float *a)
 	r[0] = a[0] / 256;
 	r[1] = a[1] / 256;
 	r[2] = a[2] / 256;
-	r[3] = 0;
 	return (r);
 }
 

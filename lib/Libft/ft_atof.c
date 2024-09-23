@@ -27,9 +27,9 @@ float	ft_atof(const char *str)
 	sign = 1.0;
 	if (*str == '-')
 		sign = -1.0;
-	while (--i >= 0 && str[i] >= '0' && str[i] <= '9')
+	while (--i >= 0 && str[i] >= '0' && str[i] <= '9' && str[i] != '\n')
 		result = result / 10.0 + (str[i] - '0');
-	if (i >= 0 && (str[i] != '.' || i < 1))
+	if (i >= 0 && (str[i] != '.' || i < 1) && str[i] != '\n')
 		return (0.0);
 	while (--i >= 0 && str[i] >= '0' && str[i] <= '9')
 	{

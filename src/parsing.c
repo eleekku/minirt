@@ -9,6 +9,9 @@ t_bool  validate_light2(char **args, t_parse *parse, int index, t_light *light)
         if (!fill_rgb(&light->color, args[3]))
             return (FALSE);
     }
+    printf("lightbrightess is %f\n", parse->lbrightness);
+    light->color = multiply_color(light->color, parse->lbrightness, 1);
+    printf("light colors are %f %f %f\n", light->color[0], light->color[1], light->color[2]);
     if (args[3] && args[4])
         return (FALSE);
     parse->light[index] = light;
@@ -34,8 +37,10 @@ t_bool    validate_light(char **args, t_parse *parse, int index)
         exit_error("invalid light brightness format", args, parse);
     if (!fill_value(args[2], NULL, &parse->lbrightness))
         return (FALSE);
+    printf("lbrightness is %f\n", parse->lbrightness);
     if (!(parse->lbrightness >= 0.0 && parse->lbrightness <= 1.0))
         exit_error("Invalid light brightness value", args, parse);
+    printf("lightbrightess is %f\n", parse->lbrightness);
     return (validate_light2(args, parse, index, light));
 }
 
@@ -53,6 +58,7 @@ t_bool    validate_ambient(char **args, t_parse *parse)
             return (FALSE);
         if (!fill_rgb(&parse->amcolor, args[2]))
             return (FALSE);
+        parse->amcolor = multiply_color(parse->amcolor, parse->alightr, 1);
         if (args[3])
             return (FALSE);
         return (TRUE);    
@@ -109,20 +115,3 @@ t_bool  validate_line(char **args, t_parse *parse)
         return (FALSE);
     return (TRUE); 
 }
-
-/*
-int main(int argc, char **argv)
-{
-    t_parse parse;
-
-    parse.spheres = 0;
-    parse.planes = 0;
-    parse.planes = 0;
-
-    if (argc != 2)
-    {
-        ft_printf(2, "Error\nPlease input one and only one file\n");
-        exit (1);
-    }
-    check_file(argv[1], &parse, FALSE);
-}*/

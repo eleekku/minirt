@@ -223,6 +223,8 @@ int	main(int argc, char **argv)
 	int			i;
 
 	parse = malloc(sizeof(t_parse));
+	parse->lightnumb = 0;
+	parse->total = 0;
 	parse->amcolor = create_point(0, 0, 0);
 	if (argc != 2)
     {
@@ -235,14 +237,14 @@ int	main(int argc, char **argv)
 //	object[0]->material->pattern = TRUE;
 	while (++i < parse->total)
 		object[i]->transform = create_transform(object[i]->transform, object[i]);
-	object[0]->material->pattern = TRUE;
+/*	object[0]->material->pattern = TRUE;
 	object[0]->material->patt = create_pattern(color(0, 0, 0), color(1, 1, 1), object[0]->transform);
 	object[0]->material->shininess = 30;
 	object[0]->material->specular = 0.1;
 	object[1]->material->shininess = 90;
 	object[1]->material->specular = 0.3;
 	object[2]->material->shininess = 90;
-	object[2]->material->specular = 0.3;
+	object[2]->material->specular = 0.3;*/
 	
 
 //	printf("camdir is %f %f %f\n", parse->normv[0], parse->normv[1], parse->normv[2]);

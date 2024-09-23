@@ -109,7 +109,6 @@ t_object **check_file(char *file, t_parse *parse, int flag)
         exit_error("Failed to open the file please check name, path and permissions", NULL, parse);
     if (flag == FALSE)
     {
-        parse->lightnumb = 0;
         read_file(fd, parse, FALSE);
         return (check_file(file, parse, TRUE));
     }

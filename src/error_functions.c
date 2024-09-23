@@ -42,7 +42,7 @@ void    exit_error(char *msg, char **args, t_parse *parse)
     if (parse)
         clean_parse(parse);
     if (args)
-        free_array(args);
+        free_array(args);  
     ft_printf(2, "Error\n%s\n", msg);
     exit(1);
 }
