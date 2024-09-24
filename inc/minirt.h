@@ -192,7 +192,7 @@ t_bool fill_rgb(float **color, char *str);
 void    free_objects_exit(t_object **object, char **args, int amount, t_parse *parse);
 
 int			colors_to_int(int *colors, int intensity);
-int			*combine_colors(int *a, int *b);
+float		*combine_colors(float *a, float *b);
 int			*multiply_scale(int *color, float scale);
 
 /*** Definitions ***/
@@ -202,8 +202,8 @@ float		*create_vector(float a, float b, float c);
 t_matrix	*create_matrix(int n);
 t_matrix	*create_populated_matrix(float *a, float *b, float *c, float *d);
 float		*color(float a, float b, float c);
-t_material	*create_material(void);
-t_object	*create_object(t_shape shape);
+t_material	*create_material(t_parse *parse);
+t_object	*create_object(t_shape shape, t_parse *parse);
 t_matrix	*create_identity(int n);
 t_comp		*create_comp(t_inter *i);
 t_inters	*create_intersections(int n);

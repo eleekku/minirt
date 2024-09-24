@@ -65,129 +65,87 @@ t_matrix *create_axis_rotation(float *axis, float angle)
     return rotation;
 }
 
-t_matrix *create_transform(t_matrix *transform, t_object *o)
+t_matrix *scaling_for_transform(t_object *o)
 {
-    t_matrix    *temp;
-    t_matrix    *scale;
-    t_matrix    *rotation;
-    float       *up = create_vector(0, 1, 0);  // Up vector
-    float       *rotation_axis;
-    float       angle;
-    float       dot;
-	float	theta_x;
-	float	theta_y;
-	t_matrix *x, *y;
+	t_matrix *scale;
 
-
-
-    // Create translation matrix
-    temp = create_translate(o->coord[0], o->coord[1], o->coord[2]);
-
-    // Handle scaling based on object type
+	/*Handle scaling based on object type*/
     if (o->s == SPHERE)
         scale = create_scaling(o->diameter / 2, o->diameter / 2, o->diameter / 2);
     else if (o->s == CYLINDER)
         scale = create_scaling(o->diameter / 2, o->height, o->diameter / 2);
     else
         scale = create_identity(4);
-
-    // Handle rotation for non-spherical objects
-    if (o->s == PLANE)// || o->s == CYLINDER)
-    {
-        // Calculate the angle between the object's normal vector and the up vector
-        dot = dot_product(o->normv, up);  // Dot product
-        angle = acos(dot);  // Angle between normal and up vector
-
-        // Compute the rotation axis (cross product of normal and up vector)
-        rotation_axis = vector_cross_prod(o->normv, up);
-
-        // If the normal vector is already aligned with the up vector, no rotation is needed
-        if (magnitude(rotation_axis) > 1e-6)  // Check if rotation is needed
-            rotation = create_axis_rotation(rotation_axis, angle);  // Rotate around the axis by the calculated angle
-        else
-            rotation = create_identity(4);  // No rotation needed if the vectors are already aligned
-    }
-	else if (o->s == CYLINDER)
-	{
-		theta_x = atan2(o->normv[2], o->normv[0]);
-		theta_y = acos(o->normv[1]);
-		x = create_x_rotation(theta_x);
-		y = create_y_rotation(theta_y);
-		rotation = matrix_multiply(x, y, 1);
-	}
-    else
-    {
-        // Spheres don't need any rotation
-        rotation = create_identity(4);
-    }
-
-    // Apply the transformations: Translation * Rotation * Scaling
-    temp = matrix_multiply(temp, rotation, 1);
-    transform = matrix_multiply(temp, scale, 1);
-
-    // Inverse the final transform matrix
-    transform = inverse_matrix(transform);
-
-    // Free temporary vectors
-    free(up);
-
-    return (transform);
+	return (scale);
 }
 /*
-	t_matrix	*temp;
-	t_matrix    *scale;
+Calculate the angle between the object's normal vector and the up vector
+Compute the rotation axis (cross product of normal and up vector)
+If the normal vector is already aligned with the up vector, no rotation is needed
+No rotation needed if the vectors are already aligned
+*/
+t_matrix *create_rotation_plane(t_object *o)
+{
+	t_matrix 	*rotation;
+ 	float       angle;
+    float       dot;
+	float		*up;
+	float		*rotation_axis;
+
+	up = create_vector(0, 1, 0);
+	dot = dot_product(o->normv, up);
+    angle = acos(dot);
+	rotation_axis = vector_cross_prod(o->normv, up);
+    if (magnitude(rotation_axis) > 1e-6)
+        rotation = create_axis_rotation(rotation_axis, angle);
+    else
+        rotation = create_identity(4);
+	free(rotation_axis);
+	free(up);
+	return (rotation);
+}
+
+t_matrix *create_rotation_cylinder(t_object *o)
+{
+	float 		theta_x;
+	float 		theta_y;
+	t_matrix	*rotation;
 	t_matrix	*x;
 	t_matrix	*y;
-	t_matrix *rotation;
-	float	theta_x;
-	float	theta_y;
 
-	temp = create_translate(o->coord[0], o->coord[1], o->coord[2]);
-	if (o->s == SPHERE)
-		scale = create_scaling(o->diameter / 2, o->diameter / 2, o->diameter / 2);
+	theta_x = atan2(o->normv[2], o->normv[0]);
+	theta_y = acos(o->normv[1]);
+	x = create_x_rotation(theta_x);
+	y = create_y_rotation(theta_y);
+	rotation = matrix_multiply(x, y, 1);
+	return (rotation);
+}
+
+t_matrix *create_transform(t_matrix *transform, t_object *o)
+{
+    t_matrix    *temp;
+    t_matrix    *scale;
+    t_matrix    *rotation;
+
+
+    temp = create_translate(o->coord[0], o->coord[1], o->coord[2]);
+	scale = scaling_for_transform(o);
+    if (o->s == PLANE)
+		rotation = create_rotation_plane(o);
 	else if (o->s == CYLINDER)
-		scale = create_scaling(o->diameter / 2, o->height, o->diameter / 2);
-	else
-		scale = create_identity(4);
-	if (o->s != SPHERE)
-	{
-		
-		if (o->s == PLANE)
-		{
-			float angle;
-            float *def;
-			def = create_vector(0, 1, 0);
-            angle = acos(dot_product(o->normv, def));
+		rotation = create_rotation_cylinder(o);
+    else
+        rotation = create_identity(4);
+    temp = matrix_multiply(temp, rotation, 1);
+    transform = matrix_multiply(temp, scale, 1);
+    transform = inverse_matrix(transform);
+    return (transform);
+}
 
-            float *rotation_axis = vector_cross_prod(o->normv, def);
-
-            if (magnitude(rotation_axis) > 1e-6)
-                rotation = create_axis_rotation(rotation_axis, angle);
-            else
-                rotation = create_identity(4); // No rotation needed if aligned
-    	}
-		else
-	//	{
-		theta_x = atan2(o->normv[2], o->normv[0]);
-		theta_y = acos(o->normv[1]);
-		x = create_x_rotation(theta_x);
-		y = create_y_rotation(theta_y);
-		rotation = matrix_multiply(x, y, 1);
-	//	}
-	}
-	else
-	rotation = create_identity(4);
-
-	temp = matrix_multiply(temp, rotation, 1);
-	transform = matrix_multiply(temp, scale, 1);
-	transform = inverse_matrix(transform);
-	return (transform);
-}*/
-
+/*If camd is not aligned too closely with (0, 1, 0), we use (0, 1, 0)
+Otherwise, we use (1, 0, 0) as the reference to avoid collinearity*/
 float *compute_up(float *dir)
 {
-	/*If camd is not aligned too closely with (0, 1, 0), we use (0, 1, 0)
-    Otherwise, we use (1, 0, 0) as the reference to avoid collinearity*/
 	float *temp_up;
 	float *right;
 	float *cameradir;
@@ -207,7 +165,16 @@ float *compute_up(float *dir)
 	return (up);
 }
 
-#include <stdio.h>
+t_parse *init_parse(void)
+{
+	t_parse		*parse;
+
+	parse = malloc(sizeof(t_parse));
+	parse->lightnumb = 0;
+	parse->total = 0;
+	parse->amcolor = create_point(0, 0, 0);
+	return (parse);
+}
 
 int	main(int argc, char **argv)
 {
@@ -223,10 +190,7 @@ int	main(int argc, char **argv)
 	t_object	**object;
 	int			i;
 
-	parse = malloc(sizeof(t_parse));
-	parse->lightnumb = 0;
-	parse->total = 0;
-	parse->amcolor = create_point(0, 0, 0);
+	parse = init_parse();	
 	if (argc != 2)
     {
         ft_printf(2, "Error\nPlease input one and only one file\n");
