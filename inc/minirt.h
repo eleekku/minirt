@@ -63,7 +63,7 @@ typedef struct s_pattern
 typedef struct s_material
 {
 	float		*color;
-	float		ambient;
+	float		*ambient;
 	float		diffuse;
 	float		specular;
 	float		shininess;
@@ -193,7 +193,7 @@ void    free_objects_exit(t_object **object, char **args, int amount, t_parse *p
 
 
 int				colors_to_int(int *colors, int intensity);
-int				*combine_colors(int *a, int *b);
+float				*combine_colors(float *a, float *b);
 int				*multiply_scale(int *color, float scale);
 
 /*** Definitions ***/

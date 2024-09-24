@@ -119,7 +119,8 @@ float	*lighting(t_comp *comp, t_light *l, t_object *obj, int shadow)
 	ldot.obj = obj;
 	if (!light_pre(&ldot))
 		return (NULL);
-	ldot.ambient = multiply_color(ldot.eff_color, obj->material->ambient, 0);
+//	ldot.ambient = multiply_color(ldot.eff_color, obj->material->ambient, 0);
+	ldot.ambient = combine_colors(ldot.eff_color, obj->material->ambient);
 	ldot.light_dot_nor = dot_product(ldot.lightv, comp->normalv);
 	if (ldot.light_dot_nor < 0 || shadow)
 	{

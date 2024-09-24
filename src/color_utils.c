@@ -127,16 +127,16 @@ int	colors_to_int(int *colors, int intensity)
 	return (result);
 }
 
-int	*combine_colors(int *a, int *b)
+float	*combine_colors(float *a, float *b)
 {
-	int *result;
+	float *result;
 
 	result = malloc(3 * sizeof(int));
 	if (!result)
 		return (NULL);
-	result[0] = ((a[0] * b[0]) / 255);
-	result[1] = ((a[1] * b[1]) / 255);
-	result[2] = ((a[2] * b[2]) / 255);
+	result[0] = (a[0] * b[0]);
+	result[1] = (a[1] * b[1]);
+	result[2] = (a[2] * b[2]);
 	return (result);
 }
 

@@ -79,7 +79,7 @@ t_material	*create_material(t_parse *parse)
 		free(mat);
 		return (NULL);
 	}
-	mat->ambient = 0.1;
+	mat->ambient = color(parse->amcolor[0], parse->amcolor[1], parse->amcolor[2]);
 	mat->diffuse = 0.9;
 	mat->specular = 0.9;
 	mat->shininess = 200;
