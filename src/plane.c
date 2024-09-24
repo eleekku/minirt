@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   plane.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: esalmela <esalmela@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 16:50:36 by esalmela          #+#    #+#             */
-/*   Updated: 2024/09/12 16:50:39 by esalmela         ###   ########.fr       */
+/*   Updated: 2024/09/23 12:31:12 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,13 @@ t_object *test_object(t_shape type)
 }*/
 
 
-t_intersections *plane_intersect(t_object *plane, float **ray)
+t_inters *plane_intersect(t_object *plane, float **ray)
 {
-    t_intersections	*cross;
-    float           t;
+    t_inters    *cross;
+    float       t;
 
     (void)plane;
-    cross = create_intersections();
+    cross = create_intersections(3);
     if (!cross)
         return (NULL);
     if (fabs(ray[1][1]) < EPS)

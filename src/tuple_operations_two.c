@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/16 14:46:25 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/16 10:52:07 by xriera-c         ###   ########.fr       */
+/*   Created: 2024/09/23 11:53:52 by xriera-c          #+#    #+#             */
+/*   Updated: 2024/09/23 11:54:41 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@ float	magnitude(float *a)
 {
 	float	n;
 
-    n = sqrt(a[0] * a[0] + a[1] * a[1] + a[2] * a[2]);
-    return (n);
+	n = sqrt(a[0] * a[0] + a[1] * a[1] + a[2] * a[2]);
+	return (n);
 }
 
-float   *normalize(float *a, int delete)
+float	*normalize(float *a, int delete)
 {
-    float	*p;
-    float   mag;
+	float	*p;
+	float	mag;
 	int		i;
 
 	mag = magnitude(a);
@@ -50,38 +50,38 @@ float   *normalize(float *a, int delete)
 	}
 	if (delete == 1)
 		free(a);
-    return (p);
+	return (p);
 }
 
-float   dot_product(float *a, float *b)
+float	dot_product(float *a, float *b)
 {
-    float	p;
+	float	p;
 	int		i;
 
-    p = 0;
+	p = 0;
 	i = 0;
 	while (i < 4)
 	{
 		p = p + (a[i] * b[i]);
 		i++;
 	}
-    return (p);
+	return (p);
 }
 
 float	*vector_cross_prod(float *a, float *b)
 {
 	float	*p;
-	
-    if (a[3] == 1 || b[3] == 1)
+
+	if (a[3] == 1 || b[3] == 1)
 	{
-        printf("Error: Cross product failed. Use vectors\n");
+		printf("Error: Cross product failed. Use vectors\n");
 	}
 	p = malloc(4 * sizeof(float));
 	if (!p)
 		return (NULL);
 	p[0] = (a[1] * b[2]) - (a[2] * b[1]);
-    p[1] = (a[2] * b[0]) - (a[0] * b[2]);
-    p[2] = (a[0] * b[1]) - (a[1] * b[0]);
-    p[3] = 0; 
+	p[1] = (a[2] * b[0]) - (a[0] * b[2]);
+	p[2] = (a[0] * b[1]) - (a[1] * b[0]);
+	p[3] = 0;
 	return (p);
 }
