@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 14:14:21 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/23 11:56:34 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/24 12:25:10 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static float	*local_normal_at(t_shape shape, float *object_p, t_object *object)
 		return (create_vector(0, 1, 0));
 	if (shape == SPHERE)
 		return (create_vector(object_p[0], object_p[1], object_p[2]));
-	if (shape == CYLINDER)
+	if (shape == CYLINDER || shape == CONE)
 	{
 		dist = object_p[0] * object_p[0] + object_p[2] * object_p[2];
 		if (dist < 1 && object_p[1] >= object->cylindermax - 1e-6)
@@ -43,6 +43,11 @@ float	*normal_at(t_object *object, float *world_p)
 
 	object_p = four_one_multiply(object->transform, world_p, 0);
 	object_normal = local_normal_at(object->s, object_p, object);
+	if (object_normal == NULL)
+	{
+		free(object_p);
+		return (NULL);
+	}
 	transposed = transpose(object->transform);
 	world_normal = four_one_multiply(transposed, object_normal, 1);
 	world_normal[3] = 0;

@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 14:57:03 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/23 12:26:49 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/24 12:21:13 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ t_inters *pre_intersect(t_object *object, float **ray)
 		result = plane_intersect(object, local_ray);
 	else if (object->s == CYLINDER)
 		result = cylinder_intersect(object, local_ray);
+	else if (object->s == CONE)
+		result = cone_intersect(object, local_ray);
 	else
 		result = NULL;
 	clean_ray(local_ray);
