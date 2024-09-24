@@ -207,7 +207,7 @@ float *compute_up(float *dir)
 	return (up);
 }
 
-
+#include <stdio.h>
 
 int	main(int argc, char **argv)
 {
@@ -233,6 +233,7 @@ int	main(int argc, char **argv)
     }
 	i = -1;
 	object = check_file(argv[1], parse, FALSE);
+	printf("ambient is %f %f %f\n", parse->amcolor[0], parse->amcolor[1], parse->amcolor[2]);
 	printf("parsing done\n");
 //	object[0]->material->pattern = TRUE;
 	while (++i < parse->total)

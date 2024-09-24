@@ -44,12 +44,12 @@ t_bool    parse_cylinder2(char **args, t_object **object, int index, char **valu
         return (TRUE);
 }
 
-t_bool    parse_cylinder(char **args, int index, t_object **object)
+t_bool    parse_cylinder(char **args, int index, t_object **object, t_parse *parse)
 {
         char    **values;
         int     i;
 
-        object[index] = create_object(CYLINDER);
+        object[index] = create_object(CYLINDER, parse);
         if (!validate_values(args[1]))
             return (FALSE);
         i = -1;
@@ -95,12 +95,12 @@ t_bool  parse_plane2(char **args, t_object **object, int index, char **values)
         return (TRUE);
 }
 
-t_bool    parse_plane(char **args, int index, t_object **object)
+t_bool    parse_plane(char **args, int index, t_object **object, t_parse *parse)
 {
         char    **values;
         int     i;
 
-        object[index] = create_object(PLANE);
+        object[index] = create_object(PLANE, parse);
         if (!validate_values(args[1]))
             return (FALSE);
         i = -1;
@@ -119,12 +119,12 @@ t_bool    parse_plane(char **args, int index, t_object **object)
 }
 
 
-t_bool    parse_sphere(char **args, int index, t_object **object)
+t_bool    parse_sphere(char **args, int index, t_object **object, t_parse *parse)
 {
         char    **values;
         int     i;
 
-        object[index] = create_object(SPHERE);
+        object[index] = create_object(SPHERE, parse);
         if (!validate_values(args[1]))
             return (FALSE);
         i = -1;

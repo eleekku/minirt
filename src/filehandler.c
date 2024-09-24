@@ -18,19 +18,19 @@ static void    recon_object(char **args, t_object **object, t_parse *parse)
 
     if (!ft_strncmp(args[0], "sp", ft_strlen(args[0])))
     {
-        if (!parse_sphere(args, i, object))
+        if (!parse_sphere(args, i, object, parse))
             free_objects_exit(object, args, i, parse);
         i++;
     }
     else if (!ft_strncmp(args[0], "pl", ft_strlen(args[0])))
     {
-        if (!parse_plane(args, i, object))
+        if (!parse_plane(args, i, object, parse))
             free_objects_exit(object, args, i, parse);
         i++;
     }
     else if (!ft_strncmp(args[0], "cy", ft_strlen(args[0])))
     {
-        if (!parse_cylinder(args, i, object))
+        if (!parse_cylinder(args, i, object, parse))
             free_objects_exit(object, args, i, parse);
         i++;
     }
