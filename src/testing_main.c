@@ -31,8 +31,18 @@ int	main(void)
 	t_world		*world;
 	t_camera	*camera;
 	t_light	**lights;
+	float		**ray;
 	t_matrix	*tmp;
+	t_object	*cone;
+	t_inters	*xs;
 
+	cone = create_object(CONE);
+	ray = create_ray(create_point(0, 0, -5), normalize(create_vector(0, 1, 0), 1));
+	xs = cone_intersect(cone, ray);
+	if (!xs)
+		printf("ERROR\n");
+	else
+		printf("%f %f\n", xs->t[0], xs->t[1]);
 	(void)plane;
 
 	floor = create_object(PLANE);

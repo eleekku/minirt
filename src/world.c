@@ -6,13 +6,13 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:52:53 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/16 16:49:57 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/24 17:47:27 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minirt.h"
 
-static t_intersections *combine_xs(t_intersections *a, t_intersections *b)
+static t_inters	*combine_xs(t_inters *a, t_inters *b)
 {
 	int	i;
 	int	j;
@@ -34,14 +34,14 @@ static t_intersections *combine_xs(t_intersections *a, t_intersections *b)
 	return (a);
 }
 
-t_intersections	*intersect_world(t_world *w, float **r)
+t_inters	*intersect_world(t_world *w, float **r)
 {
-	t_intersections	*w_inters;
-	t_intersections	*temp;
+	t_inters	*w_inters;
+	t_inters	*temp;
 	int				i;
 
 	i = -1;
-	w_inters = create_intersections();
+	w_inters = create_intersections(w->number_objects);
 	if (!w_inters)
 		return (NULL);
 	while (++i < w->number_objects)
@@ -51,19 +51,19 @@ t_intersections	*intersect_world(t_world *w, float **r)
 			combine_xs(w_inters, temp);
 	}
 	sort_intersect(w_inters);
-	return (w_inters);	
+	return (w_inters);
 }
 
 static void	get_over_point(t_comp *comp)
 {
 	float	*tmp;
 
-	tmp = scalar_multi_tuple(comp->normalv, EPS);
+	tmp = scalar_multi_tuple(comp->normalv, 0.001);
 	comp->over_point = tuple_add(comp->point, tmp);
 	free(tmp);
 }
 
-t_comp	*prepare_computations(t_intersection *i, float **ray)
+t_comp	*prepare_computations(t_inter *i, float **ray)
 {
 	t_comp	*comp;
 	float	*tmp;

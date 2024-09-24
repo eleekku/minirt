@@ -6,27 +6,27 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 11:34:33 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/19 12:25:06 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/23 12:31:45 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minirt.h"
 
-t_intersections	*create_intersections(void)
+t_inters	*create_intersections(int n)
 {
-	t_intersections	*inter;
+	t_inters	*inter;
 
-	inter = malloc(sizeof(t_intersections));
+	inter = malloc(sizeof(t_inters));
 	if (!inter)
 		return (NULL);
 	inter->count = 0;
-	inter->objects = malloc(16 * sizeof(t_object *));
+	inter->objects = malloc(n * 4 * sizeof(t_object *));
 	if (!inter->objects)
 	{
 		free(inter);
 		return (NULL);
 	}
-	inter->t = malloc(16 * sizeof(float));
+	inter->t = malloc(n * 4 * sizeof(float));
 	if (!inter->t)
 	{
 		free(inter->objects);
@@ -37,7 +37,7 @@ t_intersections	*create_intersections(void)
 	return (inter);
 }
 
-t_comp	*create_comp(t_intersection *i)
+t_comp	*create_comp(t_inter *i)
 {
 	t_comp	*comp;
 
