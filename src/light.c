@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 11:36:08 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/20 13:04:06 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/23 12:38:55 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,10 @@ float	*shade_hit(t_world	*w, t_comp *comp)
 
 float	*color_at(t_world *w, float **ray)
 {
-	t_intersections	*xs;
-	t_intersection	*i;
-	t_comp			*comp;
-	float			*result;
+	t_inters	*xs;
+	t_inter		*i;
+	t_comp		*comp;
+	float		*result;
 
 	xs = intersect_world(w, ray);
 	if (!xs)
@@ -107,7 +107,7 @@ static float	*specular(float *lv, t_comp *comp, t_object *obj, t_light *l)
 		factor = pow(ref_dot_eye, obj->material->shininess);
 		tmp = multiply_color(l->color, obj->material->specular, 0);
 	}
-		return (multiply_color(tmp, factor, 1));
+	return (multiply_color(tmp, factor, 1));
 }
 
 float	*lighting(t_comp *comp, t_light *l, t_object *obj, int shadow)

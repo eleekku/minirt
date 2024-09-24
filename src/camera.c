@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 16:47:33 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/16 10:07:16 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/23 12:41:54 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ t_camera	*create_camera(float hsize, float vsize, float field)
 
 int	render(t_camera *camera, t_world *world)
 {
-	int	x;
-	int	y;
+	int		x;
+	int		y;
 	float	**ray;
 	float	*col;
 	int		*color_back;

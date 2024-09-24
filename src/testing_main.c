@@ -215,6 +215,7 @@ int	main(int argc, char **argv)
 	t_world		*world;
 	t_camera	*camera;
 	t_light	**lights;
+	float		**ray;
 	t_matrix	*tmp;
 	float		*cameraup;
 

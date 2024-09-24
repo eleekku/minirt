@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 12:06:26 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/19 12:27:30 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/23 12:29:58 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	clean_lights(t_light **lights)
 	lights = NULL;
 }
 
-void	clean_intersections(t_intersections *inter)
+void	clean_intersections(t_inters *inter)
 {
 	if (inter)
 	{

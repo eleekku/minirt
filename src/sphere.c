@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 10:50:17 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/12 13:57:43 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/23 12:30:36 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,11 @@ static float	*get_values(t_object *sp, float **r)
 	return (vals);
 }
 
-t_intersections	*sphere_intersect(t_object *sp, float **r)
+t_inters	*sphere_intersect(t_object *sp, float **r)
 {
-	t_intersections	*cross;
-	float			*vals;
-	float			discrim;
+	t_inters	*cross;
+	float		*vals;
+	float		discrim;
 
 	vals = get_values(sp, r);
 	if (!vals)
@@ -52,7 +52,7 @@ t_intersections	*sphere_intersect(t_object *sp, float **r)
 		free(vals);
 		return (NULL);
 	}
-	cross = create_intersections();
+	cross = create_intersections(3);
 	if (!cross)
 		return (NULL);
 	cross->t[0] = (-vals[1] - sqrt(discrim)) / (2 * vals[0]);
