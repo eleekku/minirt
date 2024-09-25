@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 12:33:34 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/23 15:34:06 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/25 12:14:05 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,6 +195,9 @@ int			colors_to_int(int *colors, int intensity);
 int			*combine_colors(int *a, int *b);
 int			*multiply_scale(int *color, float scale);
 
+/*** MLX ***/
+void		start_display(t_camera *c, t_world *w);
+
 /*** Definitions ***/
 float		*tuple(float a, float b, float c, float w);
 float		*create_point(float a, float b, float c);
@@ -293,7 +296,7 @@ float		*shade_hit(t_world	*w, t_comp *comp);
 float		*reflect(float *vector, float *normal);
 float		*color_at(t_world *w, float **ray);
 int			is_shadowed(t_world *w, float *p, t_light *l);
-int			render(t_camera *camera, t_world *world);
+int			render(t_camera *camera, t_world *world, mlx_image_t *img);
 t_pattern	*create_pattern(float *a, float *b, t_matrix *transf);
 float		*checker_at_obj(t_comp *comp);
 

@@ -1,23 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   start_mlx.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/16 17:47:42 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/25 12:13:04 by xriera-c         ###   ########.fr       */
+/*   Created: 2024/09/25 11:48:15 by xriera-c          #+#    #+#             */
+/*   Updated: 2024/09/25 12:11:58 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minirt.h"
-#include <string.h>
 
-int	main(int argc, char **argv)
+void	start_display(t_camera *c, t_world *w)
 {
-	t_camera	*cam;
-	t_world		*world;
+	mlx_t		*mlx;
+	mlx_image_t	*img;
 
-	start_display(cam, world);
-    return (0);
+	mlx = mlx_init(c->hsize, c->vsize, "miniRT", true);
+	if (!mlx)
+		return (NULL);
+	img = mlx_new_image(mlx, c->hsize, c->vsize);
+	if (!img)
+	{
+		mlx_terminate(mlx);
+		return (NULL);
+	}
+	mlx_image_to_window(mlx, img, 0, 0);
+	render(c, w, img);
+	mlx_loop(mlx);
+	//ADD ESC KEY TERMINATE
+	mlx_terminate(mlx);
+	return (mlx);
 }
