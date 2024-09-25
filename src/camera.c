@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 16:47:33 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/25 12:10:22 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/25 14:14:04 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,5 @@ int	render(t_camera *camera, t_world *world, mlx_image_t *img)
 		}
 		y++;
 	}
-	clean_world(world);
 	return (1);
 }
