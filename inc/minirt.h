@@ -245,6 +245,7 @@ t_matrix	*create_y_rotation(float a);
 t_matrix	*create_z_rotation(float a);
 t_matrix	*create_shearing(float *p);
 t_matrix	*view_transform(float *from, float *to, float *up);
+t_matrix	*create_transform(t_matrix *transform, t_object *o);
 
 /*** Rays ***/
 float		**create_ray(float *origin, float *direction);

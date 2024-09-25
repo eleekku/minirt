@@ -27,7 +27,8 @@ SRCS	:= $(SRCDIR)/definitions.c \
 			$(SRCDIR)/intersections.c \
 			$(SRCDIR)/matrix_operations.c \
 			$(SRCDIR)/matrix_inverse.c \
-			$(SRCDIR)/matrix_transformations.c \
+			$(SRCDIR)/matrix_transform.c \
+			$(SRCDIR)/matrix_transformations_utils.c \
 			$(SRCDIR)/normal.c \
 			$(SRCDIR)/matrix_utils.c \
 			$(SRCDIR)/reflection.c \

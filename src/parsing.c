@@ -44,6 +44,8 @@ t_bool    validate_ambient(char **args, t_parse *parse)
 {
         float   lightratio;
 
+        if (!args[1])
+        return (FALSE);
         if (!ft_isdigit(args[1][0]))
             exit_error("invalid format", args, parse);
         lightratio = ft_atof(args[1]);
@@ -93,19 +95,19 @@ t_bool  validate_line(char **args, t_parse *parse)
 {
     static int  index;
 
-    if (!ft_strncmp(args[0], "A", ft_strlen(args[0])))
+    if (!ft_strncmp(args[0], "A", 2))
         return (validate_ambient(args, parse));
-    else if (!ft_strncmp(args[0], "C", ft_strlen(args[0])))
+    else if (!ft_strncmp(args[0], "C", 2))
         return (validate_camera(args, parse));
-    else if (!ft_strncmp(args[0], "L", ft_strlen(args[0])))
+    else if (!ft_strncmp(args[0], "L", 2))
     {
         index++;
         return (validate_light(args, parse, index - 1));
     }
-    else if (!ft_strncmp(args[0], "sp", ft_strlen(args[0])) || 
-    !ft_strncmp(args[0], "pl", ft_strlen(args[0])) ||
-    !ft_strncmp(args[0], "cy", ft_strlen(args[0])) ||
-    !ft_strncmp(args[0], "\n", (ft_strlen(args[0]))))
+    else if (!ft_strncmp(args[0], "sp", 3) || 
+    !ft_strncmp(args[0], "pl", 3) ||
+    !ft_strncmp(args[0], "cy", 3) ||
+    !ft_strncmp(args[0], "\n", 2))
         return (TRUE);
     else
         return (FALSE);

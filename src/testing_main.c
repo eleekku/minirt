@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   testing_main.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: esalmela <esalmela@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/25 10:53:18 by esalmela          #+#    #+#             */
+/*   Updated: 2024/09/25 10:53:22 by esalmela         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 
 #include "../inc/minirt.h"
 
@@ -10,13 +22,7 @@
 	parse->amcolor = create_point(0, 0, 0);
 	parse->total = 0;
 	parse->lightnumb = 0;
-	
-	//parse->lcolor = (int*)create_point(0, 0, 0);
-	if (argc != 2)
-    {
-        ft_printf(2, "Error\nPlease input one and only one file\n");
-        exit (1);
-    }
+	//parse->lcolor = (int*)create_point(0, 0, 0); if (argc != 2) { ft_printf(2, "Error\nPlease input one and only one file\n"); exit (1); }
 	objects = check_file(argv[1], parse, FALSE);
 	printf("ambient color is %f\n", parse->amcolor[0]);
 	printf("object color is %f\n", objects[0]->material->color[1]);
@@ -27,123 +33,9 @@
 	free(objects);
 }*/
 
-t_matrix *create_axis_rotation(float *axis, float angle)
-{
-    t_matrix *rotation = create_identity(4);  // Start with identity matrix
-    float x = axis[0], y = axis[1], z = axis[2];
-    float cos_theta = cos(angle);
-    float sin_theta = sin(angle);
-    float one_minus_cos = 1.0f - cos_theta;
-
-    // Normalize the axis vector
-    float magnitude = sqrt(x*x + y*y + z*z);
-    x /= magnitude;
-    y /= magnitude;
-    z /= magnitude;
-
-    // Rodrigues' rotation formula
-    rotation->m[0][0] = cos_theta + one_minus_cos * x * x;
-    rotation->m[0][1] = one_minus_cos * x * y - z * sin_theta;
-    rotation->m[0][2] = one_minus_cos * x * z + y * sin_theta;
-    rotation->m[0][3] = 0.0f;
-
-    rotation->m[1][0] = one_minus_cos * y * x + z * sin_theta;
-    rotation->m[1][1] = cos_theta + one_minus_cos * y * y;
-    rotation->m[1][2] = one_minus_cos * y * z - x * sin_theta;
-    rotation->m[1][3] = 0.0f;
-
-    rotation->m[2][0] = one_minus_cos * z * x - y * sin_theta;
-    rotation->m[2][1] = one_minus_cos * z * y + x * sin_theta;
-    rotation->m[2][2] = cos_theta + one_minus_cos * z * z;
-    rotation->m[2][3] = 0.0f;
-
-    rotation->m[3][0] = 0.0f;
-    rotation->m[3][1] = 0.0f;
-    rotation->m[3][2] = 0.0f;
-    rotation->m[3][3] = 1.0f;
-
-    return rotation;
-}
-
-t_matrix *scaling_for_transform(t_object *o)
-{
-	t_matrix *scale;
-
-	/*Handle scaling based on object type*/
-    if (o->s == SPHERE)
-        scale = create_scaling(o->diameter / 2, o->diameter / 2, o->diameter / 2);
-    else if (o->s == CYLINDER)
-        scale = create_scaling(o->diameter / 2, o->height, o->diameter / 2);
-    else
-        scale = create_identity(4);
-	return (scale);
-}
-/*
-Calculate the angle between the object's normal vector and the up vector
-Compute the rotation axis (cross product of normal and up vector)
-If the normal vector is already aligned with the up vector, no rotation is needed
-No rotation needed if the vectors are already aligned
-*/
-t_matrix *create_rotation_plane(t_object *o)
-{
-	t_matrix 	*rotation;
- 	float       angle;
-    float       dot;
-	float		*up;
-	float		*rotation_axis;
-
-	up = create_vector(0, 1, 0);
-	dot = dot_product(o->normv, up);
-    angle = acos(dot);
-	rotation_axis = vector_cross_prod(o->normv, up);
-    if (magnitude(rotation_axis) > 1e-6)
-        rotation = create_axis_rotation(rotation_axis, angle);
-    else
-        rotation = create_identity(4);
-	free(rotation_axis);
-	free(up);
-	return (rotation);
-}
-
-t_matrix *create_rotation_cylinder(t_object *o)
-{
-	float 		theta_x;
-	float 		theta_y;
-	t_matrix	*rotation;
-	t_matrix	*x;
-	t_matrix	*y;
-
-	theta_x = atan2(o->normv[2], o->normv[0]);
-	theta_y = acos(o->normv[1]);
-	x = create_x_rotation(theta_x);
-	y = create_y_rotation(theta_y);
-	rotation = matrix_multiply(x, y, 1);
-	return (rotation);
-}
-
-t_matrix *create_transform(t_matrix *transform, t_object *o)
-{
-    t_matrix    *temp;
-    t_matrix    *scale;
-    t_matrix    *rotation;
-
-
-    temp = create_translate(o->coord[0], o->coord[1], o->coord[2]);
-	scale = scaling_for_transform(o);
-    if (o->s == PLANE)
-		rotation = create_rotation_plane(o);
-	else if (o->s == CYLINDER)
-		rotation = create_rotation_cylinder(o);
-    else
-        rotation = create_identity(4);
-    temp = matrix_multiply(temp, rotation, 1);
-    transform = matrix_multiply(temp, scale, 1);
-    transform = inverse_matrix(transform);
-    return (transform);
-}
-
 /*If camd is not aligned too closely with (0, 1, 0), we use (0, 1, 0)
 Otherwise, we use (1, 0, 0) as the reference to avoid collinearity*/
+
 float *compute_up(float *dir)
 {
 	float *temp_up;
@@ -198,6 +90,9 @@ int	main(int argc, char **argv)
     }
 	i = -1;
 	object = check_file(argv[1], parse, FALSE);
+	printf("parsing done\n");
+	if (!object[0])
+		exit(1);
 //	object[0]->material->pattern = TRUE;
 	while (++i < parse->total)
 	{
