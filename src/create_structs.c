@@ -12,6 +12,19 @@
 
 #include "../inc/minirt.h"
 
+t_light	*create_light(void)
+{
+	t_light	*light;
+
+	light = malloc(sizeof(t_light));
+	if (!light)
+		return (NULL);
+	light->coord = create_point(0, 0, 0);
+	light->color = color(1, 1, 1);
+	light->brightness = 0.5;
+	return (light);
+}
+
 t_inters	*create_intersections(int n)
 {
 	t_inters	*inter;
@@ -82,13 +95,15 @@ t_object	*create_object(t_shape shape)
 	if (!obj)
 		return (NULL);
 	obj->s = shape;
-	obj->diameter = 1;
+	obj->diameter = 2;
 	obj->height = 1;
 	obj->coord = create_point(0, 0, 0);
 	obj->color = color(0, 0, 0);
 	obj->material = create_material();
 	obj->normv = create_vector(0, 0, 0);
 	obj->transform = create_identity(4);
+	obj->cylindermin = 0;
+	obj->cylindermax = 1;
 	if (!obj->coord || !obj->color || !obj->material ||
 		!obj->normv || !obj->transform)
 	{
