@@ -37,7 +37,7 @@ t_bool    parse_cone2(char **args, t_object **object, int index, char **values)
             return (FALSE);
         if  (!validate_values(args[5]))
             return (FALSE);
-        if (!fill_rgb(&object[index]->material->color, args[5]))
+        if (!fill_rgb(object[index]->material->color, args[5]))
             return (FALSE);
         object[index]->cylindermax = object[index]->height;
         return (check_pattern(object, index, args, 6));
@@ -64,7 +64,6 @@ t_bool    parse_cone(char **args, int index, t_object **object, t_parse *parse)
             free_array(values);
             return (FALSE);
         }
-        i = -1;
         free_array(values);
         if (!validate_values(args[2]))
             return (FALSE);
@@ -97,7 +96,7 @@ static t_bool    parse_cylinder2(char **args, t_object **object, int index, char
             return (FALSE);
         if  (!validate_values(args[5]))
             return (FALSE);
-        if (!fill_rgb(&object[index]->material->color, args[5]))
+        if (!fill_rgb(object[index]->material->color, args[5]))
             return (FALSE);
         object[index]->cylindermax = (object[index]->height / 2);
         object[index]->cylindermin = -(object[index]->height / 2);
@@ -125,7 +124,6 @@ t_bool    parse_cylinder(char **args, int index, t_object **object, t_parse *par
             free_array(values);
             return (FALSE);
         }
-        i = -1;
         free_array(values);
         if (!validate_values(args[2]))
             return (FALSE);
@@ -150,7 +148,7 @@ t_bool  parse_plane2(char **args, t_object **object, int index, char **values)
         free_array(values);
         if (!validate_values(args[3]))
             return (FALSE);
-        if (!fill_rgb(&object[index]->material->color, args[3]))
+        if (!fill_rgb(object[index]->material->color, args[3]))
             return (FALSE);
         return (check_pattern(object, index, args, 4));
 }
@@ -201,7 +199,7 @@ t_bool    parse_sphere(char **args, int index, t_object **object, t_parse *parse
             return (FALSE);
         if (!validate_values(args[3]))
             return(FALSE);
-        if (!fill_rgb(&object[index]->material->color, args[3]))
+        if (!fill_rgb(object[index]->material->color, args[3]))
             return (FALSE);
         return (check_pattern(object, index, args, 4));
 }

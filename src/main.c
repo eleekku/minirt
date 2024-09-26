@@ -91,8 +91,8 @@ int	main(int argc, char **argv)
 	world = create_world(parse->total, parse->light);
 	world->objects = objects;
 	prepare_n_render(objects, parse, world);
-	clean_world(world);
 	clean_parse(parse);
+	clean_world(world);
     return (0);
 }
 

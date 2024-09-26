@@ -28,8 +28,6 @@ void	clean_world(t_world	*w)
 	n = 0;
 	if (w)
 	{
-		if (w->lights)
-			clean_lights(w->lights);
 		while (n < w->number_objects)
 		{
 			if (w->objects[n])

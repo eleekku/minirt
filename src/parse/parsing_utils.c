@@ -28,7 +28,7 @@ t_bool allocate_light(t_parse *parse)
     return (TRUE);
 }
 
-t_bool fill_rgb(float **color, char *str)
+t_bool fill_rgb(float *color, char *str)
 {
     int     i;
     char    **rgb;
@@ -48,8 +48,8 @@ t_bool fill_rgb(float **color, char *str)
                 return (FALSE);
             }
         }
-    free(*color);
-    *color = conv_color_for(value);
+    free(color);
+    color = conv_color_for(value);
     free(value);
     status = TRUE;
     if (rgb[i])
