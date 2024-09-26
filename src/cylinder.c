@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 11:17:52 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/23 15:05:42 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/26 14:27:29 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ t_inters	*cylinder_intersect(t_object *cylinder, float **ray)
 	t_cylvals	v;
 
 	cross = create_intersections(3);
+	if (!cross)
+		return (NULL);
 	v.a = pow(ray[1][0], 2) + pow(ray[1][2], 2);
 	if (!(fabs(v.a) < 1e-6))
 	{
