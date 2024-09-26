@@ -1,4 +1,4 @@
-#include "../inc/minirt.h"
+#include "../../inc/minirt.h"
 
 t_bool  validate_light2(char **args, t_parse *parse, int index, t_light *light)
 {

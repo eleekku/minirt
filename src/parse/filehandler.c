@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minirt.h"
+#include "../../inc/minirt.h"
 
 static void    recon_object(char **args, t_object **object, t_parse *parse)
 {
@@ -20,20 +20,27 @@ static void    recon_object(char **args, t_object **object, t_parse *parse)
     {
         if (!parse_sphere(args, i, object, parse))
             free_objects_exit(object, args, i, parse);
-        i++;
     }
     else if (!ft_strncmp(args[0], "pl", ft_strlen(args[0])))
     {
         if (!parse_plane(args, i, object, parse))
             free_objects_exit(object, args, i, parse);
-        i++;
     }
     else if (!ft_strncmp(args[0], "cy", ft_strlen(args[0])))
     {
         if (!parse_cylinder(args, i, object, parse))
             free_objects_exit(object, args, i, parse);
-        i++;
     }
+    else if (!ft_strncmp(args[0], "co", ft_strlen(args[0])))
+    {
+        if (!parse_cone(args, i, object, parse))
+            free_objects_exit(object, args, i, parse);
+    }
+    else
+    {
+        return;
+    }
+    i++;
 }
 
 static t_object    **read_objects(int fd, t_parse *parse)
@@ -64,6 +71,8 @@ static void    count_objects(char **args, t_parse *parse)
     if (!ft_strncmp(args[0], "pl", 3))
         parse->total++;
     if (!ft_strncmp(args[0], "cy", 3))
+        parse->total++;
+    if (!ft_strncmp(args[0], "co", 3))
         parse->total++;
     if (!ft_strncmp(args[0], "L", 3))
         parse->lightnumb++;

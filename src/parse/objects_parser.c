@@ -10,9 +10,70 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minirt.h"
+#include "../../inc/minirt.h"
 
-t_bool    parse_cylinder2(char **args, t_object **object, int index, char **values)
+t_bool    parse_cone2(char **args, t_object **object, int index, char **values)
+{
+        int i;
+
+        i = -1;
+        while (++i <= 2)
+        {
+            if (!fill_value(values[i], values, &object[index]->normv[i]))
+                return (FALSE);
+            if (!(object[index]->normv[i] >= -1.0 && object[index]->normv[i] <= 1.0))
+                return (FALSE);
+        }
+        free_array(values);
+        if (equal_float(magnitude(object[index]->normv), 1) == 0)
+            return (FALSE);
+        if (!fill_value(args[3], NULL, &object[index]->diameter))
+            return (FALSE);
+        if (object[index]->diameter <= 0.0)
+            return (FALSE);
+        if (!fill_value(args[4], NULL, &object[index]->height))
+            return (FALSE);
+        if (object[index]->height <= 0.0)
+            return (FALSE);
+        if  (!validate_values(args[5]))
+            return (FALSE);
+        if (!fill_rgb(&object[index]->material->color, args[5]))
+            return (FALSE);
+        object[index]->cylindermax = (object[index]->height / 2);
+        object[index]->cylindermin = -(object[index]->height / 2);
+        return (check_pattern(object, index, args, 6));
+}
+
+t_bool    parse_cone(char **args, int index, t_object **object, t_parse *parse)
+{
+        char    **values;
+        int     i;
+
+        object[index] = create_object(CONE, parse);
+        if (!validate_values(args[1]))
+            return (FALSE);
+        i = -1;
+        values = safe_split(args[1], ',');
+        while (++i <= 2)
+            if(!fill_value(values[i], values, &object[index]->coord[i]))
+            {
+                free_array(values);
+                return (FALSE);
+            }
+        if (values[i])
+        {
+            free_array(values);
+            return (FALSE);
+        }
+        i = -1;
+        free_array(values);
+        if (!validate_values(args[2]))
+            return (FALSE);
+        values = safe_split(args[2], ',');
+        return (parse_cone2(args, object, index, values));
+}
+
+static t_bool    parse_cylinder2(char **args, t_object **object, int index, char **values)
 {
         int i;
 

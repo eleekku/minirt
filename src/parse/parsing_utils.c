@@ -1,4 +1,4 @@
-#include "../inc/minirt.h"
+#include "../../inc/minirt.h"
 
 t_bool  check_pattern(t_object **object, int index, char **args, int n)
 {

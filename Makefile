@@ -6,6 +6,7 @@ CFLAGS	:= -Wextra -Wall -Werror -Wunreachable-code -Ofast
 
 LIBMLX	:= ./lib/MLX42
 SRCDIR  := ./src
+PARSE_DIR = $(SRCDIR)/parse
 
 #Libft#
 LIBFT_DIR	:= ./lib/Libft/
@@ -16,10 +17,10 @@ LIBS	:= $(LIBMLX)/build/libmlx42.a -Iinclude -ldl -lglfw -pthread -lm
 SRCS	:= $(SRCDIR)/definitions.c \
 			$(SRCDIR)/color_utils.c \
 			$(SRCDIR)/cylinder.c \
-			$(SRCDIR)/filehandler.c \
-			$(SRCDIR)/parsing.c \
-			$(SRCDIR)/parsing_utils.c \
-			$(SRCDIR)/objects_parser.c \
+			$(PARSE_DIR)/filehandler.c \
+			$(PARSE_DIR)/parsing.c \
+			$(PARSE_DIR)/parsing_utils.c \
+			$(PARSE_DIR)/objects_parser.c \
 			$(SRCDIR)/error_functions.c \
 			$(SRCDIR)/tuple_operations_one.c \
 			$(SRCDIR)/tuple_operations_two.c \
@@ -56,7 +57,10 @@ all: libmlx $(LIBFT) $(NAME)
 libmlx:
 	@cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j4
 
-%.o: %.c
+$(SRCDIR)/%.o: $(SRCDIR)/%.c
+	@$(CC) $(CFLAGS) -o $@ -c $< $(HEADERS) && printf "Compiling: $(notdir $<)\n"
+
+$(PARSE_DIR)/%.o: $(PARSE_DIR)/%.c
 	@$(CC) $(CFLAGS) -o $@ -c $< $(HEADERS) && printf "Compiling: $(notdir $<)\n"
 
 $(NAME): $(OBJS)
