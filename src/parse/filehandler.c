@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   filehandler.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: esalmela <esalmela@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 16:04:31 by esalmela          #+#    #+#             */
-/*   Updated: 2024/09/16 16:04:32 by esalmela         ###   ########.fr       */
+/*   Updated: 2024/09/26 14:04:23 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,7 @@ static void    recon_object(char **args, t_object **object, t_parse *parse)
             free_objects_exit(object, args, i, parse);
     }
     else
-    {
         return;
-    }
     i++;
 }
 
