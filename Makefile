@@ -33,7 +33,7 @@ SRCS	:= $(SRCDIR)/definitions.c \
 			$(SRCDIR)/matrix_utils.c \
 			$(SRCDIR)/reflection.c \
 			$(SRCDIR)/world.c \
-			$(SRCDIR)/testing_main.c \
+			$(SRCDIR)/main.c \
 			$(SRCDIR)/plane.c \
 			$(SRCDIR)/debug.c \
 			$(SRCDIR)/color_operations.c \
