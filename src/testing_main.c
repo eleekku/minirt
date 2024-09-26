@@ -65,7 +65,36 @@ t_parse *init_parse(void)
 	parse->lightnumb = 0;
 	parse->total = 0;
 	parse->amcolor = create_point(0, 0, 0);
+	parse->amnum = 0;
+	parse->cnum = 0;
 	return (parse);
+}
+
+t_camera	*transform_n_pattern(t_object **o, t_parse *parse, t_world **world)
+{
+	t_camera	*camera;
+	float		*cameraup;
+	t_matrix	*tmp;
+	int	i;
+	
+	i = -1;
+	while(++i < parse->total)
+	{
+		o[i]->transform = create_transform(o[i]->transform, o[i]);
+		if (o[i]->material->pattern == TRUE)
+			o[i]->material->patt = create_pattern(color(0, 0, 0), 
+				color(1, 1, 1), o[i]->transform);
+	}
+	*world = create_world(parse->total, parse->light);
+	world[0]->objects = o;
+	camera = create_camera(1500, 1000, parse->fow * 0.01745329);
+	clean_matrix(camera->transform, 4);
+	cameraup = compute_up(parse->normv);
+	tmp = view_transform(create_point(parse->camc[0], parse->camc[1], parse->camc[2]),
+		create_point(parse->normv[0], parse->normv[1], parse->normv[2]), cameraup);
+	camera->transform = inverse_matrix(tmp);
+	clean_matrix(tmp, 4);
+	return (camera);
 }
 
 int	main(int argc, char **argv)
@@ -73,13 +102,10 @@ int	main(int argc, char **argv)
 //	t_light		*light;
 	t_world		*world;
 	t_camera	*camera;
-	t_light	**lights;
 //	float		**ray;
-	t_matrix	*tmp;
-	float		*cameraup;
 
 	t_parse		*parse;
-	t_object	**object;
+	t_object	**objects;
 	int			i;
 
 	parse = init_parse();	
@@ -89,40 +115,19 @@ int	main(int argc, char **argv)
         exit (1);
     }
 	i = -1;
-	object = check_file(argv[1], parse, FALSE);
+	objects = check_file(argv[1], parse, FALSE);
 	printf("parsing done\n");
-	if (!object[0])
-		exit(1);
-//	object[0]->material->pattern = TRUE;
-	while (++i < parse->total)
-	{
-		object[i]->transform = create_transform(object[i]->transform, object[i]);
-	}
-	object[0]->material->pattern = TRUE;
-	object[0]->material->patt = create_pattern(color(0, 0, 0), color(1, 1, 1), object[0]->transform);
-/*	object[0]->material->shininess = 30;
-	object[0]->material->specular = 0.1;
-	object[1]->material->shininess = 90;
-	object[1]->material->specular = 0.3;
-	object[2]->material->shininess = 90;
-	object[2]->material->specular = 0.3;*/
-	
+	camera = transform_n_pattern(objects, parse, &world);
+	printf("render gonna start\n");
 
-//	printf("camdir is %f %f %f\n", parse->normv[0], parse->normv[1], parse->normv[2]);
-	lights = parse->light;
-//	light->coord = create_point(parse->light[0]->coord[0], parse->light[0]->coord[1], parse->light[0]->coord[2]);
-//	light->color = color(1, 1, 1);
-
-	world = create_world(parse->total, lights);
-	world->objects = object;
 	i = -1;
 //	while (++i < total)
 //		printf("obj colors are %f, %f, %f\n", world->objects[i]->material->color[0], world->objects[i]->material->color[1], world->objects[i]->material->color[2]);
-	camera = create_camera(1500, 1000, parse->fow * 0.01745329);
-	clean_matrix(camera->transform, 4);
-	cameraup = compute_up(parse->normv);
-	tmp = view_transform(create_point(parse->camc[0], parse->camc[1], parse->camc[2]), create_point(parse->normv[0], parse->normv[1], parse->normv[2]), cameraup);
-	camera->transform = inverse_matrix(tmp);
-	clean_matrix(tmp, 4);
+//	camera = create_camera(1500, 1000, parse->fow * 0.01745329);
+//	clean_matrix(camera->transform, 4);
+//	cameraup = compute_up(parse->normv);
+//	tmp = view_transform(create_point(parse->camc[0], parse->camc[1], parse->camc[2]), create_point(parse->normv[0], parse->normv[1], parse->normv[2]), cameraup);
+//	camera->transform = inverse_matrix(tmp);
+//	clean_matrix(tmp, 4);
 	render(camera, world);
 }

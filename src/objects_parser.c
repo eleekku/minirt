@@ -41,7 +41,7 @@ t_bool    parse_cylinder2(char **args, t_object **object, int index, char **valu
             return (FALSE);
         object[index]->cylindermax = (object[index]->height / 2);
         object[index]->cylindermin = -(object[index]->height / 2);
-        return (TRUE);
+        return (check_pattern(object, index, args, 6));
 }
 
 t_bool    parse_cylinder(char **args, int index, t_object **object, t_parse *parse)
@@ -92,7 +92,7 @@ t_bool  parse_plane2(char **args, t_object **object, int index, char **values)
             return (FALSE);
         if (!fill_rgb(&object[index]->material->color, args[3]))
             return (FALSE);
-        return (TRUE);
+        return (check_pattern(object, index, args, 4));
 }
 
 t_bool    parse_plane(char **args, int index, t_object **object, t_parse *parse)
@@ -118,7 +118,6 @@ t_bool    parse_plane(char **args, int index, t_object **object, t_parse *parse)
         return (parse_plane2(args, object, index, values)); 
 }
 
-
 t_bool    parse_sphere(char **args, int index, t_object **object, t_parse *parse)
 {
         char    **values;
@@ -132,7 +131,6 @@ t_bool    parse_sphere(char **args, int index, t_object **object, t_parse *parse
         while (++i <= 2)
             if (!fill_value(values[i], values, &object[index]->coord[i]))
                 return (FALSE);
-        object[index]->coord[i] = 1;
         if (values[i])
         {
             free_array(values);
@@ -145,7 +143,7 @@ t_bool    parse_sphere(char **args, int index, t_object **object, t_parse *parse
             return(FALSE);
         if (!fill_rgb(&object[index]->material->color, args[3]))
             return (FALSE);
-        return (TRUE);
+        return (check_pattern(object, index, args, 4));
 }
 
 

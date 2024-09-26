@@ -123,12 +123,6 @@ t_world	*create_world(int n, t_light **lights)
 	if (!world)
 		return (NULL);
 	world->number_objects = n;
-	world->objects = malloc(n * sizeof(t_object *));
-	if (!world->objects)
-	{
-		free(world);
-		return (NULL);
-	}
 	world->lights = lights;
 	return (world);
 }

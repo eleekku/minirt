@@ -46,7 +46,7 @@ t_bool    validate_ambient(char **args, t_parse *parse)
 
         if (!args[1])
         return (FALSE);
-        if (!ft_isdigit(args[1][0]))
+        if(!validate_values(args[1]))
             exit_error("invalid format", args, parse);
         lightratio = ft_atof(args[1]);
         if (lightratio < 0.0 || lightratio > 1.0 || (lightratio == 0.0 && args[1][0] != '0'))

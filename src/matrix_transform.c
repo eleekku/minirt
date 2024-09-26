@@ -107,7 +107,9 @@ t_matrix *create_transform(t_matrix *transform, t_object *o)
     else
         rotation = create_identity(4);
     temp = matrix_multiply(temp, rotation, 1);
-    transform = matrix_multiply(temp, scale, 1);
-    transform = inverse_matrix(transform);
+    clean_matrix(transform, 4);
+    temp = matrix_multiply(temp, scale, 1);
+    transform = inverse_matrix(temp);
+    clean_matrix(temp, 4);
     return (transform);
 }

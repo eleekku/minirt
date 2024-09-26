@@ -59,14 +59,18 @@ static t_object    **read_objects(int fd, t_parse *parse)
 
 static void    count_objects(char **args, t_parse *parse)
 {
-    if (!ft_strncmp(args[0], "sp", ft_strlen(args[0])))
+    if (!ft_strncmp(args[0], "sp", 3))
         parse->total++;
-    if (!ft_strncmp(args[0], "pl", ft_strlen(args[0])))
+    if (!ft_strncmp(args[0], "pl", 3))
         parse->total++;
-    if (!ft_strncmp(args[0], "cy", ft_strlen(args[0])))
+    if (!ft_strncmp(args[0], "cy", 3))
         parse->total++;
-    if (!ft_strncmp(args[0], "L", ft_strlen(args[0])))
+    if (!ft_strncmp(args[0], "L", 3))
         parse->lightnumb++;
+    if (!ft_strncmp(args[0], "A", 2))
+        parse->amnum++;
+    if (!ft_strncmp(args[0], "C", 2))
+        parse->cnum++;
 }
 
 static void    read_file(int fd, t_parse *parse, t_bool flag)
@@ -83,6 +87,8 @@ static void    read_file(int fd, t_parse *parse, t_bool flag)
         free_array(args);
         line = get_next_line(fd);
     }
+    if (parse->amnum != 1 || parse->cnum != 1)
+        exit_error("Invalid number for ambient or camera", NULL, parse);
     while (flag == TRUE && line)
     {
         args = ft_split(line, ' ');

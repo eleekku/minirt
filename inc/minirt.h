@@ -163,6 +163,8 @@ typedef struct s_lightdot
 
 typedef struct s_parse
 {
+	int			amnum;
+	int			cnum;
     float       alightr;
     float       *amcolor;
     float       camc[3];
@@ -175,21 +177,22 @@ typedef struct s_parse
 }   t_parse;
 
 /* Parsing */
-t_object  **check_file(char *file, t_parse *parse, int flag);
-char    **safe_split(char *string, char separator);
-void    free_array(char **args);
-void    exit_error(char *msg, char **args, t_parse *parse);
-t_bool    validate_values(char *arg);
-t_bool    fill_value(char *arg, char **coordinates, float *value);
-void    free_objects(t_parse *parse);
-void    malloc_objects(t_parse *parse);
-t_bool  allocate_light(t_parse *parse);
-t_bool    parse_sphere(char **args, int index, t_object **object, t_parse *parse);
-t_bool    parse_plane(char **args, int index, t_object **object, t_parse *parse);
-t_bool    parse_cylinder(char **args, int index, t_object **object, t_parse *parse);
-t_bool  validate_line(char **args, t_parse *parse);
-t_bool fill_rgb(float **color, char *str);
-void    free_objects_exit(t_object **object, char **args, int amount, t_parse *parse);
+t_object	**check_file(char *file, t_parse *parse, int flag);
+char		**safe_split(char *string, char separator);
+void		free_array(char **args);
+void		exit_error(char *msg, char **args, t_parse *parse);
+t_bool		validate_values(char *arg);
+t_bool		fill_value(char *arg, char **coordinates, float *value);
+void		free_objects(t_parse *parse);
+void		malloc_objects(t_parse *parse);
+t_bool		allocate_light(t_parse *parse);
+t_bool		parse_sphere(char **args, int index, t_object **object, t_parse *parse);
+t_bool		parse_plane(char **args, int index, t_object **object, t_parse *parse);
+t_bool		parse_cylinder(char **args, int index, t_object **object, t_parse *parse);
+t_bool		validate_line(char **args, t_parse *parse);
+t_bool		fill_rgb(float **color, char *str);
+t_bool		check_pattern(t_object **object, int index, char **args, int n);
+void		free_objects_exit(t_object **object, char **args, int amount, t_parse *parse);
 
 int			colors_to_int(int *colors, int intensity);
 float		*combine_colors(float *a, float *b);
