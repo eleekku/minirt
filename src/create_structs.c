@@ -73,7 +73,7 @@ t_material	*create_material(t_parse *parse)
 	mat = malloc(sizeof(t_material));
 	if (!mat)
 		return (NULL);
-	mat->color = color(parse->amcolor[0], parse->amcolor[1], parse->amcolor[2]);
+	mat->color = color(0, 0, 0);
 	if (!mat->color)
 	{
 		free(mat);
@@ -98,13 +98,14 @@ t_object	*create_object(t_shape shape, t_parse *parse)
 	obj->diameter = 2;
 	obj->height = 1;
 	obj->coord = create_point(0, 0, 0);
-	obj->color = color(0, 0, 0);
+//	obj->color = color(0, 0, 0);
 	obj->material = create_material(parse);
 	obj->normv = create_vector(0, 0, 0);
 	obj->transform = create_identity(4);
 	obj->cylindermin = 0;
 	obj->cylindermax = 1;
-	if (!obj->coord || !obj->color || !obj->material ||
+	obj->closed = TRUE;
+	if (!obj->coord || !obj->material ||
 		!obj->normv || !obj->transform)
 	{
 		clean_object(obj);

@@ -95,7 +95,7 @@ typedef struct s_object
 	t_shape		s;
 	float		*coord;
 	float		diameter;
-	float		*color;
+//	float		*color;
 	t_matrix	*transform;
 	float		*normv;
 	float		height;
@@ -203,7 +203,7 @@ t_bool		parse_plane(char **args, int index, t_object **object, t_parse *parse);
 t_bool		parse_cylinder(char **args, int index, t_object **object, t_parse *parse);
 t_bool		parse_cone(char **args, int index, t_object **object, t_parse *parse);
 t_bool		validate_line(char **args, t_parse *parse);
-t_bool		fill_rgb(float **color, char *str);
+t_bool		fill_rgb(float *color, char *str);
 t_bool		check_pattern(t_object **object, int index, char **args, int n);
 void		free_objects_exit(t_object **object, char **args, int amount, t_parse *parse);
 

@@ -26,9 +26,11 @@ void	clean_lights(t_light **lights)
 			if (lights[i]->color)
 				free(lights[i]->color);
 			free(lights[i]);
+			printf("light freed\n");
 			i++;
 		}
 		free(lights);
+		printf("lights freed\n");
 	}
 	lights = NULL;
 }
@@ -68,7 +70,10 @@ void	clean_material(t_material *mat)
 	if (mat)
 	{
 		if (mat->color)
+		{
 			free(mat->color);
+			printf("material color freed\n");
+		}
 		free(mat);
 	}
 	mat = NULL;
@@ -80,8 +85,6 @@ void	clean_object(t_object *obj)
 	{
 		if (obj->coord)
 			free(obj->coord);
-		if (obj->color)
-			free(obj->color);
 		if (obj->normv)
 			free(obj->normv);
 		if (obj->material)
