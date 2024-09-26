@@ -39,8 +39,7 @@ t_bool    parse_cone2(char **args, t_object **object, int index, char **values)
             return (FALSE);
         if (!fill_rgb(&object[index]->material->color, args[5]))
             return (FALSE);
-        object[index]->cylindermax = (object[index]->height / 2);
-        object[index]->cylindermin = -(object[index]->height / 2);
+        object[index]->cylindermax = object[index]->height;
         return (check_pattern(object, index, args, 6));
 }
 

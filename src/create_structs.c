@@ -104,6 +104,7 @@ t_object	*create_object(t_shape shape, t_parse *parse)
 	obj->transform = create_identity(4);
 	obj->cylindermin = 0;
 	obj->cylindermax = 1;
+	obj->closed = TRUE;
 	if (!obj->coord || !obj->color || !obj->material ||
 		!obj->normv || !obj->transform)
 	{

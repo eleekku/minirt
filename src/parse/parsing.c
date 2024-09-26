@@ -107,6 +107,7 @@ t_bool  validate_line(char **args, t_parse *parse)
     else if (!ft_strncmp(args[0], "sp", 3) || 
     !ft_strncmp(args[0], "pl", 3) ||
     !ft_strncmp(args[0], "cy", 3) ||
+    !ft_strncmp(args[0], "co", 3) ||
     !ft_strncmp(args[0], "\n", 2))
         return (TRUE);
     else

@@ -96,13 +96,13 @@ t_matrix *create_transform(t_matrix *transform, t_object *o)
     temp = create_translate(o->coord[0], o->coord[1], o->coord[2]);
     if (o->s == SPHERE)
         scale = create_scaling(o->diameter / 2, o->diameter / 2, o->diameter / 2);
-    else if (o->s == CYLINDER)
+    else if (o->s == CYLINDER || o->s == CONE)
 		scale = create_scaling(o->diameter / 2, o->height, o->diameter / 2);
 	else
 		scale = create_identity(4);
     if (o->s == PLANE)
 		rotation = create_rotation_plane(o);
-	else if (o->s == CYLINDER)
+	else if (o->s == CYLINDER || o->s == CONE)
 		rotation = create_rotation_cylinder(o);
     else
         rotation = create_identity(4);

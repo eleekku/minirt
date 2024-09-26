@@ -37,9 +37,7 @@ static void    recon_object(char **args, t_object **object, t_parse *parse)
             free_objects_exit(object, args, i, parse);
     }
     else
-    {
         return;
-    }
     i++;
 }
 

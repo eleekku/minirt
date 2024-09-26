@@ -46,7 +46,7 @@ static float	*compute_up(float *dir)
 	return (up);
 }
 
-static void	transform_n_pattern(t_object **o, t_parse *parse, t_world *world)
+static void	prepare_n_render(t_object **o, t_parse *parse, t_world *world)
 {
 	t_camera	*camera;
 	float		*cameraup;
@@ -90,7 +90,7 @@ int	main(int argc, char **argv)
 	objects = check_file(argv[1], parse, FALSE);
 	world = create_world(parse->total, parse->light);
 	world->objects = objects;
-	transform_n_pattern(objects, parse, world);
+	prepare_n_render(objects, parse, world);
 	clean_world(world);
 	clean_parse(parse);
     return (0);
