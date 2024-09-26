@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 11:15:54 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/23 11:16:11 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/26 11:08:22 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,21 @@ static float	*cylinder_checkers(t_pattern *pattern, float *p)
 	float	u;
 	float	v;
 	float	theta;
+	float	*normal;
 
+	normal = create_vector(p[0], 0, p[2]);
+	normal = normalize(normal, 1);
+	theta = atan2(normal[2], normal[0]);
+	u = (theta + PI) / (2 * PI);
+	v = fmod(p[1], 1.0);
+	if (v < 0)
+		v += 1.0;
+	free(normal);
+	free(p);
+	if (fmod((floor(u * 64) + floor(v * 2)), 2) == 0)
+		return (pattern->colora);
+	return (pattern->colorb);
+	/*
 	theta = atan2(p[2], p[0]);
 	u = (theta + PI) / (2 * PI);
 	v = fmod(p[1], 1.0);
@@ -67,7 +81,7 @@ static float	*cylinder_checkers(t_pattern *pattern, float *p)
 	free(p);
 	if (fmod((floor(u * 100) + floor(v * 100)), 2) == 0)
 		return (pattern->colora);
-	return (pattern->colorb);
+	return (pattern->colorb);*/
 }
 
 float	*checker_at_obj(t_comp *comp)
