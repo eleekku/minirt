@@ -24,7 +24,6 @@ void	clean_parse(t_parse *parse)
 void	clean_world(t_world	*w)
 {
 	int	n;
-
 	n = 0;
 	if (w)
 	{
@@ -60,4 +59,11 @@ void	clean_points(float *a, float *b, float *c, float *d)
 		free(c);
 	if (d)
 		free(d);
+}
+
+void	clean_rtx(t_rtx	*rtx)
+{
+	clean_matrix(rtx->cam->transform, 4);
+	free(rtx->cam);
+	free(rtx);
 }

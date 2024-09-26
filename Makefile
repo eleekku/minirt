@@ -2,7 +2,7 @@ NAME	:= miniRT
 
 #Compiler options#
 CC		:= cc
-CFLAGS	:= -Wextra -Wall -Werror -Wunreachable-code -Ofast
+CFLAGS	:= -Wextra -Wall -Werror -Wunreachable-code -Ofast -g #-fsanitize=address -g
 
 LIBMLX	:= ./lib/MLX42
 SRCDIR  := ./src

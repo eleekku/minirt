@@ -51,6 +51,6 @@ void	start_display(t_camera *c, t_world *w)
 	mlx_loop_hook(mlx, &resize, rtx);
 	mlx_resize_hook(mlx, &resize_hook, rtx);
 	mlx_loop(mlx);
-	free(rtx);
+	clean_rtx(rtx);
 	mlx_terminate(mlx);
 }
