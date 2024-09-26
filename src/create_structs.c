@@ -66,20 +66,20 @@ t_comp	*create_comp(t_inter *i)
 	return (comp);
 }
 
-t_material	*create_material(void)
+t_material	*create_material(t_parse *parse)
 {
 	t_material	*mat;
 
 	mat = malloc(sizeof(t_material));
 	if (!mat)
 		return (NULL);
-	mat->color = color(1, 1, 1);
+	mat->color = color(parse->amcolor[0], parse->amcolor[1], parse->amcolor[2]);
 	if (!mat->color)
 	{
 		free(mat);
 		return (NULL);
 	}
-	mat->ambient = 0.1;
+	mat->ambient = color(parse->amcolor[0], parse->amcolor[1], parse->amcolor[2]);
 	mat->diffuse = 0.9;
 	mat->specular = 0.9;
 	mat->shininess = 200;
@@ -87,7 +87,7 @@ t_material	*create_material(void)
 	return (mat);
 }
 
-t_object	*create_object(t_shape shape)
+t_object	*create_object(t_shape shape, t_parse *parse)
 {
 	t_object	*obj;
 
@@ -99,7 +99,7 @@ t_object	*create_object(t_shape shape)
 	obj->height = 1;
 	obj->coord = create_point(0, 0, 0);
 	obj->color = color(0, 0, 0);
-	obj->material = create_material();
+	obj->material = create_material(parse);
 	obj->normv = create_vector(0, 0, 0);
 	obj->transform = create_identity(4);
 	obj->cylindermin = 0;

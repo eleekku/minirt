@@ -1,11 +1,29 @@
 #include "../inc/minirt.h"
 
+t_bool  check_pattern(t_object **object, int index, char **args, int n)
+{
+    if (args[n])
+    {
+        if (!ft_strncmp(args[n], "P\n", 3) || !ft_strncmp(args[n], "P", 2))
+        {
+            object[index]->material->pattern = TRUE;
+            return (TRUE);
+        }
+        return (FALSE);
+    }
+    return (TRUE);
+}
 
 t_bool allocate_light(t_parse *parse)
 {
+    int i;
+
+    i = -1;
     parse->light = malloc(parse->lightnumb + 1 * (sizeof(t_light)));
     if (!parse->light && parse->lightnumb > 0)
         return(FALSE);
+    while (++i < parse->lightnumb)
+        parse->light[i] = create_light();
     parse->light[parse->lightnumb] = NULL;
     return (TRUE);
 }

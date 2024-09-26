@@ -9,6 +9,7 @@ t_bool  validate_light2(char **args, t_parse *parse, int index, t_light *light)
         if (!fill_rgb(&light->color, args[3]))
             return (FALSE);
     }
+    light->color = multiply_color(light->color, parse->lbrightness, 1);
     if (args[3] && args[4])
         return (FALSE);
     parse->light[index] = light;
@@ -43,7 +44,9 @@ t_bool    validate_ambient(char **args, t_parse *parse)
 {
         float   lightratio;
 
-        if (!ft_isdigit(args[1][0]))
+        if (!args[1])
+        return (FALSE);
+        if(!validate_values(args[1]))
             exit_error("invalid format", args, parse);
         lightratio = ft_atof(args[1]);
         if (lightratio < 0.0 || lightratio > 1.0 || (lightratio == 0.0 && args[1][0] != '0'))
@@ -53,6 +56,7 @@ t_bool    validate_ambient(char **args, t_parse *parse)
             return (FALSE);
         if (!fill_rgb(&parse->amcolor, args[2]))
             return (FALSE);
+        parse->amcolor = multiply_color(parse->amcolor, parse->alightr, 1);
         if (args[3])
             return (FALSE);
         return (TRUE);    
@@ -91,38 +95,21 @@ t_bool  validate_line(char **args, t_parse *parse)
 {
     static int  index;
 
-    if (!ft_strncmp(args[0], "A", ft_strlen(args[0])))
+    if (!ft_strncmp(args[0], "A", 2))
         return (validate_ambient(args, parse));
-    else if (!ft_strncmp(args[0], "C", ft_strlen(args[0])))
+    else if (!ft_strncmp(args[0], "C", 2))
         return (validate_camera(args, parse));
-    else if (!ft_strncmp(args[0], "L", ft_strlen(args[0])))
+    else if (!ft_strncmp(args[0], "L", 2))
     {
         index++;
         return (validate_light(args, parse, index - 1));
     }
-    else if (!ft_strncmp(args[0], "sp", ft_strlen(args[0])) || 
-    !ft_strncmp(args[0], "pl", ft_strlen(args[0])) ||
-    !ft_strncmp(args[0], "cy", ft_strlen(args[0])) ||
-    !ft_strncmp(args[0], "\n", (ft_strlen(args[0]))))
+    else if (!ft_strncmp(args[0], "sp", 3) || 
+    !ft_strncmp(args[0], "pl", 3) ||
+    !ft_strncmp(args[0], "cy", 3) ||
+    !ft_strncmp(args[0], "\n", 2))
         return (TRUE);
     else
         return (FALSE);
     return (TRUE); 
 }
-
-/*
-int main(int argc, char **argv)
-{
-    t_parse parse;
-
-    parse.spheres = 0;
-    parse.planes = 0;
-    parse.planes = 0;
-
-    if (argc != 2)
-    {
-        ft_printf(2, "Error\nPlease input one and only one file\n");
-        exit (1);
-    }
-    check_file(argv[1], &parse, FALSE);
-}*/

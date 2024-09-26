@@ -48,7 +48,7 @@ static float	*sphere_checkers(t_pattern *pattern, float *p)
 	u = (theta + PI) / (2 * PI);
 	v = phi / PI;
 	free(p);
-	if (fmod((floor(u * 100) + floor(v * 50)), 2) == 0)
+	if (fmod((floor(u * 50) + floor(v * 25)), 2) == 0)
 		return (pattern->colora);
 	return (pattern->colorb);
 }
@@ -79,7 +79,7 @@ static float	*cylinder_checkers(t_pattern *pattern, float *p)
 	if (v < 0)
 		v += 1.0;
 	free(p);
-	if (fmod((floor(u * 64) + floor(v * 2)), 2) == 0)
+	if (fmod((floor(u * 100) + floor(v * 100)), 2) == 0)
 		return (pattern->colora);
 	return (pattern->colorb);*/
 }

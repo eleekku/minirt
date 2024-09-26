@@ -12,6 +12,7 @@
 
 #include "../inc/minirt.h"
 
+/*
 t_object *test_object(t_shape type)
 {
     t_object    *object;
@@ -31,7 +32,7 @@ t_object *test_object(t_shape type)
     free(object->material->color);
     object->material->color = color(0, 0, 200);
     return (object);
-}
+}*/
 
 
 t_inters *plane_intersect(t_object *plane, float **ray)

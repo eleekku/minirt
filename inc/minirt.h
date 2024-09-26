@@ -63,7 +63,7 @@ typedef struct s_pattern
 typedef struct s_material
 {
 	float		*color;
-	float		ambient;
+	float		*ambient;
 	float		diffuse;
 	float		specular;
 	float		shininess;
@@ -163,6 +163,8 @@ typedef struct s_lightdot
 
 typedef struct s_parse
 {
+	int			amnum;
+	int			cnum;
     float       alightr;
     float       *amcolor;
     float       camc[3];
@@ -187,24 +189,25 @@ typedef struct s_rtx
 }	t_rtx;
 
 /* Parsing */
-t_object  **check_file(char *file, t_parse *parse, int flag);
-char    **safe_split(char *string, char separator);
-void    free_array(char **args);
-void    exit_error(char *msg, char **args, t_parse *parse);
-t_bool    validate_values(char *arg);
-t_bool    fill_value(char *arg, char **coordinates, float *value);
-void    free_objects(t_parse *parse);
-void    malloc_objects(t_parse *parse);
-t_bool  allocate_light(t_parse *parse);
-t_bool    parse_sphere(char **args, int index, t_object **object);
-t_bool    parse_plane(char **args, int index, t_object **object);
-t_bool    parse_cylinder(char **args, int index, t_object **object);
-t_bool  validate_line(char **args, t_parse *parse);
-t_bool fill_rgb(float **color, char *str);
-void    free_objects_exit(t_object **object, char **args, int amount, t_parse *parse);
+t_object	**check_file(char *file, t_parse *parse, int flag);
+char		**safe_split(char *string, char separator);
+void		free_array(char **args);
+void		exit_error(char *msg, char **args, t_parse *parse);
+t_bool		validate_values(char *arg);
+t_bool		fill_value(char *arg, char **coordinates, float *value);
+void		free_objects(t_parse *parse);
+void		malloc_objects(t_parse *parse);
+t_bool		allocate_light(t_parse *parse);
+t_bool		parse_sphere(char **args, int index, t_object **object, t_parse *parse);
+t_bool		parse_plane(char **args, int index, t_object **object, t_parse *parse);
+t_bool		parse_cylinder(char **args, int index, t_object **object, t_parse *parse);
+t_bool		validate_line(char **args, t_parse *parse);
+t_bool		fill_rgb(float **color, char *str);
+t_bool		check_pattern(t_object **object, int index, char **args, int n);
+void		free_objects_exit(t_object **object, char **args, int amount, t_parse *parse);
 
 int			colors_to_int(int *colors, int intensity);
-int			*combine_colors(int *a, int *b);
+float		*combine_colors(float *a, float *b);
 int			*multiply_scale(int *color, float scale);
 
 /*** MLX ***/
@@ -220,8 +223,8 @@ float		*create_vector(float a, float b, float c);
 t_matrix	*create_matrix(int n);
 t_matrix	*create_populated_matrix(float *a, float *b, float *c, float *d);
 float		*color(float a, float b, float c);
-t_material	*create_material(void);
-t_object	*create_object(t_shape shape);
+t_material	*create_material(t_parse *parse);
+t_object	*create_object(t_shape shape, t_parse *parse);
 t_matrix	*create_identity(int n);
 t_comp		*create_comp(t_inter *i);
 t_inters	*create_intersections(int n);
@@ -263,6 +266,7 @@ t_matrix	*create_y_rotation(float a);
 t_matrix	*create_z_rotation(float a);
 t_matrix	*create_shearing(float *p);
 t_matrix	*view_transform(float *from, float *to, float *up);
+t_matrix	*create_transform(t_matrix *transform, t_object *o);
 
 /*** Rays ***/
 float		**create_ray(float *origin, float *direction);

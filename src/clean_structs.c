@@ -25,6 +25,7 @@ void	clean_lights(t_light **lights)
 				free(lights[i]->coord);
 			if (lights[i]->color)
 				free(lights[i]->color);
+			free(lights[i]);
 			i++;
 		}
 		free(lights);
