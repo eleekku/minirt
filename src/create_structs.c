@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 11:34:33 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/23 12:31:45 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/25 13:58:37 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,7 @@ t_world	*create_world(int n, t_light **lights)
 	if (!world)
 		return (NULL);
 	world->number_objects = n;
+	world->objects = NULL;
 	world->lights = lights;
 	return (world);
 }

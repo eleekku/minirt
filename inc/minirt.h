@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 12:33:34 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/23 15:34:06 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/25 17:12:19 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,6 +176,18 @@ typedef struct s_parse
     int         total;
 }   t_parse;
 
+typedef struct s_rtx
+{
+	t_camera	*cam;
+	t_world		*world;
+	mlx_image_t	*img;
+	int32_t		width;
+	int32_t		height;
+	int			resize;
+	mlx_t		*mlx;
+	float		time;
+}	t_rtx;
+
 /* Parsing */
 t_object	**check_file(char *file, t_parse *parse, int flag);
 char		**safe_split(char *string, char separator);
@@ -197,6 +209,12 @@ void		free_objects_exit(t_object **object, char **args, int amount, t_parse *par
 int			colors_to_int(int *colors, int intensity);
 float		*combine_colors(float *a, float *b);
 int			*multiply_scale(int *color, float scale);
+
+/*** MLX ***/
+void		start_display(t_camera *c, t_world *w);
+void		my_keyhook(mlx_key_data_t keydata, void *param);
+void		resize_hook(int32_t width, int32_t height, void *param);
+void		resize(void *data);
 
 /*** Definitions ***/
 float		*tuple(float a, float b, float c, float w);
@@ -297,7 +315,7 @@ float		*shade_hit(t_world	*w, t_comp *comp);
 float		*reflect(float *vector, float *normal);
 float		*color_at(t_world *w, float **ray);
 int			is_shadowed(t_world *w, float *p, t_light *l);
-int			render(t_camera *camera, t_world *world);
+int			render(t_camera *camera, t_world *world, mlx_image_t *img);
 t_pattern	*create_pattern(float *a, float *b, t_matrix *transf);
 float		*checker_at_obj(t_comp *comp);
 
