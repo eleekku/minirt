@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_structs.c                                   :+:      :+:    :+:   */
+/*   create_structs_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 11:34:33 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/27 16:00:35 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/27 16:37:32 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minirt.h"
+#include "../inc/minirt_bonus.h"
 
 t_inters	*create_intersections(int n)
 {
