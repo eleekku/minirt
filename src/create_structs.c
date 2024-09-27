@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 11:34:33 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/27 13:56:25 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/27 16:00:35 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ t_object	*create_object(t_shape shape, t_parse *parse)
 	obj->cylindermin = 0;
 	obj->cylindermax = 1;
 	obj->closed = TRUE;
+	obj->bump = FALSE;
 	if (!obj->coord || !obj->material
 		|| !obj->normv || !obj->transform)
 	{

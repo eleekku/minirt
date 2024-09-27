@@ -48,7 +48,8 @@ SRCS	:= $(SRCDIR)/definitions.c \
 			$(SRCDIR)/pattern.c \
 			$(SRCDIR)/cones.c \
 			$(SRCDIR)/start_mlx.c \
-			$(SRCDIR)/hook.c
+			$(SRCDIR)/hook.c \
+			$(SRCDIR)/bump.c
 OBJS	:= ${SRCS:.c=.o}
 
 all: libmlx $(LIBFT) $(NAME)
