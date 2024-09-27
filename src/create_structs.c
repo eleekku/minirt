@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 11:34:33 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/25 13:58:37 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/27 11:52:59 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,9 @@ t_light	*create_light(void)
 t_inters	*create_intersections(int n)
 {
 	t_inters	*inter;
+	int			i;
 
+	i = -1;
 	inter = malloc(sizeof(t_inters));
 	if (!inter)
 		return (NULL);
@@ -46,7 +48,8 @@ t_inters	*create_intersections(int n)
 		free(inter);
 		return (NULL);
 	}
-	inter->objects[0] = NULL;
+	while (++i < (n * 4))
+		inter->objects[i] = NULL;
 	return (inter);
 }
 

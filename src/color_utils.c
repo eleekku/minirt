@@ -6,13 +6,13 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 15:03:01 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/25 17:24:46 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/27 12:24:39 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minirt.h"
 
-char	to_lower(char c)
+static char	to_lower(char c)
 {
 	if (c >= 'A' && c <= 'Z')
 		return (c + ('a' - 'A'));
@@ -127,52 +127,13 @@ int	colors_to_int(int *colors, int intensity)
 	return (result);
 }
 
-float	*combine_colors(float *a, float *b)
-{
-	float *result;
-
-	result = malloc(3 * sizeof(int));
-	if (!result)
-		return (NULL);
-	result[0] = (a[0] * b[0]);
-	result[1] = (a[1] * b[1]);
-	result[2] = (a[2] * b[2]);
-	return (result);
-}
-
-int	*multiply_scale(int *color, float scale)
-{
-	int *result;
-
-	result = malloc(3 * sizeof(int));
-	if (!result)
-		return (NULL);
-	result[0] = color[0] * scale;
-	result[1] = color[1] * scale;
-	result[2] = color[2] * scale;
-	return (result);
-}
-
 static float	clamp_color(float n)
 {
 	if (n > 255)
 		return (255);
 	return (n);
 }
-/*
-void	conv_color_for(int *color)
-{
-	color[0] = color[0] / 256;
-	color[1] = color[1] / 256;
-	color[2] = color[2] / 256;
-}
 
-void	conv_color_back(int *color)
-{
-	color[0] = clamp_color(color[0] * 256);
-	color[1] = clamp_color(color[1] * 256);
-	color[2] = clamp_color(color[2] * 256);
-}*/
 float	*conv_color_for(float *a)
 {
 	float	*r;

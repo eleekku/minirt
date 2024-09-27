@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:47:20 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/27 10:07:36 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/27 12:19:30 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	clean_parse(t_parse *parse)
 void	clean_world(t_world	*w)
 {
 	int	n;
+
 	n = 0;
 	if (w)
 	{

@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 12:33:34 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/27 10:08:22 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/27 12:23:02 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ typedef struct s_material
 typedef struct s_light
 {
 	float	*color;
-    float   brightness;
+	float	brightness;
 	float	*coord;
 }	t_light;
 
@@ -164,16 +164,16 @@ typedef struct s_parse
 {
 	int			amnum;
 	int			cnum;
-    float       alightr;
-    float       *amcolor;
-    float       camc[3];
-    float       normv[3];
-    int         fow;
-    t_light     **light;
-    int         lightnumb;
-    float       lbrightness;
-    int         total;
-}   t_parse;
+	float		alightr;
+	float		*amcolor;
+	float		camc[3];
+	float		normv[3];
+	int			fow;
+	t_light		**light;
+	int			lightnumb;
+	float		lbrightness;
+	int			total;
+}	t_parse;
 
 typedef struct s_rtx
 {
@@ -197,18 +197,22 @@ t_bool		fill_value(char *arg, char **coordinates, float *value);
 void		free_objects(t_parse *parse);
 void		malloc_objects(t_parse *parse);
 t_bool		allocate_light(t_parse *parse);
-t_bool		parse_sphere(char **args, int index, t_object **object, t_parse *parse);
-t_bool		parse_plane(char **args, int index, t_object **object, t_parse *parse);
-t_bool		parse_cylinder(char **args, int index, t_object **object, t_parse *parse);
-t_bool		parse_cone(char **args, int index, t_object **object, t_parse *parse);
+t_bool		parse_sphere(char **args, int index, t_object **object,
+				t_parse *parse);
+t_bool		parse_plane(char **args, int index, t_object **object,
+				t_parse *parse);
+t_bool		parse_cylinder(char **args, int index, t_object **object,
+				t_parse *parse);
+t_bool		parse_cone(char **args, int index, t_object **object,
+				t_parse *parse);
 t_bool		validate_line(char **args, t_parse *parse);
 t_bool		fill_rgb(float **color, char *str);
 t_bool		check_pattern(t_object **object, int index, char **args, int n);
-void		free_objects_exit(t_object **object, char **args, int amount, t_parse *parse);
+void		free_objects_exit(t_object **object, char **args,
+				int amount, t_parse *parse);
 
 int			colors_to_int(int *colors, int intensity);
 float		*combine_colors(float *a, float *b);
-int			*multiply_scale(int *color, float scale);
 
 /*** MLX ***/
 void		start_display(t_camera *c, t_world *w);
@@ -264,7 +268,6 @@ t_matrix	*create_scaling(float a, float b, float c);
 t_matrix	*create_x_rotation(float a);
 t_matrix	*create_y_rotation(float a);
 t_matrix	*create_z_rotation(float a);
-t_matrix	*create_shearing(float *p);
 t_matrix	*view_transform(float *from, float *to, float *up);
 t_matrix	*create_transform(t_matrix *transform, t_object *o);
 
@@ -319,9 +322,5 @@ int			is_shadowed(t_world *w, float *p, t_light *l);
 int			render(t_camera *camera, t_world *world, mlx_image_t *img);
 t_pattern	*create_pattern(float *a, float *b, t_matrix *transf);
 float		*checker_at_obj(t_comp *comp);
-
-/*** Debugging ***/
-int			print_matrix(float **m, int size);
-int			print_float_array(float *a);
 
 #endif

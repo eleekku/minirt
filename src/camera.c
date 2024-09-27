@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 16:47:33 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/25 14:14:04 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/27 12:18:48 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	render(t_camera *camera, t_world *world, mlx_image_t *img)
 			ray = ray_for_pixel(camera, x, y);
 			col = color_at(world, ray);
 			color_back = conv_color_back(col);
-			mlx_put_pixel(img, x, y, colors_to_int(color_back,256));
+			mlx_put_pixel(img, x, y, colors_to_int(color_back, 256));
 			free(color_back);
 			clean_ray(ray);
 			free(col);
