@@ -6,11 +6,24 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 13:20:16 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/20 12:20:15 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/27 13:56:15 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minirt.h"
+
+t_light	*create_light(void)
+{
+	t_light	*light;
+
+	light = malloc(sizeof(t_light));
+	if (!light)
+		return (NULL);
+	light->coord = create_point(0, 0, 0);
+	light->color = color(1, 1, 1);
+	light->brightness = 0.5;
+	return (light);
+}
 
 float	*tuple(float a, float b, float c, float w)
 {

@@ -6,34 +6,11 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 15:03:01 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/27 12:24:39 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/27 13:54:06 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minirt.h"
-
-static char	to_lower(char c)
-{
-	if (c >= 'A' && c <= 'Z')
-		return (c + ('a' - 'A'));
-	return (c);
-}
-
-int	get_digit(char c, int digits_in_base)
-{
-	int	max_digit;
-
-	if (digits_in_base <= 10)
-		max_digit = digits_in_base + '0';
-	else
-		max_digit = digits_in_base - 10 + 'a';
-	if (c >= '0' && c <= '9' && c <= max_digit)
-		return (c - '0');
-	else if (c >= 'a' && c <= 'f' && c <= max_digit)
-		return (10 + c - 'a');
-	else
-		return (-1);
-}
 
 unsigned int	ft_atoi_base(const char *str, int str_base)
 {
@@ -73,46 +50,30 @@ unsigned int	ft_atoi_baseintense(const char *str, int str_base)
 	return (result);
 }
 
-char *strjoin_colors(char *s1, char *s2, char *s3)
-{
-	char *temp;
-	char *result;
-
-	temp = ft_strjoin(s1, s2);
-	if (!temp)
-		exit(1);
-	result = ft_strjoin(temp, s3);
-	if (!result)
-		exit(1);
-	free(temp);
-	free(s1);
-	free(s2);
-	free(s3);
-	return (result);
-
-}
 char	*int_to_hex(int num)
 {
-    char* hexStr;
-    char *hexChars;
+	char	*hexstr;
+	char	*hexchars;
 
-	hexStr = malloc(3 * sizeof(char));	
-	hexChars = "0123456789ABCDEF";
-    hexStr[0] = hexChars[(num >> 4) & 0xF];
-    hexStr[1] = hexChars[num & 0xF];
-    hexStr[2] = '\0';
-
-    return hexStr;
+	hexstr = malloc(3 * sizeof(char));
+	if (!hexstr)
+		return (NULL);
+	hexchars = "0123456789ABCDEF";
+	hexstr[0] = hexchars[(num >> 4) & 0xF];
+	hexstr[1] = hexchars[num & 0xF];
+	hexstr[2] = '\0';
+	return (hexstr);
 }
 
 int	colors_to_int(int *colors, int intensity)
 {
-	char 	*string;
+	char	*string;
 	int		result;
 	char	*temp;
 	char	*intens;
 
-	string = strjoin_colors(int_to_hex(colors[0]), int_to_hex(colors[1]), int_to_hex(colors[2]));
+	string = strjoin_colors(int_to_hex(colors[0]), int_to_hex(colors[1]),
+			int_to_hex(colors[2]));
 	if (intensity == 256)
 		result = ft_atoi_baseintense(string, 16);
 	else
@@ -127,34 +88,9 @@ int	colors_to_int(int *colors, int intensity)
 	return (result);
 }
 
-static float	clamp_color(float n)
+float	clamp_color(float n)
 {
 	if (n > 255)
 		return (255);
 	return (n);
-}
-
-float	*conv_color_for(float *a)
-{
-	float	*r;
-
-	r = color(0, 0, 0);
-	if (!r)
-		return (NULL);
-	r[0] = a[0] / 256;
-	r[1] = a[1] / 256;
-	r[2] = a[2] / 256;
-	return (r);
-}
-
-int	*conv_color_back(float *a)
-{
-	int	*r;
-
-	r = malloc(3 * sizeof(int));
-
-	r[0] = clamp_color(a[0] * 256);
-	r[1] = clamp_color(a[1] * 256);
-	r[2] = clamp_color(a[2] * 256);
-	return (r);
 }
