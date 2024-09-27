@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 12:06:26 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/23 12:29:58 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/27 10:59:31 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	clean_material(t_material *mat)
 {
 	if (mat)
 	{
-		if (mat->color)
+		if (mat->color && mat->pattern == FALSE)
 			free(mat->color);
 		if (mat->ambient)
 			free(mat->ambient);

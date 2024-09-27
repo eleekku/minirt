@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 17:47:42 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/26 11:45:45 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/27 11:05:33 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,11 @@ static void	prepare_n_render(t_object **o, t_parse *parse, t_world *world)
 	{
 		o[i]->transform = create_transform(o[i]->transform, o[i]);
 		if (o[i]->material->pattern == TRUE)
+		{
+			free(o[i]->material->color);
 			o[i]->material->patt = create_pattern(color(0, 0, 0), 
 				color(1, 1, 1), create_identity(4));
+		}
 	}
 	camera = create_camera(150, 100, parse->fow * 0.01745329);
 	clean_matrix(camera->transform, 4);

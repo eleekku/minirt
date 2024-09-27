@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 12:19:29 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/19 14:08:13 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/27 12:20:12 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 float	*color(float a, float b, float c)
 {
 	float	*color;
-	
+
 	color = malloc(3 * sizeof(float));
 	if (!color)
 		return (NULL);
@@ -27,7 +27,7 @@ float	*color(float a, float b, float c)
 
 float	*hadamard(float *a, float *b)
 {
-	float *result;
+	float	*result;
 
 	result = color(0, 0, 0);
 	if (!result)
@@ -56,7 +56,7 @@ float	*multiply_color(float *a, float b, int delete)
 float	*add_colors(float *a, float *b, float *c)
 {
 	float	*result;
-	
+
 	result = color(0, 0, 0);
 	if (!result)
 		return (NULL);
@@ -72,7 +72,7 @@ float	*add_colors(float *a, float *b, float *c)
 float	*add_two_colors(float *a, float *b)
 {
 	float	*result;
-	
+
 	result = color(0, 0, 0);
 	if (!result)
 		return (NULL);
