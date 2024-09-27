@@ -45,7 +45,10 @@ float	*shade_hit(t_world	*w, t_comp *comp)
 	{
 		n = is_shadowed(w, comp->over_point, w->lights[i]);
 		if (comp->object->material->pattern == TRUE)
+		{
+			free(comp->object->material->color);
 			comp->object->material->color = checker_at_obj(comp);
+		}
 		col = lighting(comp, w->lights[i], comp->object, n);
 		if (!col)
 		{

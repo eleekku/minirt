@@ -68,13 +68,16 @@ void	clean_material(t_material *mat)
 	if (mat)
 	{
 		if (mat->color)
-			free(mat->color);
+		{
+			if (mat->pattern == FALSE)
+				free(mat->color);
+		}
 		if (mat->ambient)
 			free(mat->ambient);
 		if (mat->pattern == TRUE)
 		{
-			free(mat->patt->colora);
-			free(mat->patt->colorb);
+	//		free(mat->patt->colora);
+	//		free(mat->patt->colorb);
 			clean_matrix(mat->patt->transf, 4);
 			free(mat->patt);
 		}
