@@ -195,13 +195,7 @@ t_bool		validate_values(char *arg);
 t_bool		fill_value(char *arg, char **coordinates, float *value);
 void		malloc_objects(t_parse *parse);
 t_bool		allocate_light(t_parse *parse);
-<<<<<<< HEAD
-t_bool		validate_light(char **args, t_parse *parse, int index);
-t_bool		parse_sphere(char **args, int index, t_object **object, t_parse *parse);
-t_bool		parse_plane(char **args, int index, t_object **object, t_parse *parse);
-t_bool		parse_cylinder(char **args, int index, t_object **object, t_parse *parse);
-t_bool		parse_cone(char **args, int index, t_object **object, t_parse *parse);
-=======
+t_bool	validate_light(char **args, t_parse *parse, int index);
 t_bool		parse_sphere(char **args, int index, t_object **object,
 				t_parse *parse);
 t_bool		parse_plane(char **args, int index, t_object **object,
@@ -210,7 +204,6 @@ t_bool		parse_cylinder(char **args, int index, t_object **object,
 				t_parse *parse);
 t_bool		parse_cone(char **args, int index, t_object **object,
 				t_parse *parse);
->>>>>>> master
 t_bool		validate_line(char **args, t_parse *parse);
 t_bool		fill_rgb(float **color, char *str);
 t_bool		check_pattern(t_object **object, int index, char **args, int n);
