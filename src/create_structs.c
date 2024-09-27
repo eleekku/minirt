@@ -6,24 +6,11 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 11:34:33 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/27 11:52:59 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/27 13:56:25 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minirt.h"
-
-t_light	*create_light(void)
-{
-	t_light	*light;
-
-	light = malloc(sizeof(t_light));
-	if (!light)
-		return (NULL);
-	light->coord = create_point(0, 0, 0);
-	light->color = color(1, 1, 1);
-	light->brightness = 0.5;
-	return (light);
-}
 
 t_inters	*create_intersections(int n)
 {
@@ -82,7 +69,8 @@ t_material	*create_material(t_parse *parse)
 		free(mat);
 		return (NULL);
 	}
-	mat->ambient = color(parse->amcolor[0], parse->amcolor[1], parse->amcolor[2]);
+	mat->ambient = color(parse->amcolor[0],
+			parse->amcolor[1], parse->amcolor[2]);
 	mat->diffuse = 0.9;
 	mat->specular = 0.9;
 	mat->shininess = 200;
@@ -107,8 +95,8 @@ t_object	*create_object(t_shape shape, t_parse *parse)
 	obj->cylindermin = 0;
 	obj->cylindermax = 1;
 	obj->closed = TRUE;
-	if (!obj->coord || !obj->material ||
-		!obj->normv || !obj->transform)
+	if (!obj->coord || !obj->material
+		|| !obj->normv || !obj->transform)
 	{
 		clean_object(obj);
 		return (NULL);

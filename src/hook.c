@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 13:43:53 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/25 17:10:27 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/27 13:58:02 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	resize(void *data)
 	{
 		if (!mlx_resize_image(rtx->img, rtx->width, rtx->height))
 			exit(1);
-		ft_bzero(rtx->img->pixels, rtx->width * rtx->height *sizeof(uint32_t));
+		ft_bzero(rtx->img->pixels, rtx->width * rtx->height * sizeof(uint32_t));
 		rtx->resize = 0;
 		c = create_camera(rtx->width, rtx->height, rtx->cam->field);
 		if (!c)

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/26 12:07:16 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/11 19:19:12 by xriera-c         ###   ########.fr       */
+/*   Created: 2024/09/27 14:06:36 by xriera-c          #+#    #+#             */
+/*   Updated: 2024/09/27 14:06:37 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ static	float	*copy_row(float *row, int i)
 	k = -1;
 	while (++k < i)
 		new_row[k] = row[k];
-	//Use 4 or i????
 	while (++k < 4)
 		new_row[k - 1] = row[k];
 	return (new_row);
@@ -80,7 +79,6 @@ float	minor(t_matrix *a, int i, int j)
 	return (det);
 }
 
-//We assume all matrixes are size 4x4
 t_matrix	*inverse_matrix(t_matrix *a)
 {
 	t_matrix	*inv;

@@ -16,6 +16,7 @@ HEADERS	:= -I ./inc -I $(LIBMLX)/include
 LIBS	:= $(LIBMLX)/build/libmlx42.a -Iinclude -ldl -lglfw -pthread -lm	
 SRCS	:= $(SRCDIR)/definitions.c \
 			$(SRCDIR)/color_utils.c \
+			$(SRCDIR)/color_utils_two.c \
 			$(SRCDIR)/cylinder.c \
 			$(PARSE_DIR)/filehandler.c \
 			$(PARSE_DIR)/parsing.c \

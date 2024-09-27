@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 14:49:14 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/23 12:26:49 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/27 14:16:14 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ static int	is_shadowed_help(t_inters *xs, float d)
 
 int	is_shadowed(t_world *w, float *p, t_light *l)
 {
-	float			*v;
-	float			*direction;
-	float			**ray;
-	float			distance;
+	float		*v;
+	float		*direction;
+	float		**ray;
+	float		distance;
 	t_inters	*xs;
 
 	v = tuple_subs(l->coord, p);

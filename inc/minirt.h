@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 12:33:34 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/27 12:23:02 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/27 13:51:08 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -312,6 +312,10 @@ float		*add_colors(float *a, float *b, float *c);
 float		*add_two_colors(float *a, float *b);
 float		*conv_color_for(float *a);
 int			*conv_color_back(float *a);
+char		*strjoin_colors(char *s1, char *s2, char *s3);
+int			get_digit(char c, int digits_in_base);
+char		to_lower(char c);
+float		clamp_color(float n);
 
 /*** Color calculations ***/
 float		*lighting(t_comp *comp, t_light *l, t_object *obj, int shadow);
