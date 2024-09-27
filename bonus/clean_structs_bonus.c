@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clean_structs.c                                    :+:      :+:    :+:   */
+/*   clean_structs_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 12:06:26 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/27 16:20:32 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/27 16:37:32 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minirt.h"
+#include "../inc/minirt_bonus.h"
 
 void	clean_lights(t_light **lights)
 {
