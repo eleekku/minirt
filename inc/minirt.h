@@ -195,7 +195,7 @@ t_bool		validate_values(char *arg);
 t_bool		fill_value(char *arg, char **coordinates, float *value);
 void		malloc_objects(t_parse *parse);
 t_bool		allocate_light(t_parse *parse);
-t_bool	validate_light(char **args, t_parse *parse, int index);
+t_bool		validate_light(char **args, t_parse *parse, int index);
 t_bool		parse_sphere(char **args, int index, t_object **object,
 				t_parse *parse);
 t_bool		parse_plane(char **args, int index, t_object **object,
