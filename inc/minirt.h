@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 12:33:34 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/25 17:12:19 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/27 10:08:22 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -285,7 +285,7 @@ void		clean_ray(float **ray);
 void		clean_world(t_world	*w);
 void		clean_points(float *a, float *b, float *c, float *d);
 void		clean_parse(t_parse *parse);
-void		clean_rtx(t_rtx *rtx);
+void		clean_rtx(t_rtx	*rtx, mlx_t	*mlx, mlx_image_t *img);
 
 /*** Intersections ***/
 t_inter		*intersection(float t, t_object *object);

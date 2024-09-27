@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:48:15 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/26 11:48:15 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/27 10:08:35 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,5 @@ void	start_display(t_camera *c, t_world *w)
 	mlx_loop_hook(mlx, &resize, rtx);
 	mlx_resize_hook(mlx, &resize_hook, rtx);
 	mlx_loop(mlx);
-	clean_rtx(rtx);
-	mlx_terminate(mlx);
+	clean_rtx(rtx, mlx, img);
 }
