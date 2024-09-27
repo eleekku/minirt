@@ -21,6 +21,11 @@ t_bool	check_pattern(t_object **object, int index, char **args, int n)
 			object[index]->material->pattern = TRUE;
 			return (TRUE);
 		}
+		else if (!ft_strncmp(args[n], "B\n", 3) || !ft_strncmp(args[n], "B", 2))
+		{
+			object[index]->bump = TRUE;
+			return (TRUE);
+		}
 		return (FALSE);
 	}
 	return (TRUE);

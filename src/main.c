@@ -12,6 +12,26 @@
 
 #include "../inc/minirt.h"
 
+void	check_extras(t_object **objects, t_parse *parse)
+{
+	int	i;
+
+	i = -1;
+	while (++i < parse->total)
+	{
+		if (objects[i]->material->pattern == TRUE || parse->lightnumb > 1)
+		{
+			i = -1;
+			while (++i < parse->total)
+				clean_object(objects[i]);
+			free (objects);
+			clean_parse(parse);
+			ft_printf(2, "Error\nwith parsing objects\n");
+			exit (1);
+		}
+	}
+}
+
 static t_parse	*init_parse(void)
 {
 	t_parse		*parse;
@@ -89,6 +109,7 @@ int	main(int argc, char **argv)
 	}
 	parse = init_parse();
 	objects = check_file(argv[1], parse, FALSE);
+	check_extras(objects, parse);
 	world = create_world(parse->total, parse->light);
 	world->objects = objects;
 	prepare_n_render(objects, parse, world);
