@@ -50,7 +50,7 @@ float	ft_atof(const char *str)
 	if (*str == '-')
 		sign = -1.0;
 	while (str[i] < '0' || str[i] > '9')
-	i--;
+		i--;
 	result = ft_atof2(i, result, str, count);
 	return (result * sign);
 }
