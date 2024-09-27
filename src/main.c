@@ -22,6 +22,7 @@ static t_parse	*init_parse(void)
 	parse->amcolor = create_point(0, 0, 0);
 	parse->amnum = 0;
 	parse->cnum = 0;
+	parse->light = NULL;
 	return (parse);
 }
 

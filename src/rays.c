@@ -17,7 +17,7 @@ float	**transform_ray(float **ray, t_matrix *matrix)
 	float		**trans;
 	float		*p;
 	float		*v;
-	
+
 	p = four_one_multiply(matrix, ray[0], 0);
 	if (!p)
 		return (NULL);
@@ -93,7 +93,7 @@ static	float	**ray_pixel_help(t_matrix *inv, float x, float y)
 			free(pixel);
 			return (create_ray(origin, p2));
 		}
-	clean_points(p1, p2, pixel, origin);
+		clean_points(p1, p2, pixel, origin);
 	}
 	return (NULL);
 }
@@ -103,7 +103,7 @@ float	**ray_for_pixel(t_camera *c, float px, float py)
 	float		x;
 	float		y;
 	float		**ray;
-	
+
 	x = (px + 0.5) * c->pixel_size;
 	y = (py + 0.5) * c->pixel_size;
 	x = c->half_width - x;

@@ -20,6 +20,7 @@ SRCS	:= $(SRCDIR)/definitions.c \
 			$(SRCDIR)/cylinder.c \
 			$(PARSE_DIR)/filehandler.c \
 			$(PARSE_DIR)/parsing.c \
+			$(PARSE_DIR)/parse_extra.c \
 			$(PARSE_DIR)/parsing_utils.c \
 			$(PARSE_DIR)/objects_parser.c \
 			$(SRCDIR)/error_functions.c \

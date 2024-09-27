@@ -190,14 +190,13 @@ typedef struct s_rtx
 
 /* Parsing */
 t_object	**check_file(char *file, t_parse *parse, int flag);
-char		**safe_split(char *string, char separator);
 void		free_array(char **args);
 void		exit_error(char *msg, char **args, t_parse *parse);
 t_bool		validate_values(char *arg);
 t_bool		fill_value(char *arg, char **coordinates, float *value);
-void		free_objects(t_parse *parse);
 void		malloc_objects(t_parse *parse);
 t_bool		allocate_light(t_parse *parse);
+t_bool		validate_light(char **args, t_parse *parse, int index);
 t_bool		parse_sphere(char **args, int index, t_object **object,
 				t_parse *parse);
 t_bool		parse_plane(char **args, int index, t_object **object,

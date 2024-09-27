@@ -97,6 +97,6 @@ t_inters	*cone_intersect(t_object *cone, float **ray)
 	v.t0 = ((-v.b) - sqrt(v.disc)) / (2 * v.a);
 	v.t1 = ((-v.b) + sqrt(v.disc)) / (2 * v.a);
 	if (v.t0 > v.t1)
-			ft_swap(&v.t0, &v.t1);
+		ft_swap(&v.t0, &v.t1);
 	return (check_height(&v, cone, ray));
 }
