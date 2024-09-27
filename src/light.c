@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 11:36:08 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/27 12:24:09 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/27 15:45:11 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ float	*color_at(t_world *w, float **ray)
 		return (color(0, 0, 0));
 	}
 	comp = prepare_computations(i, ray);
+	if (comp->object->bump == TRUE)
+		comp->normalv = perturb_normal(comp->normalv, comp->over_point);
 	result = shade_hit(w, comp);
 	free(i);
 	clean_comp(comp);

@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 12:33:34 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/27 13:51:08 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/27 15:46:28 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ typedef struct s_object
 	float		cylindermin;
 	float		cylindermax;
 	t_bool		closed;
+	t_bool		bump;
 }	t_object;
 
 typedef struct s_world
@@ -303,6 +304,7 @@ t_inters	*cylinder_intersect(t_object *cylinder, float **ray);
 t_comp		*prepare_computations(t_inter *i, float **ray);
 t_inters	*cone_intersect(t_object *cone, float **ray);
 void		ft_swap(float *a, float *b);
+float		*perturb_normal(float* normal, float* point);
 
 /*** Color utils ***/
 float		*hadamard(float *a, float *b);
