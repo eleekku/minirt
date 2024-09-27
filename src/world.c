@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:52:53 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/24 17:47:27 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/27 14:16:55 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_inters	*intersect_world(t_world *w, float **r)
 {
 	t_inters	*w_inters;
 	t_inters	*temp;
-	int				i;
+	int			i;
 
 	i = -1;
 	w_inters = create_intersections(w->number_objects);

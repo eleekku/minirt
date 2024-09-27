@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   matrix_transformations.c                           :+:      :+:    :+:   */
+/*   matrix_transformations_utils.c                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 11:18:13 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/10 11:09:00 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/27 14:09:53 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_matrix	*create_translate(float a, float b, float c)
 
 t_matrix	*create_scaling(float a, float b, float c)
 {
-	t_matrix *matrix;
+	t_matrix	*matrix;
 
 	matrix = create_identity(4);
 	if (!matrix)
@@ -41,7 +41,7 @@ t_matrix	*create_scaling(float a, float b, float c)
 t_matrix	*create_x_rotation(float a)
 {
 	t_matrix	*matrix;
-	
+
 	matrix = create_identity(4);
 	if (!matrix)
 		return (NULL);
@@ -55,7 +55,7 @@ t_matrix	*create_x_rotation(float a)
 t_matrix	*create_y_rotation(float a)
 {
 	t_matrix	*matrix;
-	
+
 	matrix = create_identity(4);
 	if (!matrix)
 		return (NULL);
@@ -69,7 +69,7 @@ t_matrix	*create_y_rotation(float a)
 t_matrix	*create_z_rotation(float a)
 {
 	t_matrix	*matrix;
-	
+
 	matrix = create_identity(4);
 	if (!matrix)
 		return (NULL);

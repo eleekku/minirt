@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 14:14:21 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/24 17:58:27 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/27 14:12:49 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static float	get_y_value(t_shape shape, float *object_p)
 	return (y);
 }
 
-static float	*local_normal_at(t_shape shape, float *object_p, t_object *object)
+static float	*local_normal_at(t_shape shape, float *obj_p, t_object *object)
 {
 	float	dist;
 	float	y;
@@ -34,18 +34,18 @@ static float	*local_normal_at(t_shape shape, float *object_p, t_object *object)
 	if (shape == PLANE)
 		return (create_vector(0, 1, 0));
 	else if (shape == SPHERE)
-		return (create_vector(object_p[0], object_p[1], object_p[2]));
+		return (create_vector(obj_p[0], obj_p[1], obj_p[2]));
 	else if (shape == CYLINDER || shape == CONE)
 	{
-		dist = object_p[0] * object_p[0] + object_p[2] * object_p[2];
-		if (dist < 1 && object_p[1] >= object->cylindermax - 1e-6)
+		dist = obj_p[0] * obj_p[0] + obj_p[2] * obj_p[2];
+		if (dist < 1 && obj_p[1] >= object->cylindermax - 1e-6)
 			return (create_vector(0, 1, 0));
-		else if (dist < 1 && object_p[1] <= object->cylindermin + 1e-6)
+		else if (dist < 1 && obj_p[1] <= object->cylindermin + 1e-6)
 			return (create_vector(0, -1, 0));
 		else
 		{
-			y = get_y_value(shape, object_p);
-			return (create_vector(object_p[0], y, object_p[2]));
+			y = get_y_value(shape, obj_p);
+			return (create_vector(obj_p[0], y, obj_p[2]));
 		}
 	}
 	else

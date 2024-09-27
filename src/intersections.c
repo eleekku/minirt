@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 14:57:03 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/24 12:21:13 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/27 13:58:49 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ t_inter	*intersection(float t, t_object *object)
 t_inter	*hit(t_inters *xs)
 {
 	t_inter	*i;
-	int				k;
+	int		k;
 
 	k = 0;
 	i = malloc(sizeof(t_inter));
@@ -76,10 +76,10 @@ t_inter	*hit(t_inters *xs)
 	return (i);
 }
 
-t_inters *pre_intersect(t_object *object, float **ray)
+t_inters	*pre_intersect(t_object *object, float **ray)
 {
-	float **local_ray;
-	t_inters *result;
+	float		**local_ray;
+	t_inters	*result;
 
 	local_ray = transform_ray(ray, object->transform);
 	if (object->s == SPHERE)

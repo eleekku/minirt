@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 11:36:08 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/23 12:38:55 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/27 12:24:09 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ float	*lighting(t_comp *comp, t_light *l, t_object *obj, int shadow)
 	ldot.obj = obj;
 	if (!light_pre(&ldot))
 		return (NULL);
-	ldot.ambient = combine_colors(ldot.eff_color, obj->material->ambient);
+	ldot.ambient = hadamard(ldot.eff_color, obj->material->ambient);
 	ldot.light_dot_nor = dot_product(ldot.lightv, comp->normalv);
 	if (ldot.light_dot_nor < 0 || shadow)
 	{
