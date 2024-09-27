@@ -98,7 +98,6 @@ t_object	*create_object(t_shape shape, t_parse *parse)
 	obj->diameter = 2;
 	obj->height = 1;
 	obj->coord = create_point(0, 0, 0);
-//	obj->color = color(0, 0, 0);
 	obj->material = create_material(parse);
 	obj->normv = create_vector(0, 0, 0);
 	obj->transform = create_identity(4);

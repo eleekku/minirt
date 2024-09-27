@@ -61,8 +61,6 @@ static void	prepare_n_render(t_object **o, t_parse *parse, t_world *world)
 			o[i]->material->patt = create_pattern(color(0, 0, 0), 
 				color(1, 1, 1), create_identity(4));
 	}
-	world = create_world(parse->total, parse->light);
-	world->objects = o;
 	camera = create_camera(150, 100, parse->fow * 0.01745329);
 	clean_matrix(camera->transform, 4);
 	cameraup = compute_up(parse->normv);
@@ -71,8 +69,6 @@ static void	prepare_n_render(t_object **o, t_parse *parse, t_world *world)
 	camera->transform = inverse_matrix(tmp);
 	clean_matrix(tmp, 4);
 	start_display(camera, world);
-	clean_matrix(camera->transform, 4);
-	free(camera);
 }
 
 int	main(int argc, char **argv)
