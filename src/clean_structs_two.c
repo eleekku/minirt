@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:47:20 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/09/19 13:49:17 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/09/27 10:07:36 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,11 @@ void	clean_points(float *a, float *b, float *c, float *d)
 		free(d);
 }
 
-void	clean_rtx(t_rtx	*rtx)
+void	clean_rtx(t_rtx	*rtx, mlx_t	*mlx, mlx_image_t *img)
 {
 	clean_matrix(rtx->cam->transform, 4);
 	free(rtx->cam);
 	free(rtx);
+	mlx_delete_image(mlx, img);
+	mlx_terminate(mlx);
 }
