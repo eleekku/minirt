@@ -12,6 +12,21 @@
 
 #include "../inc/minirt_bonus.h"
 
+static	char	*get_shape(t_object *object)
+{
+	char	*shape;
+
+	if (object->s == SPHERE)
+		shape = "sphere";
+	else if (object->s == PLANE)
+		shape = "plane";
+	else if (object->s == CYLINDER)
+		shape = "cylinder";
+	else
+		shape = "cone";
+	return (shape);
+}
+
 void	free_objects_exit(t_object **object, char **args,
 int amount, t_parse *p)
 {
@@ -20,21 +35,18 @@ int amount, t_parse *p)
 	char	*shape;
 
 	msg = "In parsing object";
-	if (object[amount]->s == SPHERE)
-		shape = "sphere";
-	else if (object[amount]->s == PLANE)
-		shape = "plane";
-	else if (object[amount]->s == CYLINDER)
-		shape = "cylinder";
-	else
-		shape = "cone";
+	shape = get_shape(object[amount]);
 	i = -1;
 	if (args)
 		free_array(args);
 	if (p)
 		clean_parse(p);
 	while (++i <= amount)
+	{
+		if (object[i]->material->pattern == TRUE)
+			free(object[i]->material->color);
 		clean_object(object[i]);
+	}
 	free(object);
 	ft_printf(2, "Error\n%s %s\n", msg, shape);
 	exit(1);
@@ -55,10 +67,7 @@ void	free_array(char **args)
 void	exit_error(char *msg, char **args, t_parse *parse)
 {
 	if (parse)
-	{
-		printf("im here\n");
 		clean_parse(parse);
-	}
 	if (args)
 		free_array(args);
 	ft_printf(2, "Error\n%s\n", msg);

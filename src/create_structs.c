@@ -75,6 +75,7 @@ t_material	*create_material(t_parse *parse)
 	mat->specular = 0.9;
 	mat->shininess = 200;
 	mat->pattern = FALSE;
+	mat->patt = NULL;
 	return (mat);
 }
 

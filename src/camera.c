@@ -77,6 +77,5 @@ int	render(t_camera *camera, t_world *world, mlx_image_t *img)
 		}
 		y++;
 	}
-	printf("render done\n");
 	return (1);
 }
