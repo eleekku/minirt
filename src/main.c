@@ -19,7 +19,8 @@ void	check_extras(t_object **objects, t_parse *parse)
 	i = -1;
 	while (++i < parse->total)
 	{
-		if (objects[i]->material->pattern == TRUE || parse->lightnumb > 1 || objects[i]->s == CONE)
+		if (objects[i]->material->pattern == TRUE || parse->lightnumb > 1
+			|| objects[i]->s == CONE)
 		{
 			i = -1;
 			while (++i < parse->total)

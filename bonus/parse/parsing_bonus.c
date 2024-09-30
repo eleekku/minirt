@@ -46,9 +46,14 @@ static t_bool	validate_camera2(t_parse *parse, char **args)
 		return (FALSE);
 	while (++i <= 2)
 		if (!fill_value(coordinates[i], coordinates, &parse->normv[i]))
-			return (FALSE);
+			break ;
 	free_array(coordinates);
-	parse->fow = ft_atoi(args[3]);
+	if (i != 3)
+		return (FALSE);
+	if (args[3])
+		parse->fow = ft_atoi(args[3]);
+	else
+		return (FALSE);
 	if (!ft_isdigit(args[3][0]) && args[3][0] != '0')
 		exit_error("invalid fow format", args, parse);
 	if (parse->fow < 0 || parse->fow > 180)
@@ -69,9 +74,11 @@ t_bool	validate_camera(char **args, t_parse *parse)
 		return (FALSE);
 	while (++i <= 2)
 		if (!fill_value(coordinates[i], coordinates, &parse->camc[i]))
-			return (FALSE);
-	i = -1;
+			break ;
 	free_array(coordinates);
+	if (i != 3)
+		return (FALSE);
+	i = -1;
 	if (!validate_values(args[2]))
 		return (FALSE);
 	return (validate_camera2(parse, args));

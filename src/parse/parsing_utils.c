@@ -29,6 +29,12 @@ static t_bool	fill_rgb2(float **color, float *value, char **rgb, int i)
 {
 	int	status;
 
+	if (i != 3)
+	{
+		free_array(rgb);
+		free(value);
+		return (FALSE);
+	}
 	free(*color);
 	*color = conv_color_for(value);
 	free(value);
@@ -51,16 +57,17 @@ t_bool	fill_rgb(float **color, char *str)
 		return (FALSE);
 	value = malloc(3 * sizeof(float));
 	if (!value)
+	{
+		free_array(rgb);
 		return (FALSE);
+	}
 	while (++i <= 2)
 	{
+		if (!rgb[i] || !ft_isdigit(rgb[i][0]))
+			break ;
 		value[i] = ft_atoi(rgb[i]);
 		if (!(value[i] >= 0 && value[i] <= 255))
-		{
-			free_array(rgb);
-			free(value);
-			return (FALSE);
-		}
+			break ;
 	}
 	return (fill_rgb2(color, value, rgb, i));
 }
@@ -72,6 +79,8 @@ t_bool	validate_values(char *arg)
 
 	i = 0;
 	coma = 0;
+	if (!arg)
+		return (FALSE);
 	while (arg[i])
 	{
 		if (arg[i] == ',')
@@ -97,6 +106,8 @@ t_bool	fill_value(char *arg, char **coordinates, float *value)
 	int	i;
 
 	i = -1;
+	if (!arg)
+		return (FALSE);
 	while (arg[++i] && arg[i] != '\n')
 	{
 		if (arg[i] && arg[i] != '.' && arg[i] != '-'

@@ -36,18 +36,17 @@ t_bool	parse_cone2(char **args, t_object **object, int index, char **values)
 	int	i;
 
 	i = -1;
-	values = ft_split(args[2], ',');
-	if (!values)
-		return (FALSE);
 	while (++i <= 2)
 	{
 		if (!fill_value(values[i], values, &object[index]->normv[i]))
-			return (FALSE);
+			break ;
 		if (!(object[index]->normv[i] >= -1.0
 				&& object[index]->normv[i] <= 1.0))
-			return (FALSE);
+			break ;
 	}
 	free_array(values);
+	if (i != 3)
+		return (FALSE);
 	if (equal_float(magnitude(object[index]->normv), 1) == 0
 		|| !fill_value(args[3], NULL, &object[index]->diameter)
 		|| object[index]->diameter <= 0.0
@@ -72,15 +71,15 @@ t_bool	parse_cone(char **args, int index, t_object **object, t_parse *parse)
 	if (!values)
 		return (FALSE);
 	while (++i <= 2)
-	{
 		if (!fill_value(values[i], values, &object[index]->coord[i]))
-		{
-			free_array(values);
-			return (FALSE);
-		}
-	}
+			break ;
 	free_array(values);
+	if (i != 3)
+		return (FALSE);
 	if (!validate_values(args[2]))
+		return (FALSE);
+	values = ft_split(args[2], ',');
+	if (!values)
 		return (FALSE);
 	return (parse_cone2(args, object, index, values));
 }
@@ -94,10 +93,10 @@ t_bool	validate_light2(char **args, t_parse *parse, int index, t_light *light)
 		if (!fill_rgb(&light->color, args[3]))
 			return (FALSE);
 	}
-	light->color = multiply_color(light->color, parse->lbrightness, 1);
+	parse->light[index]->color = multiply_color(light->color,
+			parse->lbrightness, 1);
 	if (args[3] && args[4])
 		return (FALSE);
-	parse->light[index] = light;
 	return (TRUE);
 }
 
@@ -108,6 +107,7 @@ t_bool	validate_light(char **args, t_parse *parse, int index)
 	t_light		*light;
 
 	light = create_light();
+	parse->light[index] = light;
 	if (!light)
 		return (FALSE);
 	i = -1;
@@ -115,11 +115,12 @@ t_bool	validate_light(char **args, t_parse *parse, int index)
 	if (!coordinates)
 		return (FALSE);
 	while (++i <= 2)
-		if (!fill_value(coordinates[i], coordinates, &light->coord[i]))
-			return (FALSE);
+		if (!fill_value(coordinates[i], coordinates,
+				&parse->light[index]->coord[i]))
+			break ;
 	free_array(coordinates);
-	if (!ft_isdigit(args[2][0]))
-		exit_error("invalid light brightness format", args, parse);
+	if (i != 3)
+		return (FALSE);
 	if (!fill_value(args[2], NULL, &parse->lbrightness))
 		return (FALSE);
 	if (!(parse->lbrightness >= 0.0 && parse->lbrightness <= 1.0))

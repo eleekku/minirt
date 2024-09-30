@@ -18,18 +18,17 @@ static t_bool	parse_cylinder2(char **args, t_object **object,
 	int	i;
 
 	i = -1;
-	values = ft_split(args[2], ',');
-	if (!values)
-		return (FALSE);
 	while (++i <= 2)
 	{
 		if (!fill_value(values[i], values, &object[index]->normv[i]))
-			return (FALSE);
+			break ;
 		if (!(object[index]->normv[i] >= -1.0
 				&& object[index]->normv[i] <= 1.0))
-			return (FALSE);
+			break ;
 	}
 	free_array(values);
+	if (i != 3)
+		return (FALSE);
 	if (equal_float(magnitude(object[index]->normv), 1) == 0
 		|| !fill_value(args[3], NULL, &object[index]->diameter)
 		|| object[index]->diameter <= 0.0
@@ -56,15 +55,15 @@ t_object **object, t_parse *parse)
 	if (!values)
 		return (FALSE);
 	while (++i <= 2)
-	{
 		if (!fill_value(values[i], values, &object[index]->coord[i]))
-		{
-			free_array(values);
-			return (FALSE);
-		}
-	}
+			break ;
 	free_array(values);
+	if (i != 3)
+		return (FALSE);
 	if (!validate_values(args[2]))
+		return (FALSE);
+	values = ft_split(args[2], ',');
+	if (!values)
 		return (FALSE);
 	return (parse_cylinder2(args, object, index, values));
 }
@@ -77,14 +76,16 @@ t_bool	parse_plane2(char **args, t_object **object, int index, char **values)
 	while (++i <= 2)
 	{
 		if (!fill_value(values[i], values, &object[index]->normv[i]))
-			return (FALSE);
+			break ;
 		if (!(object[index]->normv[i] >= -1.0
 				&& object[index]->normv[i] <= 1.0))
-			return (FALSE);
+			break ;
 	}
+	free_array(values);
+	if (i != 3)
+		return (FALSE);
 	if (equal_float(magnitude(object[index]->normv), 1) == 0)
 		return (FALSE);
-	free_array(values);
 	if (!validate_values(args[3]))
 		return (FALSE);
 	if (!fill_rgb(&object[index]->material->color, args[3]))
@@ -106,10 +107,10 @@ t_bool	parse_plane(char **args, int index, t_object **object, t_parse *parse)
 		return (FALSE);
 	while (++i <= 2)
 		if (!fill_value(values[i], values, &object[index]->coord[i]))
-			return (FALSE);
-	if (values[i])
-		return (FALSE);
+			break ;
 	free_array(values);
+	if (i != 3)
+		return (FALSE);
 	i = -1;
 	if (!validate_values(args[2]))
 		return (FALSE);
@@ -133,8 +134,10 @@ t_bool	parse_sphere(char **args, int index, t_object **object, t_parse *parse)
 		return (FALSE);
 	while (++i <= 2)
 		if (!fill_value(values[i], values, &object[index]->coord[i]))
-			return (FALSE);
+			break ;
 	free_array(values);
+	if (i != 3)
+		return (FALSE);
 	if (!fill_value(args[2], NULL, &object[index]->diameter)
 		|| !validate_values(args[3])
 		|| !fill_rgb(&object[index]->material->color, args[3]))
