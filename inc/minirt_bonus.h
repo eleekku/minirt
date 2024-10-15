@@ -10,13 +10,14 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINIRT_H
-# define MINIRT_H
+#ifndef MINIRT_BONUS_H
+# define MINIRT_BONUS_H
 
 # include <math.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <fcntl.h>
+# include <pthread.h>
 # include "../lib/Libft/libft.h"
 # include "MLX42/MLX42.h"
 
@@ -187,6 +188,15 @@ typedef struct s_rtx
 	mlx_t		*mlx;
 	float		time;
 }	t_rtx;
+
+typedef struct s_thread_args {
+	t_camera	*camera;
+	t_world 	*world;
+	mlx_image_t	*img;
+	int			start_y;
+	int			end_y;
+	pthread_mutex_t	*pixel_mutex;
+} t_thread_args;
 
 /* Parsing */
 t_object	**check_file(char *file, t_parse *parse, int flag);

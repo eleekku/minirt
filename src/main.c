@@ -27,7 +27,7 @@ void	check_extras(t_object **objects, t_parse *parse)
 				clean_object(objects[i]);
 			free (objects);
 			clean_parse(parse);
-			ft_printf(2, "Error\nwith parsing objects\n");
+			ft_printf(2, "Error\nwith parsing\n");
 			exit (1);
 		}
 	}

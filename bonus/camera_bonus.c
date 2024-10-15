@@ -52,31 +52,74 @@ t_camera	*create_camera(float hsize, float vsize, float field)
 	return (compute_pixel_size(camera));
 }
 
-int	render(t_camera *camera, t_world *world, mlx_image_t *img)
+void render_row(t_camera *camera, t_world *world, mlx_image_t *img, int y, pthread_mutex_t *pixel_mutex)
 {
-	int		x;
-	int		y;
-	float	**ray;
-	float	*col;
-	int		*color_back;
+	int x = 0;
+	float **ray;
+	float *col;
+	int *color_back;
 
-	y = 0;
-	while (y < camera->vsize)
+	while (x < camera->hsize)
 	{
-		x = 0;
-		while (x < camera->hsize)
-		{
-			ray = ray_for_pixel(camera, x, y);
-			col = color_at(world, ray);
-			color_back = conv_color_back(col);
-			mlx_put_pixel(img, x, y, colors_to_int(color_back, 256));
-			free(color_back);
-			clean_ray(ray);
-			free(col);
-			x++;
-		}
+		ray = ray_for_pixel(camera, x, y);
+		col = color_at(world, ray);
+		color_back = conv_color_back(col);
+		pthread_mutex_lock(pixel_mutex);
+		mlx_put_pixel(img, x, y, colors_to_int(color_back, 256));
+		pthread_mutex_unlock(pixel_mutex);
+		free(color_back);
+		clean_ray(ray);
+		free(col);
+		x++;
+	}
+}
+
+void *render_section(void *args)
+{
+	t_thread_args *thread_args = (t_thread_args *)args;
+	t_camera *camera = thread_args->camera;
+	t_world *world = thread_args->world;
+	mlx_image_t *img = thread_args->img;
+	pthread_mutex_t *pixel_mutex = thread_args->pixel_mutex;
+	int y = thread_args->start_y;
+
+	while (y < thread_args->end_y)
+	{
+		render_row(camera, world, img, y, pixel_mutex);
 		y++;
 	}
-	printf("render done\n");
+	return NULL;
+}
+
+int render(t_camera *camera, t_world *world, mlx_image_t *img)
+{
+	int num_threads = 100; // Adjust the number of threads as needed
+	pthread_t threads[num_threads];
+	t_thread_args thread_args[num_threads];
+	int section_height;
+	int i;
+	pthread_mutex_t pixel_mutex;
+
+	if (pthread_mutex_init(&pixel_mutex, NULL) != 0)
+	{
+		fprintf(stderr, "Failed to initialize mutex\n");
+		return 1;
+	}
+	section_height = camera->vsize / num_threads;
+	i = -1;
+	while (++i < num_threads)
+	{
+		thread_args[i].camera = camera;
+		thread_args[i].world = world;
+		thread_args[i].img = img;
+		thread_args[i].start_y = i * section_height;
+		thread_args[i].pixel_mutex = &pixel_mutex;
+		thread_args[i].end_y = (i == num_threads - 1) ? camera->vsize : (i + 1) * section_height;
+		pthread_create(&threads[i], NULL, render_section, &thread_args[i]);
+	}
+	i = -1;
+	while (++i < num_threads)
+		pthread_join(threads[i], NULL);
+	pthread_mutex_destroy(&pixel_mutex);
 	return (1);
 }
