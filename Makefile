@@ -16,7 +16,7 @@ LIBFT_DIR	:= ./lib/Libft/
 LIBFT		:= $(LIBFT_DIR)/libft.a
 
 HEADERS	:= -I ./inc -I $(LIBMLX)/include
-LIBS	:= $(LIBMLX)/build/libmlx42.a -Iinclude -ldl -lglfw -pthread -lm	
+LIBS	:= $(LIBMLX)/build/libmlx42.a -Iinclude -ldl -lglfw -pthread -lm
 SRCS	:= $(SRCDIR)/definitions.c \
 			$(SRCDIR)/color_utils.c \
 			$(SRCDIR)/color_utils_two.c \
@@ -100,7 +100,9 @@ BONUS_OBJS := ${BONUS_SRCS:.c=.o}
 all: libmlx $(LIBFT) $(NAME)
 bonus: libmlx $(LIBFT) $(BONUS_NAME)
 
-libmlx:
+libmlx : .libmlx
+.libmlx:
+	touch .libmlx
 	@cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j4
 
 $(SRCDIR)/%.o: $(SRCDIR)/%.c
@@ -127,6 +129,7 @@ clean:
 	@rm -rf $(LIBMLX)/build
 
 fclean: clean
+	rm -rf .libmlx
 	rm -rf $(LIBFT)
 	@rm -rf $(NAME) $(BONUS_NAME)
 
