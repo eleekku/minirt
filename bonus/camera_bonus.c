@@ -93,7 +93,7 @@ void *render_section(void *args)
 
 int render(t_camera *camera, t_world *world, mlx_image_t *img)
 {
-	int num_threads = 100; // Adjust the number of threads as needed
+	int num_threads = 2; // Adjust the number of threads as needed
 	pthread_t threads[num_threads];
 	t_thread_args thread_args[num_threads];
 	int section_height;
