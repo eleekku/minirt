@@ -106,7 +106,9 @@ t_bool	fill_value(char *arg, char **coordinates, float *value)
 	int	i;
 
 	i = -1;
-	if (!arg)
+	if (!arg || arg[0] == '\n')
+		return (FALSE);
+	if (ft_strlen(arg) > 10)
 		return (FALSE);
 	while (arg[++i] && arg[i] != '\n')
 	{
