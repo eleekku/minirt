@@ -48,6 +48,8 @@ static t_bool	validate_camera2(t_parse *parse, char **args)
 		if (!fill_value(coordinates[i], coordinates, &parse->normv[i]))
 			break ;
 	free_array(coordinates);
+	if (equal_float(magnitude(parse->normv), 1) == 0)
+		return (FALSE);
 	if (i != 3)
 		return (FALSE);
 	if (args[3])

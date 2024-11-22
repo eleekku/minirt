@@ -124,12 +124,12 @@ $(LIBFT) :
 	@make -C $(LIBFT_DIR)
 
 clean:
+	rm -rf .libmlx
 	make -C $(LIBFT_DIR) clean
 	@rm -rf $(OBJS) $(BONUS_OBJS)
 	@rm -rf $(LIBMLX)/build
 
 fclean: clean
-	rm -rf .libmlx
 	rm -rf $(LIBFT)
 	@rm -rf $(NAME) $(BONUS_NAME)
 

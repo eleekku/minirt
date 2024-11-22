@@ -65,7 +65,7 @@ static void	prepare_n_render(t_object **o, t_parse *parse, t_world *world)
 					color(1, 1, 1), create_identity(4));
 		}
 	}
-	camera = create_camera(150, 100, parse->fow * 0.01745329);
+	camera = create_camera(1500, 1000, parse->fow * 0.01745329);
 	clean_matrix(camera->transform, 4);
 	cameraup = compute_up(parse->normv);
 	tmp = view_transform(create_point(parse->camc[0], parse->camc[1],
@@ -89,6 +89,13 @@ int	main(int argc, char **argv)
 	}
 	parse = init_parse();
 	objects = check_file(argv[1], parse, FALSE);
+	if (parse->total == 0)
+	{
+		ft_printf(2, "Error\nNo objects to render\n");
+		free (objects);
+		clean_parse(parse);
+		exit (1);
+	}
 	world = create_world(parse->total, parse->light);
 	world->objects = objects;
 	prepare_n_render(objects, parse, world);

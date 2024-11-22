@@ -16,6 +16,8 @@ t_bool	check_pattern(t_object **object, int index, char **args, int n)
 {
 	if (args[n])
 	{
+		if (args[n + 1])
+			return (FALSE);
 		if (!ft_strncmp(args[n], "P\n", 3) || !ft_strncmp(args[n], "P", 2))
 		{
 			object[index]->material->pattern = TRUE;
@@ -85,7 +87,7 @@ t_bool	parse_cone(char **args, int index, t_object **object, t_parse *parse)
 }
 
 t_bool	validate_light2(char **args, t_parse *parse, int index, t_light *light)
-{	
+{
 	if (args[3])
 	{
 		if (!validate_values(args[3]))
