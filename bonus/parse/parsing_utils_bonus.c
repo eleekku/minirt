@@ -14,9 +14,6 @@
 
 t_bool	allocate_light(t_parse *parse)
 {
-	int	i;
-
-	i = -1;
 	if (parse->lightnumb > 0)
 		parse->light = malloc((parse->lightnumb + 1) * (sizeof(t_light *)));
 	else
