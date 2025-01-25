@@ -17,12 +17,13 @@ MiniRT is a C project that implements ray-tracing algorithm using the MLX42 grap
   - Camera and object movement.
  
 ## Installation
-Clone the repository 
-git clone <repository-url>
-cd miniRT
-make (or rather make bonus for all features)
+Clone the repository and make
+```
+git clone https://github.com/xrierac/minirt.git
+cd minirt
+make // (or rather make bonus for all features)
 ./miniRT scenes/example.rt
-
+```
 ## Scene Description Format
 Scene files define the objects, lights, and camera in the scene using a strict syntax. Below is a breakdown of the available elements:
 
