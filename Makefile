@@ -97,7 +97,7 @@ BONUS_SRCS := $(BONUS_SRCDIR)/bump_bonus.c \
 OBJS	:= ${SRCS:.c=.o}
 BONUS_OBJS := ${BONUS_SRCS:.c=.o}
 
-all: libmlx $(LIBFT) $(NAME)
+all: libmlx $(LIBFT) $(BONUS_NAME)
 bonus: libmlx $(LIBFT) $(BONUS_NAME)
 
 libmlx : .libmlx
@@ -115,7 +115,7 @@ $(BONUS_SRCDIR)/%.o: $(BONUS_SRCDIR)/%.c
 	@$(CC) $(CFLAGS) -o $@ -c $< $(HEADERS) && printf "Compiling: $(notdir $<)\n"
 
 $(BONUS_NAME): $(BONUS_OBJS)
-	@$(CC) $(CFLAGS) $(BONUS_OBJS) $(LIBFT) $(LIBS) $(HEADERS) -o $(BONUS_NAME)
+	@$(CC) $(CFLAGS) $(BONUS_OBJS) $(LIBFT) $(LIBS) $(HEADERS) -o $(NAME)
 
 $(NAME): $(OBJS)
 	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(LIBS) $(HEADERS) -o $(NAME)
