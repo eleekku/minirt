@@ -1,5 +1,5 @@
 # MiniRT: A Ray-Tracer project
-MiniRT is a C project that implements ray-tracing algorithm using the MLX42 graphics library. The program generates images of scenes defined in `.rt` files b rendering simple geometric shapes with lighting and transformation capabilities.
+MiniRT is a C project that implements ray-tracing algorithm using the MLX42 graphics library. The program generates images of scenes defined in `.rt` files by rendering simple geometric shapes with lighting and transformation capabilities.
 
 ## Features
 - Objects:
